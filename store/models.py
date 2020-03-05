@@ -10,9 +10,13 @@ class Book(models.Model):
     publisher = models.CharField(max_length=50, help_text="Enter publisher name")
     pub_year = models.IntegerField(help_text="Enter year of publication")
     hard_cover = models.ImageField(upload_to='static/images/')
+    genre = models.CharField(max_length=100, help_text="Enter book genre.")
     size = models.CharField(max_length=10, help_text="Enter size book")
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book")
     Discounts = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter discounts")
+
+    def __str__(self):
+        return self.name
 
 
 class Magazine(models.Model):
@@ -26,3 +30,6 @@ class Magazine(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book")
     subs_price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book")
     Discounts = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter discounts")
+
+    def __str__(self):
+        return self.name
