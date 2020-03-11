@@ -1,0 +1,8 @@
+{% extends "base_generic.html" %}
+{% block content %}
+   {% if book_list %}
+       {% for book in book_list %}
+           <li>{{ book.hard_cover }}</li>
+       {% endfor %}
+    {% endif %}
+ {% endblock %}
