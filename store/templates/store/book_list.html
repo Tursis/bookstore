@@ -3,6 +3,8 @@
    {% if book_list %}
        {% for book in book_list %}
            <li>{{ book.hard_cover }}</li>
+          <img src="{{book.hard_cover.url}}" >
        {% endfor %}
+
     {% endif %}
  {% endblock %}
