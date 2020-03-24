@@ -11,3 +11,4 @@ def index(request):
 
 class BooksListView(generic.ListView):
     model = Book
+    paginate_by = 3

@@ -1,10 +1,11 @@
 {% extends "base_generic.html" %}
 {% block content %}
    {% if book_list %}
+     <ul>
        {% for book in book_list %}
            <li>{{ book.name}}</li>
           <img src="{{book.image.url}}" >
        {% endfor %}
-
+     </ul>
     {% endif %}
  {% endblock %}
