@@ -18,9 +18,13 @@
 </header>
 <div class="container">
   <div class="row">
+    <div class="col-12">
+      <h2><a href="{% url 'store:index' %}">Каталог товаров</a></h2>
+    </div>
+  </div>
+  <div class="row">
     <nav class="col-3">
       <ul>
-        <li><a href="{% url 'store:index' %}">Home</a></li>
         <li><a href="{% url 'store:books' %}">Books</a></li>
         <li><a href="">Magazine</a></li>
       </ul>
