@@ -28,10 +28,13 @@ class Book(models.Model):
     size = models.CharField(max_length=10, help_text="Enter size book", blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book", blank=True)
     Discounts = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter discounts", blank=True)
-    image = models.ImageField(upload_to='images/books', blank=True, null=True)
+    image = models.ImageField(upload_to='images/books/', blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-id']
 
 
 class Magazine(models.Model):
@@ -43,9 +46,13 @@ class Magazine(models.Model):
     numb_in_year = models.IntegerField(help_text="Enter number Magazine", blank=True, null=True)
     size = models.CharField(max_length=10, help_text="Enter size book", blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book", blank=True, null=True)
-    subs_price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book", blank=True, null=True)
+    subs_price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book", blank=True,
+                                     null=True)
     Discounts = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter discounts", blank=True, null=True)
     image = models.ImageField(upload_to='images/magazine', blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-id']
