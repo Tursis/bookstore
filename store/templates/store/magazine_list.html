@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+{% block content %}
+   {% if magazine_list %}
+     <ul>
+       {% for magazine in magazine_list %}
+           <li>{{ magazine.name}}</li>
+          <img src="{{magazine.image.url}}" >
+       {% endfor %}
+     </ul>
+    {% endif %}
+ {% endblock %}

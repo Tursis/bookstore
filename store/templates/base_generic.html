@@ -26,14 +26,16 @@
     <nav class="col-3">
       <ul>
         <li><a href="{% url 'store:books' %}">Books</a></li>
-        <li><a href="">Magazine</a></li>
+        <li><a href="{% url 'store:magazine' %}">Magazine</a></li>
       </ul>
     </nav>
     <div class="col-9">
-      {% block content %} {% endblock %}
-      {% block pagination %}
-        {% if is_paginated %}
-          <div class="pagination">
+      <div class="center-wrapper">
+        <div class="catalog">
+          {% block content %} {% endblock %}
+          {% block pagination %}
+            {% if is_paginated %}
+              <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
                   <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
@@ -45,9 +47,11 @@
                 <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
               {% endif %}
             </span>
-          </div>
-        {% endif %}
-      {% endblock %}
+              </div>
+            {% endif %}
+          {% endblock %}
+        </div>
+      </div>
     </div>
   </div>
 </div>

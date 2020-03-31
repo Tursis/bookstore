@@ -1,6 +1,9 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium aliquid aut beatae consectetur,
-    dicta, dolorum esse impedit ipsum nihil nobis optio quibusdam quos soluta unde. Id incidunt magni modi!</p>
+  {% for result in result_list %}
+    <li>{{ result.name }}</li>
+    <img src="{{ result.image.url }}" alt="">
+  {% endfor %}
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 {% endblock %}
