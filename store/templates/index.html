@@ -1,9 +1,18 @@
 {% extends "base_generic.html" %}
-
 {% block content %}
-  {% for result in result_list %}
-    <li>{{ result.name }}</li>
-    <img src="{{ result.image.url }}" alt="">
-  {% endfor %}
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+  <ul class="catalog-grid">
+    {% for result in result_list %}
+      <li class="catalog-grid__cell">
+        <div>
+          <div>
+            <img class="catalog-grid__img" src="{{ result.image.url }}" alt="">
+          </div>
+          <div>
+            {{ result.name }}
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+  <p class="test">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 {% endblock %}

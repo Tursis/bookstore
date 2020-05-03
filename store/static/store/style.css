@@ -1,6 +1,22 @@
 .center-wrapper {
 
 }
-.catalog{
+
+.catalog {
 
 }
+
+.catalog-grid {
+
+}
+
+.catalog-grid__cell {
+   width: 50%;
+}
+
+.catalog-grid__img {
+    width: 30%;
+}
+
+
+
