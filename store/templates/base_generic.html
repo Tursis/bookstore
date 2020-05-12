@@ -23,13 +23,13 @@
     </div>
   </div>
   <div class="row">
-    <nav class="col-3">
+    <nav class="col-12 col-md-3 col-xl-2">
       <ul>
         <li><a href="{% url 'store:books' %}">Books</a></li>
         <li><a href="{% url 'store:magazine' %}">Magazine</a></li>
       </ul>
     </nav>
-    <div class="col-9">
+    <div class="col-12 col-md-9 col-xl-10">
       <div class="center-wrapper">
         <div class="catalog">
           {% block content %} {% endblock %}

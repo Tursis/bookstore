@@ -1,5 +1,6 @@
-.center-wrapper {
 
+.center-wrapper {
+display: block;
 }
 
 .catalog {
@@ -8,14 +9,22 @@
 
 .catalog-grid {
 
+    display: flex;
+    flex-wrap: wrap;
+
 }
 
 .catalog-grid__cell {
-   width: 50%;
+    width: 20%;
+    margin: 0 .3125rem .625rem;
+    text-align: center;
 }
 
+.goods-tile {
+
+}
 .catalog-grid__img {
-    width: 30%;
+ width: 100%;
 }
 
 
