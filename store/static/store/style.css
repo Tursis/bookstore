@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-p
+
 }
 body {
     background-color: #f8f8f8 !important;
@@ -16,6 +16,7 @@ ul li {
 }
 .center-wrapper {
     display: block;
+    position: relative;
 }
 
 .catalog {
