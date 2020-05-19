@@ -23,11 +23,8 @@ ul li {
     background: #fff;
 }
 
-.catalog-grid {
 
-}
-
-.catalog-grid__cell {
+.goods-tile {
     background: #fff;
     position: relative;
     padding: 15px 15px 30px;
@@ -35,13 +32,9 @@ ul li {
     border: 0;
 }
 
-.goods-tile {
-    position: relative;
-    width: 100%;
-}
-
 .goods-tile__picture {
     width: 100%;
+    height: 100%;
 }
 
 .img-product {

@@ -3,14 +3,12 @@
 
   <ul class="row no-gutters">
     {% for result in result_list %}
-      <li class="col-12 col-md-3 col-xl-3 catalog-grid__cell ">
-        <div class="goods-tile">
-          <div class="goods-tile__picture">
-            <img class="img-product" src="{{ result.image.url }}" alt="">
-          </div>
-          <div class="goods-tile__heading">
-            {{ result.name }}
-          </div>
+      <li class="col-12 col-md-3 col-xl-3 goods-tile ">
+        <div class="goods-tile__picture">
+          <img class="img-product" src="{{ result.image.url }}" alt="">
+        </div>
+        <div class="goods-tile__heading">
+          {{ result.name }}
         </div>
       </li>
     {% endfor %}
