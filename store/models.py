@@ -7,7 +7,7 @@ class BookAuthor(models.Model):
     name = models.CharField(max_length=50, help_text="Enter author name.", blank=True)
 
     def __str__(self):
-        return self.name
+        return self.name + ';'
 
 
 class BookGenre(models.Model):

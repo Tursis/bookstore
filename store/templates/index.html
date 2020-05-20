@@ -5,10 +5,16 @@
     {% for result in result_list %}
       <li class="col-12 col-md-3 col-xl-3 goods-tile ">
         <div class="goods-tile__picture">
-          <img class="img-product" src="{{ result.image.url }}" alt="">
+          <img src="{{ result.image.url }}" alt="">
         </div>
         <div class="goods-tile__heading">
           {{ result.name }}
+          <p> Автор:
+            {% for author in result.author.all %}
+              {{ author }}
+            {% endfor %}
+          </p>
+          <p>{{ result.price }}</p>
         </div>
       </li>
     {% endfor %}
