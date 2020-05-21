@@ -12,9 +12,6 @@ ul li {
     list-style-type: none;
 }
 
-img {
-    width: 100%;
-}
 
 .main-menu {
     background: #fff;
@@ -29,23 +26,34 @@ img {
     background: #fff;
 }
 
-
-.goods-tile {
-    background: #fff;
+.catalog-item {
     position: relative;
     padding: 15px 15px 30px;
+    background: #fff;
     outline: 1px solid #d2d2d2;
     border: 0;
 }
 
-.goods-tile__picture {
+.catalog-item__img-wrapper {
+    position: relative;
     width: 100%;
-    height: 70%;
-    padding: 5px 40px;
+    height: 250px;
+    padding: 5px 0;
+    text-align: center;
 }
 
-.goods-tile__heading {
-    display: block;
-    padding: 5px 15px ;
+.catalog-item__img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 140px;
+
+}
+
+.catalog-item__heading {
+
+    padding: 5px 15px;
 }
 

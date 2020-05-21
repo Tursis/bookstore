@@ -3,12 +3,12 @@
 
   <ul class="row no-gutters">
     {% for result in result_list %}
-      <li class="col-12 col-md-3 col-xl-3 goods-tile ">
-        <div class="goods-tile__picture">
-          <img src="{{ result.image.url }}" alt="">
+      <li class="col-12 col-sm-6 col-md-4 col-xl-4  catalog-item">
+        <div class="catalog-item__img-wrapper">
+          <img class="catalog-item__img" src="{{ result.image.url }}" alt="">
         </div>
-        <div class="goods-tile__heading">
-          {{ result.name }}
+        <div class="catalog-item__heading">
+          {{ result.name }}12
           <p> Автор:
             {% for author in result.author.all %}
               {{ author }}
