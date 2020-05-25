@@ -14,7 +14,12 @@
               {{ author }}
             {% endfor %}
           </p>
-          <p>{{ result.price }}</p>
+        </div>
+        <div>
+          <div class="catalog-item__price">
+            <p>{{ result.price }}</p>
+            <button class="catalog-item__button">Купить</button>
+          </div>
         </div>
       </li>
     {% endfor %}
