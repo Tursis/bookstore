@@ -32,6 +32,8 @@ ul li {
     background: #fff;
     outline: 1px solid #d2d2d2;
     border: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .catalog-item__img-wrapper {
@@ -56,13 +58,17 @@ ul li {
     padding: 5px 15px;
 }
 
+.catalog-item__bottom {
+    flex-shrink: 0;
+}
+
 .catalog-item__price {
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
+
 }
 
 .catalog-item__button {
-    display: flex;
 
 }

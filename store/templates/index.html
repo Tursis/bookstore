@@ -5,22 +5,22 @@
     {% for result in result_list %}
       <li class="col-12 col-sm-6 col-md-4 col-xl-4  catalog-item">
         <div class="catalog-item__img-wrapper">
-          <img class="catalog-item__img" src="{{ result.image.url }}" alt="">
+          <a href=""><img class="catalog-item__img" src="{{ result.image.url }}" alt=""></a>
         </div>
         <div class="catalog-item__heading">
-          {{ result.name }}12
+          <a href="">{{ result.name }}</a>
           <p> Автор:
             {% for author in result.author.all %}
               {{ author }}
             {% endfor %}
           </p>
         </div>
-        <div>
-          <div class="catalog-item__price">
-            <p>{{ result.price }}</p>
-            <button class="catalog-item__button">Купить</button>
-          </div>
+      <div class="catalog-item__bottom">
+        <div class="catalog-item__price">
+          <p>{{ result.price }}</p>
+          <button class="catalog-item__button">Купить</button>
         </div>
+      </div>
       </li>
     {% endfor %}
   </ul>
