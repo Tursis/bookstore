@@ -1,13 +1,14 @@
 {% extends "base_generic.html" %}
 {% block content %}
 
-  <ul class="row no-gutters">
+  <ul class="row catalog-grid">
     {% for result in result_list %}
-      <li class="col-6 col-sm-6 col-md-4 col-xl-4  catalog-item">
-        <div class="catalog-item__img-wrapper">
-          <a href=""><img class="catalog-item__img" src="{{ result.image.url }}" alt=""></a>
+      <li class="col-6 col-md-6 col-xl-4  catalog-grid__cell">
+
+        <div class="item__img-wrapper">
+          <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
         </div>
-        <div class="catalog-item__heading">
+        <div class="item__heading">
           <a href="">{{ result.name }}</a>
           <p> Автор:
             {% for author in result.author.all %}
@@ -15,11 +16,11 @@
             {% endfor %}
           </p>
         </div>
-      <div class="catalog-item__bottom">
-        <div class="catalog-item__price">
+      <div class="item__bottom">
+        <div class="item__price">
           <p>{{ result.price }}</p>
         </div>
-          <button class="catalog-item__button">Купить</button>
+          <button class="item__button">Купить</button>
         </div>
 
       </li>
