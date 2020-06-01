@@ -23,7 +23,7 @@ ul li {
 }
 
 .catalog {
-    background: #fff;
+    position: relative;
 }
 
 .catalog-grid {
@@ -32,12 +32,11 @@ ul li {
 }
 
 .catalog-grid__cell {
-    background: #fff;
-    outline: 1px solid #d2d2d2;
-    border: 0;
     position: relative;
     display: flex;
-    flex-direction: column;
+    padding-left: 0;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
 
 .item__wrapper {
@@ -54,9 +53,7 @@ ul li {
 
 
 .item__img {
-
     width: 100%;
-
 }
 
 .item__heading {
@@ -69,14 +66,21 @@ ul li {
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
-
 }
 
 .item__price {
-
 
 }
 
 .item__button {
 
+}
+
+.item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid #d2d2d2;
+    border: 0;
+    background: #fff;
 }

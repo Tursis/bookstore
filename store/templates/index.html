@@ -3,8 +3,8 @@
 
   <ul class="row catalog-grid">
     {% for result in result_list %}
-      <li class="col-6 col-md-6 col-xl-4  catalog-grid__cell">
-
+      <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell">
+        <div class="item">
         <div class="item__img-wrapper">
           <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
         </div>
@@ -22,7 +22,7 @@
         </div>
           <button class="item__button">Купить</button>
         </div>
-
+      </div>
       </li>
     {% endfor %}
   </ul>
