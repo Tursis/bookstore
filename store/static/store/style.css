@@ -33,7 +33,6 @@ ul li {
 
 .catalog-grid__cell {
     position: relative;
-    display: flex;
     padding-left: 0;
     padding-right: 10px;
     padding-bottom: 10px;
@@ -46,6 +45,7 @@ ul li {
     outline: 1px solid #d2d2d2;
     border: 0;
     background: #fff;
+    height: 100%;
 }
 
 .item__wrapper {
@@ -54,16 +54,13 @@ ul li {
 
 .item__img-wrapper {
     position: relative;
-    overflow: hidden;
-    z-index: 0;
-    width: 75%;
-    height: 100%;
     align-self: center;
 }
 
 
 .item__img {
-    width: 100%;
+    width: auto;
+    height: 216px;
 }
 
 .item__heading {
