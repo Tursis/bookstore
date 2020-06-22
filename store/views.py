@@ -5,7 +5,7 @@ from django.utils import timezone
 from .models import Book, Magazine
 from itertools import chain
 from operator import attrgetter
-
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -17,6 +17,7 @@ def index(request):
         key=attrgetter('id'))
     context = {'book': book, 'magazine': magazine, 'result_list': result_list}
     return render(request, 'index.html', context=context)
+
 
 
 class BooksListView(generic.ListView):
