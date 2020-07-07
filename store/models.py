@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 
 # Create your models here.
@@ -29,12 +30,21 @@ class Book(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter price book", blank=True)
     Discounts = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter discounts", blank=True)
     image = models.ImageField(upload_to='images/books/', blank=True, null=True)
+    slug = models.SlugField(max_length=100)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['-id']
+
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('store:product_detail', kwargs={'slug': self.slug})
 
 
 class Magazine(models.Model):
@@ -50,9 +60,18 @@ class Magazine(models.Model):
                                      null=True)
     Discounts = models.DecimalField(max_digits=10, decimal_places=2, help_text="Enter discounts", blank=True, null=True)
     image = models.ImageField(upload_to='images/magazine', blank=True, null=True)
+    slug = models.SlugField(max_length=100)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['-id']
+
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('store:product_detail', kwargs={'slug': self.slug})

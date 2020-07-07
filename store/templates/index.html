@@ -9,7 +9,7 @@
           <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
         </div>
         <div class="item__heading">
-          <a href="">{{ result.name }}</a>
+          <a href={{ result.get_absolute_url }}>{{ result.name }}</a>
           <p> Автор:
             {% for author in result.author.all %}
               {{ author }}

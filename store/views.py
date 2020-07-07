@@ -29,9 +29,14 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
-class BooksListView(generic.ListView):
+def product_detail(request, slug):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
+    context = {'book': book, 'magazine': magazine}
+    return render(request, 'store/product_detail.html', context=context)
+
+
+class BooksListView(generic.ListView):
     model = Book
     paginate_by = 3
 
@@ -39,3 +44,13 @@ class BooksListView(generic.ListView):
 class MagazineListView(generic.ListView):
     model = Magazine
     paginate_by = 3
+
+
+class BooksDetailView(generic.DetailView):
+    template_name = 'store/product_detail.html'
+    model = Book
+
+
+class MagazineDetailView(generic.DetailView):
+    template_name = 'store/product_detail.html'
+    model = Magazine
