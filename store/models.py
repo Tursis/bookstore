@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 class BookAuthor(models.Model):
     name = models.CharField(max_length=50, help_text="Enter author name.", blank=True)
+    slug = models.SlugField(max_length=100)
 
     def __str__(self):
         return self.name + ';'
@@ -13,6 +14,7 @@ class BookAuthor(models.Model):
 
 class BookGenre(models.Model):
     genre = models.CharField(max_length=50, help_text="Enter book genre.", blank=True)
+    slug = models.SlugField(max_length=100)
 
     def __str__(self):
         return self.genre
@@ -38,7 +40,7 @@ class Book(models.Model):
     class Meta:
         ordering = ['-id']
 
-    def save(self, *args, **kwargs): # new
+    def save(self, *args, **kwargs):  # new
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
@@ -68,7 +70,7 @@ class Magazine(models.Model):
     class Meta:
         ordering = ['-id']
 
-    def save(self, *args, **kwargs): # new
+    def save(self, *args, **kwargs):  # new
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
