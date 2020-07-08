@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+{% block sidebar %}
+  {% if bookgenre_list %}
+    <nav class="col-12 col-md-3 col-xl-2 main-menu">
+      <ul>
+        <li><a href="{% url 'store:book_genres' %}">Книги</a></li>
+        <ul>
+          {% for genre in bookgenre_list %}
+            <li>{{ genre.genre }}</li>
+          {% endfor %}
+        </ul>
+        <li><a href="{% url 'store:magazine' %}">Журналы</a></li>
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock %}
+{% block content %}
+
+  <ul>
+
+  </ul>
+
+{% endblock %}

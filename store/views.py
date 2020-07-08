@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import Book, Magazine
+from .models import Book, Magazine, BookGenre, BookAuthor
 from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,6 +13,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def index(request):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
+    genre = BookGenre.objects.all()
     result_list = sorted(
         chain(book, magazine),
         key=attrgetter('id'))
@@ -25,15 +26,21 @@ def index(request):
     except EmptyPage:
         result_list = paginator.page(paginator.num_pages)
 
-    context = {'book': book, 'magazine': magazine, 'result_list': result_list}
+    context = {'book': book, 'magazine': magazine, 'genre': genre, 'result_list': result_list}
     return render(request, 'index.html', context=context)
 
 
 def product_detail(request, slug):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
+
     context = {'book': book, 'magazine': magazine}
     return render(request, 'store/product_detail.html', context=context)
+
+
+class BookGenresListView(generic.ListView):
+    template_name = 'store/book_genres.html'
+    model = BookGenre
 
 
 class BooksListView(generic.ListView):

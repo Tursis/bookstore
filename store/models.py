@@ -19,6 +19,9 @@ class BookGenre(models.Model):
     def __str__(self):
         return self.genre
 
+    def get_absolute_url(self):
+        return reverse('store:book_genres', kwargs={'slug': self.slug})
+
 
 class Book(models.Model):
     name = models.CharField(max_length=100, help_text="Enter book name.", blank=True)
