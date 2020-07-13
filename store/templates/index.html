@@ -1,20 +1,5 @@
 {% extends "base_generic.html" %}
-{% block sidebar %}
-  {% if genre %}
-    <nav id="main-nav" class="col-12 col-md-3 col-xl-2">
-      <ul id="main-nav__list">
-        <li id="main-nav__item"><a id="main-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
-        <ul id="sub-nav">
-          {% for genre_list in genre %}
-            <li id="sub-nav__item"><a  id="sub-nav__link" href="">{{ genre_list.genre }}</a></li>
-          {% endfor %}
-        </ul>
-      </li>
-        <li id="main-nav__item"> <a id="main-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
-      </ul>
-    </nav>
-  {% endif %}
-{% endblock %}
+
 {% block content %}
 
   <ul class="row catalog-grid">

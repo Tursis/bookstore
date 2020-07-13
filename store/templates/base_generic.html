@@ -21,21 +21,28 @@
   <div class="row">
     <div class="col-12">
       <h2><a href="{% url 'store:index' %}">Каталог товаров</a></h2>
-
     </div>
-
   </div>
   <div class="row">
     {% block sidebar %}
-      <nav class="col-12 col-md-3 col-xl-2">
-        <ul>
-          <li><a href="{% url 'store:book_genres' %}">Книги</a></li>
-          <li><a href="{% url 'store:magazine' %}">Журналы</a></li>
+      <nav id='main-nav' class="col-12 col-md-3 col-xl-2 ">
+        <ul class="main-nav__list">
+          <li class="main-nav__item"><a class="main-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
+            <ul class="sub-nav">
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Детектив</a></li>
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Мистика</a></li>
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Программирование</a></li>
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Триллер</a></li>
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Ужасы</a></li>
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Фантастика</a></li>
+              <li class="sub-nav__item"><a class="sub-nav__link" href="">Фентази</a></li>
+            </ul>
+          </li>
+          <li class="main-nav__item"><a class="main-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
         </ul>
       </nav>
     {% endblock %}
     <div class="col-12 col-md-9 col-xl-10">
-
       <div class="center-wrapper">
         <div class="catalog">
           {% block content %} {% endblock %}
