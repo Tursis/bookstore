@@ -12,6 +12,24 @@
 <body>
 <header>
   <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="header-dropdown-menu">
+          <button id="button-menu">Каталог товаров</button>
+          <div id="menu-section">
+            <ul class="menu__list">
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Детектив</a></li>
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Мистика</a></li>
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Программирование</a></li>
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Триллер</a></li>
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Ужасы</a></li>
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Фантастика</a></li>
+              <li class="sub-menu__item"><a class="sub-menu__link" href="">Фентази</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="navbar">
       Lorem ipsum dolor sit.
     </nav>
@@ -19,26 +37,21 @@
 </header>
 <div class="container container_white">
   <div class="row">
-    <div class="col-12">
-      <h2><a href="{% url 'store:index' %}">Каталог товаров</a></h2>
-    </div>
-  </div>
-  <div class="row">
     {% block sidebar %}
-      <nav id='main-nav' class="col-12 col-md-3 col-xl-2 ">
-        <ul class="main-nav__list">
-          <li class="main-nav__item"><a class="main-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
-            <ul class="sub-nav">
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Детектив</a></li>
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Мистика</a></li>
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Программирование</a></li>
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Триллер</a></li>
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Ужасы</a></li>
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Фантастика</a></li>
-              <li class="sub-nav__item"><a class="sub-nav__link" href="">Фентази</a></li>
+      <nav id='side-nav' class="col-12 col-md-3 col-xl-2 ">
+        <ul class="side-nav__list">
+          <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
+            <ul class="sub-side-nav">
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Детектив</a></li>
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Мистика</a></li>
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Программирование</a></li>
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Триллер</a></li>
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Ужасы</a></li>
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фантастика</a></li>
+              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фентази</a></li>
             </ul>
           </li>
-          <li class="main-nav__item"><a class="main-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
+          <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
         </ul>
       </nav>
     {% endblock %}
@@ -71,7 +84,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
-        $('#main-nav  ul li').hover(
+        $('#side-nav  ul li').hover(
             function () {
                 $('ul', this).stop().slideDown(400);
             },
@@ -79,6 +92,12 @@
                 $('ul', this).stop().slideUp(400);
             }
         );
+    });
+</script>
+<script type="text/javascript">
+    $("#button-menu").on("click", () => {
+        $("#menu-section").slideToggle();
+        $('body').toggleClass('overlay');
     });
 </script>
 </body>
