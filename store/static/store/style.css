@@ -8,17 +8,20 @@ body {
     background-color: #f8f8f8 !important;
     font-family: 'Fira Sans', sans-serif;
 }
-
-.overlay::before {
+header {
+    z-index: 2;
+    position: relative;
+}
+body.overlay:after {
     content: '';
     display: block;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #444;
+    background-color: rgba(68, 68, 68, 0.85);
     position: absolute;
-    z-index: -1;
+    z-index: 1;
 }
 
 .container_white {
@@ -95,7 +98,10 @@ ul li {
 .item__button {
 
 }
-
+.header-dropdown-menu{
+    background: #ffffff;
+    z-index: 50;
+}
 #menu-section {
     position: absolute;
     display: none;
