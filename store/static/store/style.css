@@ -8,11 +8,13 @@ body {
     background-color: #f8f8f8 !important;
     font-family: 'Fira Sans', sans-serif;
 }
+
 header {
     z-index: 2;
     position: relative;
 }
-body.overlay:after {
+
+body.overlay:before {
     content: '';
     display: block;
     left: 0;
@@ -24,8 +26,12 @@ body.overlay:after {
     z-index: 1;
 }
 
-.container_white {
+.block_white {
     background: #fff;
+}
+
+.block_shadow {
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
 }
 
 ul li {
@@ -36,6 +42,7 @@ ul li {
 .center-wrapper {
     display: block;
     position: relative;
+    padding: 0;
 }
 
 .catalog {
@@ -44,13 +51,11 @@ ul li {
 
 .catalog-grid {
     margin-left: 0;
-    margin-right: 0;
 }
 
 .catalog-grid__cell {
     position: relative;
     padding-left: 0;
-    padding-right: 10px;
     padding-bottom: 10px;
 }
 
@@ -98,10 +103,12 @@ ul li {
 .item__button {
 
 }
-.header-dropdown-menu{
+
+.header-dropdown-menu {
     background: #ffffff;
     z-index: 50;
 }
+
 #menu-section {
     position: absolute;
     display: none;
@@ -114,9 +121,6 @@ ul li {
 
 }
 
-.sub-side-nav__link {
-    display: block;
-}
 
 .side-nav__list {
     width: auto;
@@ -124,21 +128,18 @@ ul li {
 
 .side-nav__list a {
     text-decoration: none;
-    color: #fff;
-
+    color: #000;
 }
 
 .side-nav__item {
     padding-bottom: 10px;
     position: relative;
-
 }
 
 .side-nav__link {
     font-size: 18px;
     padding: 5px;
-    background-color: #333;
-    color: #fff;
+
 }
 
 .sub-side-nav {
@@ -147,9 +148,13 @@ ul li {
     display: none;
 }
 
+.sub-side-nav__link {
+    display: block;
+}
+
 .sub-side-nav__item {
-    background-color: #333;
-    border-bottom: 1px solid #888;
+
+
 }
 
 .sub-side-nav__item:last-child {
@@ -158,12 +163,11 @@ ul li {
 
 .sub-side-nav__link {
     padding: 5px 12px;
-    color: #fff;
     display: block;
 }
 
 .sub-side-nav__item:hover {
-    background-color: #444;
+
 }
 
 .sub-side-nav__item:first-child {
@@ -177,7 +181,7 @@ ul li {
     width: 1px;
     height: 1px;
     border: 5px solid transparent;
-    border-bottom-color: #333;
+
     left: 10px;
     top: -10px;
 }

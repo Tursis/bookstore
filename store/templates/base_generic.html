@@ -35,33 +35,34 @@
     </nav>
   </div>
 </header>
-<div class="container container_white">
+<div class="container">
   <div class="row">
     {% block sidebar %}
-      <nav id='side-nav' class="col-12 col-md-3 col-xl-2 ">
-        <ul class="side-nav__list">
-          <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
-            <ul class="sub-side-nav">
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Детектив</a></li>
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Мистика</a></li>
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Программирование</a></li>
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Триллер</a></li>
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Ужасы</a></li>
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фантастика</a></li>
-              <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фентази</a></li>
-            </ul>
-          </li>
-          <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
-        </ul>
+      <nav class="col-12 col-md-3 col-xl-2 sidebar">
+        <div id='side-nav' class="block_white block_shadow">
+          <ul class="side-nav__list">
+            <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
+              <ul class="sub-side-nav">
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Детектив</a></li>
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Мистика</a></li>
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Программирование</a></li>
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Триллер</a></li>
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Ужасы</a></li>
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фантастика</a></li>
+                <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фентази</a></li>
+              </ul>
+            </li>
+            <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
+          </ul>
+        </div>
       </nav>
     {% endblock %}
-    <div class="col-12 col-md-9 col-xl-10">
-      <div class="center-wrapper">
-        <div class="catalog">
-          {% block content %} {% endblock %}
-          {% block pagination %}
-            {% if is_paginated %}
-              <div class="pagination">
+    <div class="col-12 col-md-9 col-xl-10 center-wrapper">
+      <div class="catalog  block_white">
+        {% block content %} {% endblock %}
+        {% block pagination %}
+          {% if is_paginated %}
+            <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
                   <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
@@ -73,10 +74,25 @@
                 <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
               {% endif %}
             </span>
-              </div>
+            </div>
+          {% endif %}
+        {% endblock %}
+      </div>
+      <div class="pagination">
+          <span class="step-links">
+              {% if result_list.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ result_list.previous_page_number }}">previous</a>
+              {% endif %}
+
+            <span class="current">
+                  Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}.
+              </span>
+            {% if result_list.has_next %}
+              <a href="?page={{ result_list.next_page_number }}">next</a>
+              <a href="?page={{ result_list.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
-          {% endblock %}
-        </div>
+          </span>
       </div>
     </div>
   </div>
@@ -96,7 +112,7 @@
 </script>
 <script type="text/javascript">
     $("#button-menu").on("click", () => {
-        $("#menu-section").slideToggle();
+        $("#menu-section").slideToggle(200);
         $('body').toggleClass('overlay');
     });
 </script>
