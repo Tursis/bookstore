@@ -1,30 +1,52 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <div class="col-12 col-md-9 col-xl-10 center-wrapper">
+    <div class="catalog  block_white">
+      <ul class="row catalog-grid">
+        {% for result in result_list %}
+          <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
+            <div class="item block_shadow">
+              <div class="item__img-wrapper">
+                <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
+              </div>
+              <div class="item__heading">
+                <a href={{ result.get_absolute_url }}>{{ result.name }}</a>
+                <p> Автор:
+                  {% for author in result.author.all %}
+                    {{ author }}
+                  {% endfor %}
+                </p>
+              </div>
+              <div class="item__bottom">
+                <div class="item__price">
+                  <p>{{ result.price }}</p>
+                </div>
+                <button class="item__button">Купить</button>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+   <div class="pagination">
+          <span class="step-links">
+              {% if result_list.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ result_list.previous_page_number }}">previous</a>
+              {% endif %}
 
-  <ul class="row catalog-grid">
-    {% for result in result_list %}
-      <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
-        <div class="item block_shadow">
-        <div class="item__img-wrapper">
-          <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
-        </div>
-        <div class="item__heading">
-          <a href={{ result.get_absolute_url }}>{{ result.name }}</a>
-          <p> Автор:
-            {% for author in result.author.all %}
-              {{ author }}
-            {% endfor %}
-          </p>
-        </div>
-      <div class="item__bottom">
-        <div class="item__price">
-          <p>{{ result.price }}</p>
-        </div>
-          <button class="item__button">Купить</button>
-        </div>
-      </div>
-      </li>
-    {% endfor %}
-  </ul>
+            <span class="current">
+                  Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}.
+              </span>
+            {% if result_list.has_next %}
+              <a href="?page={{ result_list.next_page_number }}">next</a>
+              <a href="?page={{ result_list.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+          </span>
+  </div>
+</div>
+  </div>
+
+
 {% endblock %}
