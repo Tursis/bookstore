@@ -33,8 +33,9 @@ def index(request):
 def product_detail(request, slug):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
+    genre = BookGenre.objects.all()
 
-    context = {'book': book, 'magazine': magazine}
+    context = {'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
     return render(request, 'store/product_detail.html', context=context)
 
 

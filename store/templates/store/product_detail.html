@@ -1,6 +1,5 @@
 {% extends "base_generic.html" %}
 
-
 {% block breadcrumbs %}
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Компоненты</a></li>
@@ -10,21 +9,21 @@
 {% endblock %}
 
 {% block content %}
-  <div class="col-12  center-wrapper">
+
     <div class="catalog  block_white">
       <div id="block">
         Hello
       </div>
     </div>
-  </div>
 
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script type="text/javascript">
-    $("#button-menu").on("click", () => {
-        $("#side-nav").slideToggle(200);
-        //     $('body').toggleClass('overlay');
-    });
-</script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript">
+      $("#button-menu").on("click", () => {
+          $("#side-nav").slideToggle(200);
+          //     $('body').toggleClass('overlay');
+      });
+  </script>
+
 {% endblock %}
 

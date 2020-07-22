@@ -119,6 +119,10 @@ ul li {
 }
 
 #side-nav {
+
+}
+
+.side-nav-hide {
     display: none;
 }
 
