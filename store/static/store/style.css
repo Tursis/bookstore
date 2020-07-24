@@ -103,9 +103,15 @@ ul li {
 .item__button {
 
 }
-
+.header-bottom-line {
+    display: flex;
+}
 .header-dropdown-menu {
     z-index: 50;
+}
+
+.search-line {
+    display: block;
 }
 
 #menu-section {
