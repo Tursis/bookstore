@@ -40,8 +40,7 @@ ul li {
 
 /* header */
 .header-bottom-line {
-    display: flex;
-    flex-wrap: wrap;
+
 }
 
 .header-dropdown-menu {

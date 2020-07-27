@@ -12,20 +12,32 @@
 <body>
 <header>
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="header-bottom-line">п
-          <div class="col-12 col-md-3 col-xl-2 header-dropdown-menu">
-            <span id="dropdown-menu">Каталог товаров</span>
-          </div>
-          <div class="col-12 col-md-7 col-xl-10 search-line">
-            <form action="" class="search-form">
-              <label class="">
-                <input class="search-form__input" type="search" placeholder="Поиск">
-              </label>
-              <button class="search-form__button">Го</button>
-            </form>
-          </div>
+    <div class="header-top-line">
+      <div class="row">
+        <div class="col-12 col-xl-6"> Logo</div>
+        <div class="col-12 col-xl-6">
+            {% if user.is_authenticated %}
+              <div>User: {{ user.get_username }}</div>
+              <div><a href="{% url 'logout' %}?next={{ request.path }}">Logged out!</a></div>
+            {% else %}
+              <div><a href="{% url 'login' %}?next={{ request.path }}">Login</a></div>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom-line">
+      <div class="row">
+        <div class="col-12 col-md-3 col-xl-2 header-dropdown-menu">
+          <span id="dropdown-menu">Каталог товаров</span>
+        </div>
+        <div class="col-12 col-md-7 col-xl-10 search-line">
+          <form action="" class="search-form">
+            <label class="">
+              <input class="search-form__input" type="search" placeholder="Поиск">
+            </label>
+            <button class="search-form__button">Пошук</button>
+          </form>
         </div>
       </div>
     </div>
