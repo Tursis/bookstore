@@ -39,10 +39,19 @@ ul li {
 }
 
 /* header */
+.header-top-line {
+
+
+}
 .header-bottom-line {
 
 }
-
+.test {
+    display: flex;
+}
+.test2 {
+ align-self: center;
+}
 .header-dropdown-menu {
     background-color: #6e9fec;
     border-radius: 2px 0 0 2px;
@@ -204,3 +213,9 @@ ul li {
 
 }
 
+/* login page*/
+
+.wrapper-sm {
+    position: relative;
+    margin: 0 auto;
+}

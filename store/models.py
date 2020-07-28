@@ -80,4 +80,4 @@ class Magazine(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('store:product_detail', kwargs={'slug': self.slug})
+        return reverse('store:', kwargs={'slug': self.slug})

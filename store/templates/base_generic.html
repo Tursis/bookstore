@@ -15,14 +15,13 @@
     <div class="header-top-line">
       <div class="row">
         <div class="col-12 col-xl-6"> Logo</div>
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-6 test">
             {% if user.is_authenticated %}
               <div>User: {{ user.get_username }}</div>
-              <div><a href="{% url 'logout' %}?next={{ request.path }}">Logged out!</a></div>
+              <div><a href="{% url 'logout' %}?next={{ request.path }}">ВЫйти</a></div>
             {% else %}
-              <div><a href="{% url 'login' %}?next={{ request.path }}">Login</a></div>
+              <div  class="test2" ><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>
             {% endif %}
-          </ul>
         </div>
       </div>
     </div>
@@ -36,7 +35,7 @@
             <label class="">
               <input class="search-form__input" type="search" placeholder="Поиск">
             </label>
-            <button class="search-form__button">Пошук</button>
+            <button class="search-form__button">Поиск</button>
           </form>
         </div>
       </div>

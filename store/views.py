@@ -14,19 +14,19 @@ def index(request):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
     genre = BookGenre.objects.all()
-    result_list = sorted(
+    products = sorted(
         chain(book, magazine),
         key=attrgetter('id'))
-    paginator = Paginator(result_list, 6)
+    paginator = Paginator(products, 6)
     page = request.GET.get('page')
     try:
-        result_list = paginator.page(page)
+        products = paginator.page(page)
     except PageNotAnInteger:
-        result_list = paginator.page(1)
+        products = paginator.page(1)
     except EmptyPage:
-        result_list = paginator.page(paginator.num_pages)
+        products = paginator.page(paginator.num_pages)
 
-    context = {'book': book, 'magazine': magazine, 'genre': genre, 'result_list': result_list}
+    context = {'book': book, 'magazine': magazine, 'genre': genre, 'products': products}
     return render(request, 'index.html', context=context)
 
 
@@ -34,8 +34,10 @@ def product_detail(request, slug):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
     genre = BookGenre.objects.all()
-
-    context = {'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
+    products = sorted(
+        chain(book, magazine),
+        key=attrgetter('id'))
+    context = {'products': products,'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
     return render(request, 'store/product_detail.html', context=context)
 
 
