@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.views.generic import TemplateView
 from django.utils import timezone
 from .models import Book, Magazine, BookGenre, BookAuthor
 from itertools import chain
@@ -30,6 +31,7 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
+"""
 def product_detail(request, slug):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
@@ -39,6 +41,20 @@ def product_detail(request, slug):
         key=attrgetter('id'))
     context = {'products': products, 'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
     return render(request, 'store/product_detail.html', context=context)
+"""
+
+
+class ProductDetailView(generic.ListView):
+    template_name = 'store/product_detail.html'
+    context_object_name = "product"
+    def get_queryset(self):
+        return
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = Book.objects.all()
+        context['magazine'] = Magazine.objects.all()
+        context['product'] = sorted(chain(Book.objects.all(), Magazine.objects.all()), key=attrgetter('id'))
+        return context
 
 
 class BookGenresListView(generic.ListView):

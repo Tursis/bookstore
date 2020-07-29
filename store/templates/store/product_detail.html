@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-
+  {% comment %}
     <div class="catalog  block_white">
       <div>
      {% if magazine %}
@@ -17,6 +17,14 @@
     {% endif %}
       </div>
     </div>
+{% endcomment %}
+
+    <ul>
+      {% for mag in product%}
+      <li>{{mag.name }}</li>
+      {% endfor %}
+    </ul>
+
 
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

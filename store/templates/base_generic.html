@@ -14,14 +14,14 @@
   <div class="container">
     <div class="header-top-line">
       <div class="row">
-        <div class="col-xl-6"> Logo</div>
+        <div class="col-xl-6"><a href="{% url 'store:index' %}">Logo</a></div>
         <div class="col-xl-6 login-menu">
-            {% if user.is_authenticated %}
-              <div>User: {{ user.get_username }}</div>
-              <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
-            {% else %}
-              <div  class="test2" ><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>
-            {% endif %}
+          {% if user.is_authenticated %}
+            <div>User: {{ user.get_username }}</div>
+            <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
+          {% else %}
+            <div class="test2"><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <nav class="col-12 col-md-3 col-xl-2 sidebar">
         <div id='side-nav' class="block_white block_shadow {% if is_shown_by_default %} side-nav-hide {% endif %}">
           <ul class="side-nav__list">
-            <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:book_genres' %}">Книги</a>
+            <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:books' %}">Книги</a>
               <ul class="sub-side-nav">
                 <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Детектив</a></li>
                 <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Мистика</a></li>
@@ -66,9 +66,10 @@
     {% endblock %}
     <div class="{% if is_shown_by_default %} col-12 {% else %} col-12 col-md-9 col-xl-10 center-wrapper {% endif %}r">
       {% block content %}
-        {% block pagination %}
-          {% if is_paginated %}
-            <div class="pagination">
+      {% endblock %}
+      {% block pagination %}
+        {% if is_paginated %}
+          <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
                   <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
@@ -80,9 +81,8 @@
                 <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
               {% endif %}
             </span>
-            </div>
-          {% endif %}
-        {% endblock %}
+          </div>
+        {% endif %}
       {% endblock %}
     </div>
   </div>
