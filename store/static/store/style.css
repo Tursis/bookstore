@@ -39,9 +39,16 @@ ul li {
 }
 
 /* header */
+.header-top-line {
+
+
+}
 .header-bottom-line {
+
+}
+.login-menu {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .header-dropdown-menu {
@@ -205,3 +212,9 @@ ul li {
 
 }
 
+/* login page*/
+
+.wrapper-sm {
+    position: relative;
+    margin: 0 auto;
+}

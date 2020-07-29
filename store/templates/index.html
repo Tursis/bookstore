@@ -3,11 +3,11 @@
 {% block content %}
     <div class="catalog  block_white">
       <ul class="row catalog-grid">
-        {% for result in result_list %}
+        {% for result in products %}
           <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
             <div class="item block_shadow">
               <div class="item__img-wrapper">
-                <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
+                <a href="{{ result.get_absolute_url }}"><img class="item__img" src="{{ result.image.url }}" alt=""></a>
               </div>
               <div class="item__heading">
                 <a href={{ result.get_absolute_url }}>{{ result.name }}</a>
@@ -30,17 +30,17 @@
     </div>
     <div class="pagination">
           <span class="step-links">
-              {% if result_list.has_previous %}
+              {% if products.has_previous %}
                 <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ result_list.previous_page_number }}">previous</a>
+                <a href="?page={{ products.previous_page_number }}">previous</a>
               {% endif %}
 
             <span class="current">
-                  Page {{ result_list.number }} of {{ result_list.paginator.num_pages }}.
+                  Page {{ products.number }} of {{ products.paginator.num_pages }}.
               </span>
-            {% if result_list.has_next %}
-              <a href="?page={{ result_list.next_page_number }}">next</a>
-              <a href="?page={{ result_list.paginator.num_pages }}">last &raquo;</a>
+            {% if products.has_next %}
+              <a href="?page={{ products.next_page_number }}">next</a>
+              <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
           </span>
     </div>

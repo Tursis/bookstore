@@ -10,6 +10,6 @@ urlpatterns = [
     path('store/books/', views.BooksListView.as_view(), name='books'),
     path('store/books/genre', views.BookGenresListView.as_view(), name='book_genres'),
     path('store/magazine/', views.MagazineListView.as_view(), name='magazine'),
-    path('store/<slug:slug>', views.product_detail, name='product_detail'),
+    path('store/<slug:slug>', views.ProductDetailView.as_view(), name='product_detail'),
     path('store/<slug:slug>', views.MagazineDetailView.as_view(), name='product_detail')
 ]
