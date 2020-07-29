@@ -14,11 +14,11 @@
   <div class="container">
     <div class="header-top-line">
       <div class="row">
-        <div class="col-12 col-xl-6"> Logo</div>
-        <div class="col-12 col-xl-6 test">
+        <div class="col-xl-6"> Logo</div>
+        <div class="col-xl-6 login-menu">
             {% if user.is_authenticated %}
               <div>User: {{ user.get_username }}</div>
-              <div><a href="{% url 'logout' %}?next={{ request.path }}">ВЫйти</a></div>
+              <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
             {% else %}
               <div  class="test2" ><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>
             {% endif %}

@@ -37,7 +37,7 @@ def product_detail(request, slug):
     products = sorted(
         chain(book, magazine),
         key=attrgetter('id'))
-    context = {'products': products,'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
+    context = {'products': products, 'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
     return render(request, 'store/product_detail.html', context=context)
 
 

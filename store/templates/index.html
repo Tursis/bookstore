@@ -7,7 +7,7 @@
           <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
             <div class="item block_shadow">
               <div class="item__img-wrapper">
-                <a href=""><img class="item__img" src="{{ result.image.url }}" alt=""></a>
+                <a href="{{ result.get_absolute_url }}"><img class="item__img" src="{{ result.image.url }}" alt=""></a>
               </div>
               <div class="item__heading">
                 <a href={{ result.get_absolute_url }}>{{ result.name }}</a>
