@@ -1,28 +1,4 @@
-
-  <div class="catalog  block_white">
-    <ul class="row catalog-grid">
-      {% for book in test %}
-        <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
-          <div class="item block_shadow">
-            <div class="item__img-wrapper">
-              <a href="{{ book.get_absolute_url }}"><img class="item__img" src="{{ book.image.url }}" alt=""></a>
-            </div>
-            <div class="item__heading">
-              <a href={{ book.get_absolute_url }}>{{ book.name }}</a>
-              <p> Автор:
-                {% for author in book.author.all %}
-                  {{ author }}
-                {% endfor %}
-              </p>
-            </div>
-            <div class="item__bottom">
-              <div class="item__price">
-                <p>{{ book.price }}</p>
-              </div>
-              <button class="item__button">Купить</button>
-            </div>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+{% extends "base_generic.html" %}
+{% block content %}
+{% include "product_detail.html" %}
+{% endblock %}

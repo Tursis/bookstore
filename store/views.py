@@ -45,7 +45,7 @@ def product_detail(request, slug):
 
 
 class ProductDetailView(generic.ListView):
-    template_name = 'store/product_detail.html'
+    template_name = 'store/templates/product_detail.html'
     context_object_name = "product"
 
     def get_queryset(self):
@@ -86,10 +86,10 @@ class MagazineListView(generic.ListView):
 
 
 class BooksDetailView(generic.DetailView):
-    template_name = 'store/product_detail.html'
+    template_name = 'store/book_detail.html'
     model = Book
 
 
 class MagazineDetailView(generic.DetailView):
-    template_name = 'store/product_detail.html'
+    template_name = 'store/magazine_detail.html'
     model = Magazine

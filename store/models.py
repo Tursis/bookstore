@@ -50,7 +50,7 @@ class Book(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('store:product_detail', kwargs={'slug': self.slug})
+        return reverse('store:book_detail', kwargs={'slug': self.slug})
 
 
 class Magazine(models.Model):
@@ -80,4 +80,4 @@ class Magazine(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('store:product_detail', kwargs={'slug': self.slug})
+        return reverse('store:magazine_detail', kwargs={'slug': self.slug})
