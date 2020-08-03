@@ -15,33 +15,20 @@ def index(request):
     book = Book.objects.all()
     magazine = Magazine.objects.all()
     genre = BookGenre.objects.all()
-    products_list = sorted(
+    product_list = sorted(
         chain(book, magazine),
         key=attrgetter('id'))
-    paginator = Paginator(products_list, 6)
+    paginator = Paginator(product_list, 6)
     page = request.GET.get('page')
     try:
-        products_list = paginator.page(page)
+        product_list = paginator.page(page)
     except PageNotAnInteger:
-        products_list = paginator.page(1)
+        product_list = paginator.page(1)
     except EmptyPage:
-        products_list = paginator.page(paginator.num_pages)
+        product_list = paginator.page(paginator.num_pages)
 
-    context = {'book': book, 'magazine': magazine, 'genre': genre, 'products_list': products_list}
+    context = {'book': book, 'magazine': magazine, 'genre': genre, 'product_list': product_list}
     return render(request, 'index.html', context=context)
-
-
-"""
-def product_detail(request, slug):
-    book = Book.objects.all()
-    magazine = Magazine.objects.all()
-    genre = BookGenre.objects.all()
-    products = sorted(
-        chain(book, magazine),
-        key=attrgetter('id'))
-    context = {'products': products, 'book': book, 'magazine': magazine, 'genre': genre, 'is_shown_by_default': True}
-    return render(request, 'store/product_detail.html', context=context)
-"""
 
 
 class ProductDetailView(generic.ListView):
@@ -77,7 +64,7 @@ class BooksListView(generic.ListView):
 
 class MagazineListView(generic.ListView):
     model = Magazine
-    paginate_by = 3
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,7 +76,17 @@ class BooksDetailView(generic.DetailView):
     template_name = 'store/book_detail.html'
     model = Book
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_shown_by_default'] = True
+        return context
+
 
 class MagazineDetailView(generic.DetailView):
     template_name = 'store/magazine_detail.html'
     model = Magazine
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_shown_by_default'] = True
+        return context

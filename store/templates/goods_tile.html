@@ -8,11 +8,14 @@
             </div>
             <div class="item__heading">
               <a href={{ product.get_absolute_url }}>{{ product.name }}</a>
+              {% if product.author.all %}
+
               <p> Автор:
                 {% for author in product.author.all %}
                   {{ author }}
                 {% endfor %}
               </p>
+            {% endif %}
             </div>
             <div class="item__bottom">
               <div class="item__price">
@@ -25,3 +28,10 @@
       {% endfor %}
     </ul>
   </div>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript">
+      $("#dropdown-menu").on("click", () => {
+          $("#side-nav").slideToggle(200);
+          //     $('body').toggleClass('overlay');
+      });
+  </script>
