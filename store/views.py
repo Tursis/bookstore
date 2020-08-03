@@ -77,7 +77,8 @@ class BooksDetailView(generic.DetailView):
     model = Book
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(BooksDetailView, self).get_context_data(**kwargs)
+        context['product_list'] = get_object_or_404(Book,  slug=self.kwargs['slug'])
         context['is_shown_by_default'] = True
         return context
 
@@ -88,5 +89,6 @@ class MagazineDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['product_list'] = get_object_or_404(Magazine, slug=self.kwargs['slug'])
         context['is_shown_by_default'] = True
         return context

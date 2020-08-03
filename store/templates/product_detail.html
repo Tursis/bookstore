@@ -7,19 +7,13 @@
 {% endblock %}
 
 {% block content %}
-  {% comment %}
-    <div class="catalog  block_white">
-      <div>
-     {% if magazine %}
-        {% include "store/magazine_detail.html" %}
-    {% endif %}
-      </div>
-    </div>
-{% endcomment %}
+  {% if product_list %}
+  <div class="catalog  block_white">
+    {{ product_list_name }}
+   <img class="item__img" src="{{ product_list.image.url }}" alt="">
+  <div>
 
-
-
-
+ {% endif %}
 
 {% endblock %}
 
