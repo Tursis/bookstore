@@ -227,13 +227,13 @@ ul li {
 
 }
 
-.product__picture-box{
+.product__picture-box {
 
 }
 
 .picture-box {
-        display: flex;
-    justify-content: flex-end;
+    display: flex;
+    justify-content: center;
 
 }
 
