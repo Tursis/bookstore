@@ -22,22 +22,23 @@
                 {{ author }}
               {% endfor %}
             </p>
-            <div class="info-box__body">
-              <p> Издательство: {{ product_list.publisher }}</p>
-              <p>Жанр:
-                {% for genre in product_list.genre.all %}
-                  {{ genre }}
-                {% endfor %}
-              </p>
-              <p> Год издания: {{ product_list.pub_year }} </p>
-              <p> Количество страниц: {{ product_list.pages }}</p>
-              <p> Твердый переплёт: {{ product_list.hard_cover }}</p>
-              <p> Размер: {{ product_list.size }}</p>
-            </div>
-            <div class="info-box__bottom">
-              <button class="info-box__button" type="button">Купить</button>
-              <button class="info-box__button" type="button">В корзину</button>
-            </div>
+            <button class="info-box__button" type="button">Купить</button>
+            <button class="info-box__button" type="button">В корзину</button>
+          </div>
+          <div class="info-box__body">
+            <h3>Описание</h3>
+            <p> Издательство: {{ product_list.publisher }}</p>
+            <p>Жанр:
+              {% for genre in product_list.genre.all %}
+                {{ genre }}
+              {% endfor %}
+            </p>
+            <p> Год издания: {{ product_list.pub_year }} </p>
+            <p> Количество страниц: {{ product_list.pages }}</p>
+            <p> Твердый переплёт: {{ product_list.hard_cover }}</p>
+            <p> Размер: {{ product_list.size }}</p>
+          </div>
+          <div class="info-box__bottom">
           </div>
         </div>
       </div>
