@@ -43,9 +43,11 @@ ul li {
 
 
 }
+
 .header-bottom-line {
 
 }
+
 .login-menu {
     display: flex;
     justify-content: flex-end;
@@ -54,7 +56,7 @@ ul li {
 .header-dropdown-menu {
     background-color: #6e9fec;
     border-radius: 2px 0 0 2px;
-    box-shadow: 0 0 2px 0 rgba(51,51,51,.05), 0 1px 4px 0 rgba(51,51,51,.15);
+    box-shadow: 0 0 2px 0 rgba(51, 51, 51, .05), 0 1px 4px 0 rgba(51, 51, 51, .15);
     font-size: 18px;
     color: #fff;
 }
@@ -217,4 +219,25 @@ ul li {
 .wrapper-sm {
     position: relative;
     margin: 0 auto;
+}
+
+/* product page  */
+
+.product {
+
+}
+
+.product__picture-box{
+
+}
+
+.picture-box {
+        display: flex;
+    justify-content: flex-end;
+
+}
+
+.picture-box__image {
+    height: 100%;
+    width: 302px;
 }
