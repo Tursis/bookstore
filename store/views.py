@@ -7,6 +7,7 @@ from .models import Book, Magazine, BookGenre, BookAuthor
 from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from cart.forms import CartAddProductForm
 
 
 # Create your views here.
@@ -80,6 +81,8 @@ class BooksDetailView(generic.DetailView):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['product_list'] = get_object_or_404(Book,  slug=self.kwargs['slug'])
         context['is_shown_by_default'] = True
+        context['product'] = get_object_or_404(Book, slug=self.kwargs['slug'])
+        context['cart_product_form'] = CartAddProductForm()
         return context
 
 
@@ -92,3 +95,4 @@ class MagazineDetailView(generic.DetailView):
         context['product_list'] = get_object_or_404(Magazine, slug=self.kwargs['slug'])
         context['is_shown_by_default'] = True
         return context
+

@@ -144,3 +144,6 @@ else:
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.ukr.net'
 EMAIL_PORT = 465
+
+
+CART_SESSION_ID = 'cart'
