@@ -17,7 +17,12 @@
         <div class="col-6"><a href="{% url 'store:index' %}">Logo</a></div>
         <div class="col-6 login-menu">
           {% if user.is_authenticated %}
-            <div>User: {{ user.get_username }}</div>
+            <div class="avatar">
+              <div class="avatar__image">
+                {{ user.get_username|first|upper }}
+              </div>
+              {{ user.get_username }}
+            </div>
             <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
           {% else %}
             <div><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>

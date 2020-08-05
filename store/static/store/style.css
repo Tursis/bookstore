@@ -48,6 +48,20 @@ ul li {
 
 }
 
+/* avatar */
+
+.avatar__image {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #0c4277;
+    border-radius: 50%;
+    overflow: hidden;
+    background: mistyrose;
+    text-align: center;
+    font-size: 25px;
+}
+
+/*login menu*/
 .login-menu {
     display: flex;
     justify-content: flex-end;
