@@ -27,9 +27,9 @@
             <form action="{% url "cart:cart_add" product.id %}" method="post">
               {{ cart_product_form }}
               {% csrf_token %}
-              <input type="submit" value="Add to cart">
+              <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>
             </form>
-            <button class="info-box__button" type="button">В корзину</button>
+
           </div>
           <div class="info-box__body">
             <h3>Описание</h3>
