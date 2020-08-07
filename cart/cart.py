@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from store.models import Book, Magazine
+from django.core.cache import cache
 
 
 class Cart(object):
@@ -9,7 +10,6 @@ class Cart(object):
         """
         Инициализируем корзину
         """
-
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
