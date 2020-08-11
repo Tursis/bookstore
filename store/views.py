@@ -10,6 +10,7 @@ from operator import attrgetter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from cart.forms import CartAddProductForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -69,7 +70,7 @@ class BooksListView(generic.ListView):
         return context
 
 
-class BooksManageView(generic.ListView):
+class BooksManageView(LoginRequiredMixin, generic.ListView):
     model = Book
     template_name = 'store/book/book_manage.html'
     paginate_by = 10
@@ -80,26 +81,27 @@ class BooksManageView(generic.ListView):
         return context
 
 
-class BooksCreate(CreateView):
+class BooksCreate(LoginRequiredMixin, CreateView):
     model = Book
     form = BookForm
     fields = '__all__'
     template_name = 'store/book/book_create.html'
 
 
-class BooksUpdate(UpdateView):
+class BooksUpdate(LoginRequiredMixin, UpdateView):
     model = Book
     form = BookForm
     fields = '__all__'
     template_name = 'store/book/book_update.html'
 
-class BooksDelete(DeleteView):
+
+class BooksDelete(LoginRequiredMixin, DeleteView):
     model = Book
     form = BookForm
-    template_name = ''
+    template_name = 'store/book/book_delete.html'
 
     def get_success_url(self):
-        return reverse('store:book_detail', kwargs={'pk': self.object.id})
+        return reverse('store:book_manage', kwargs={'pk': self.object.id})
 
 
 class MagazineListView(generic.ListView):
