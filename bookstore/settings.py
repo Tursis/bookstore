@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.cache.UpdateCacheMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,10 +49,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 
 ]
 
+"""
+'django.middleware.cache.UpdateCacheMiddleware',
+'django.middleware.cache.FetchFromCacheMiddleware',
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 CACHES = {
@@ -68,8 +70,9 @@ CACHE_MIDDLEWARE_SECONDS = 6000
 
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
-CART_SESSION_ID = 'cart'
 
+"""
+CART_SESSION_ID = 'cart'
 MIDDLEWARE_CLASSES = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -1,0 +1,81 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+  {% if book_list %}
+    <div class="col-12" style="overflow-x: scroll">
+      <a href="{% url 'store:book_create' %}">
+        <button type="button" class="btn btn-outline-primary btn-sm">View</button>
+      </a>
+
+
+        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+
+
+      <table class="table">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Название</th>
+          <th scope="col">Автор</th>
+          <th scope="col">Страницы</th>
+          <th scope="col">Издатель</th>
+          <th scope="col">Год публикации</th>
+          <th scope="col">Твердая обертка</th>
+          <th scope="col">Жанр</th>
+          <th scope="col">Размер</th>
+          <th scope="col">Цена</th>
+          <th scope="col">Скидка</th>
+          <th scope="col">Измень</th>
+          <th scope="col">Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in book_list %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>
+              {% for author in product.author.all %}
+                {{ author }}
+              {% endfor %}
+            </td>
+            <td>{{ product.pages }}</td>
+            <td>{{ product.publisher }}</td>
+            <td>{{ product.pub_year }}</td>
+            <td>{{ product.hard_cover }}</td>
+            <td>
+              {% for genre in product.genre.all %}
+                {{ genre }}
+              {% endfor %}
+            </td>
+            <td>{{ product.size }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.Discounts }}</td>
+            <td><a href="{% url 'store:book_update' product.slug %}">
+              <button type="button" class="btn btn-outline-primary btn-sm">View</button>
+            </a></td>
+            <td><a href="{% url 'store:book_detail' product.id %}">
+              <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+            </a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="col-12">
+      <div class="alert alert-warning" role="alert">
+        There is no product, yet. But if you want, you can add from <a class="badge badge-info"
+                                                                       href="{% url 'product_new' %}"><strong>here.</strong></a>
+      </div>
+    </div>
+  {% endif %}
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript">
+      $("#dropdown-menu").on("click", () => {
+          $("#side-nav").slideToggle(200);
+          //     $('body').toggleClass('overlay');
+      });
+  </script>
+
+{% endblock %}

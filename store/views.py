@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from .forms import BookForm, MagazineForm
 from django.views.generic import TemplateView
 from django.utils import timezone
 from .models import Book, Magazine, BookGenre, BookAuthor
@@ -8,6 +9,7 @@ from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from cart.forms import CartAddProductForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 # Create your views here.
@@ -30,6 +32,10 @@ def index(request):
 
     context = {'book': book, 'magazine': magazine, 'genre': genre, 'product_list': product_list}
     return render(request, 'index.html', context=context)
+
+
+def product_manage(request):
+    return render(request, 'product_manage.html')
 
 
 class ProductDetailView(generic.ListView):
@@ -63,6 +69,39 @@ class BooksListView(generic.ListView):
         return context
 
 
+class BooksManageView(generic.ListView):
+    model = Book
+    template_name = 'store/book/book_manage.html'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(BooksManageView, self).get_context_data(**kwargs)
+        context['is_shown_by_default'] = True
+        return context
+
+
+class BooksCreate(CreateView):
+    model = Book
+    form = BookForm
+    fields = '__all__'
+    template_name = 'store/book/book_create.html'
+
+
+class BooksUpdate(UpdateView):
+    model = Book
+    form = BookForm
+    fields = '__all__'
+    template_name = 'store/book/book_update.html'
+
+class BooksDelete(DeleteView):
+    model = Book
+    form = BookForm
+    template_name = ''
+
+    def get_success_url(self):
+        return reverse('store:book_detail', kwargs={'pk': self.object.id})
+
+
 class MagazineListView(generic.ListView):
     model = Magazine
     paginate_by = 4
@@ -79,7 +118,7 @@ class BooksDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
-        context['product_list'] = get_object_or_404(Book,  slug=self.kwargs['slug'])
+        context['product_list'] = get_object_or_404(Book, slug=self.kwargs['slug'])
         context['is_shown_by_default'] = True
         context['product'] = get_object_or_404(Book, slug=self.kwargs['slug'])
         context['cart_product_form'] = CartAddProductForm()
@@ -95,4 +134,3 @@ class MagazineDetailView(generic.DetailView):
         context['product_list'] = get_object_or_404(Magazine, slug=self.kwargs['slug'])
         context['is_shown_by_default'] = True
         return context
-
