@@ -84,8 +84,11 @@ class BooksManageView(LoginRequiredMixin, generic.ListView):
 class BooksCreate(LoginRequiredMixin, CreateView):
     model = Book
     form = BookForm
+
     fields = '__all__'
     template_name = 'store/book/book_create.html'
+
+
 
 
 class BooksUpdate(LoginRequiredMixin, UpdateView):
@@ -101,7 +104,7 @@ class BooksDelete(LoginRequiredMixin, DeleteView):
     template_name = 'store/book/book_delete.html'
 
     def get_success_url(self):
-        return reverse('store:book_manage', kwargs={'pk': self.object.id})
+        return reverse('store:book_manage')
 
 
 class MagazineListView(generic.ListView):
