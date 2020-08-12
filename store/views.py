@@ -56,7 +56,7 @@ class ProductDetailView(generic.ListView):
 
 
 class BookGenresListView(generic.ListView):
-    template_name = 'store/book_genres.html'
+    template_name = 'store/book/templates/store/book_genres.html'
     model = BookGenre
 
 
@@ -84,11 +84,8 @@ class BooksManageView(LoginRequiredMixin, generic.ListView):
 class BooksCreate(LoginRequiredMixin, CreateView):
     model = Book
     form = BookForm
-
     fields = '__all__'
     template_name = 'store/book/book_create.html'
-
-
 
 
 class BooksUpdate(LoginRequiredMixin, UpdateView):
@@ -118,7 +115,7 @@ class MagazineListView(generic.ListView):
 
 
 class BooksDetailView(generic.DetailView):
-    template_name = 'store/book_detail.html'
+    template_name = 'store/book/templates/store/book_detail.html'
     model = Book
 
     def get_context_data(self, **kwargs):
