@@ -36,7 +36,7 @@ def index(request):
 
 
 def product_manage(request):
-    return render(request, 'product_manage.html')
+    return render(request, 'store/product_manage.html')
 
 
 class ProductDetailView(generic.ListView):
@@ -56,13 +56,14 @@ class ProductDetailView(generic.ListView):
 
 
 class BookGenresListView(generic.ListView):
-    template_name = 'store/book/templates/store/book_genres.html'
+    template_name = 'store/book/book_genres.html'
     model = BookGenre
 
 
 class BooksListView(generic.ListView):
     model = Book
     paginate_by = 4
+    template_name = 'store/book/book_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,13 +71,27 @@ class BooksListView(generic.ListView):
         return context
 
 
+class BooksDetailView(generic.DetailView):
+    model = Book
+    template_name = 'store/book/book_detail.html'
+    context_object_name = 'product_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(BooksDetailView, self).get_context_data(**kwargs)
+        context['is_shown_by_default'] = True
+        context['cart_product_form'] = CartAddProductForm()
+        return context
+
+
 class BooksManageView(LoginRequiredMixin, generic.ListView):
     model = Book
     template_name = 'store/book/book_manage.html'
     paginate_by = 10
+    context_object_name = 'product_list'
 
     def get_context_data(self, **kwargs):
         context = super(BooksManageView, self).get_context_data(**kwargs)
+
         context['is_shown_by_default'] = True
         return context
 
@@ -107,6 +122,7 @@ class BooksDelete(LoginRequiredMixin, DeleteView):
 class MagazineListView(generic.ListView):
     model = Magazine
     paginate_by = 4
+    template_name = 'store/magazine/magazine_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,25 +130,24 @@ class MagazineListView(generic.ListView):
         return context
 
 
-class BooksDetailView(generic.DetailView):
-    template_name = 'store/book/templates/store/book_detail.html'
-    model = Book
-
-    def get_context_data(self, **kwargs):
-        context = super(BooksDetailView, self).get_context_data(**kwargs)
-        context['product_list'] = get_object_or_404(Book, slug=self.kwargs['slug'])
-        context['is_shown_by_default'] = True
-        context['product'] = get_object_or_404(Book, slug=self.kwargs['slug'])
-        context['cart_product_form'] = CartAddProductForm()
-        return context
-
-
 class MagazineDetailView(generic.DetailView):
-    template_name = 'store/magazine_detail.html'
+    template_name = 'store/magazine/magazine_detail.html'
     model = Magazine
+    context_object_name = 'product_list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_list'] = get_object_or_404(Magazine, slug=self.kwargs['slug'])
+        context['is_shown_by_default'] = True
+        return context
+
+
+class MagazineManageView(generic.ListView):
+    model = Magazine
+    template_name = 'store/magazine/magazine_manage.html'
+    paginate_by = 10
+    context_object_name = 'product_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(MagazineManageView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         return context

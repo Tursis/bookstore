@@ -24,11 +24,11 @@
             </p>
             <p>{{ product_list.price }}₴</p>
             <button class="info-box__button" type="button">Купить</button>
-            <form action="{% url "cart:cart_add" product.id %}" method="post">
-              {{ cart_product_form }}
-              {% csrf_token %}
-              <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>
-            </form>
+{#           <form action="{% url "cart:cart_add" product.id %}" method="post">#}
+{#              {{ cart_product_form }}#}
+{#              {% csrf_token %}#}
+{#              <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>#}
+{#            </form>#}
 
           </div>
           <div class="info-box__body">
