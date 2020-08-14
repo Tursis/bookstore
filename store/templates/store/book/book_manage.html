@@ -1,8 +1,8 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-  
-  {% if product_list %}
+
+  {% if book_list %}
     <div class="col-12" style="overflow-x: scroll">
       <a href="{% url 'store:book_create' %}">
         <button type="button" class="btn btn-outline-primary btn-sm">View</button>
@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for product in product_list %}
+        {% for product in book_list %}
           <tr>
             <td>{{ product.name }}</td>
             <td>

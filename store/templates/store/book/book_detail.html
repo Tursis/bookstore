@@ -10,8 +10,11 @@
 
 {% block content %}
 
-{% for model_name in model_fields %}
-  {{ model_name }}
+  {% for field in book %}
+    <div>
+      <label>{{ field }}:</label>
+
+    </div>
   {% endfor %}
 
   {% if book %}
