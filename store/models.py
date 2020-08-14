@@ -14,7 +14,7 @@ class BookAuthor(models.Model):
 
 
 class BookGenre(models.Model):
-    genre = models.CharField(max_length=50, help_text="Enter book genre.", blank=True)
+    genre = models.CharField(max_length=50,  help_text="Enter book genre.", blank=True)
     slug = models.SlugField(max_length=100)
 
     def __str__(self):

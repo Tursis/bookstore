@@ -1,6 +1,61 @@
 {% extends "base_generic.html" %}
+
+{% block breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Компоненты</a></li>
+    <li class="breadcrumb-item"><a href="#">pdoTools</a></li>
+    <li class="breadcrumb-item active">Парсер</li>
+  </ol>
+{% endblock %}
+
 {% block content %}
-  {% include "store/product_detail.html" %}
+
+  {% if magazine%}
+    <div class="catalog  block_white">
+      <div class="row product">
+        <div class="col-12 col-md-6 product__picture-box">
+          <div class="picture-box">
+            <img class="picture-box__image" src="{{ magazine.image.url }}" alt="">
+          </div>
+        </div>
+        <div class="col-12 col-md-6 product__info-box">
+          <div class="info-box__header">
+            <p>{{ magazine.name }}</p>
+            <p> Автор:
+              {% for author in magazine.author.all %}
+                {{ author }}
+              {% endfor %}
+            </p>
+            <p>{{ magazine.price }}₴</p>
+            <button class="info-box__button" type="button">Купить</button>
+            {#           <form action="{% url "cart:cart_add" product.id %}" method="post">#}
+            {#              {{ cart_product_form }}#}
+            {#              {% csrf_token %}#}
+            {#              <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>#}
+            {#            </form>#}
+
+          </div>
+          <div class="info-box__body">
+            <h3>Описание</h3>
+            <p> Издательство: {{ magazine.publisher }}</p>
+              <p>Жанр:
+                {% for genre in magazine.genre.all %}
+                  {{ genre }}
+                {% endfor %}
+              </p>
+            <p> Год издания: {{ magazine.pub_year }} </p>
+            <p> Количество страниц: {{ magazine.pages }}</p>
+            <p> Твердый переплёт: {{ magazine.hard_cover }}</p>
+            <p> Размер: {{ magazine.size }}</p>
+          </div>
+          <div class="info-box__bottom">
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript">

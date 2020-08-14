@@ -1,6 +1,65 @@
 {% extends "base_generic.html" %}
+
+{% block breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Компоненты</a></li>
+    <li class="breadcrumb-item"><a href="#">pdoTools</a></li>
+    <li class="breadcrumb-item active">Парсер</li>
+  </ol>
+{% endblock %}
+
 {% block content %}
-  {% include "store/product_detail.html" %}
+
+{% for model_name in model_fields %}
+  {{ model_name }}
+  {% endfor %}
+
+  {% if book %}
+    <div class="catalog  block_white">
+      <div class="row product">
+        <div class="col-12 col-md-6 product__picture-box">
+          <div class="picture-box">
+            <img class="picture-box__image" src="{{ book.image.url }}" alt="">
+          </div>
+        </div>
+        <div class="col-12 col-md-6 product__info-box">
+          <div class="info-box__header">
+            <p>{{ book.name }}</p>
+            <p> Автор:
+              {% for author in book.author.all %}
+                {{ author }}
+              {% endfor %}
+            </p>
+            <p>{{ book.price }}₴</p>
+            <button class="info-box__button" type="button">Купить</button>
+            {#           <form action="{% url "cart:cart_add" product.id %}" method="post">#}
+            {#              {{ cart_product_form }}#}
+            {#              {% csrf_token %}#}
+            {#              <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>#}
+            {#            </form>#}
+
+          </div>
+          <div class="info-box__body">
+            <h3>Описание</h3>
+            <p> Издательство: {{ book.publisher }}</p>
+            <p>Жанр:
+              {% for genre in book.genre.all %}
+                {{ genre }}
+              {% endfor %}
+            </p>
+            <p> Год издания: {{ book.pub_year }} </p>
+            <p> Количество страниц: {{ book.pages }}</p>
+            <p> Твердый переплёт: {{ book.hard_cover }}</p>
+            <p> Размер: {{ book.size }}</p>
+          </div>
+          <div class="info-box__bottom">
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript">
