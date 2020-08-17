@@ -146,3 +146,26 @@ class MagazineManageView(LoginRequiredMixin, generic.ListView):
         context = super(MagazineManageView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         return context
+
+
+class MagazineCreate(LoginRequiredMixin, CreateView):
+    model = Magazine
+    form = BookForm
+    fields = '__all__'
+    template_name = 'store/magazine/magazine_create.html'
+
+
+class MagazineUpdate(LoginRequiredMixin, UpdateView):
+    model = Magazine
+    form = BookForm
+    fields = '__all__'
+    template_name = 'store/magazine/magazine_update.html'
+
+
+class MagazineDelete(LoginRequiredMixin, DeleteView):
+    model = Book
+    form = BookForm
+    template_name = 'store/magazine/magazine_delete.html'
+
+    def get_success_url(self):
+        return reverse('store:magazine_manage')

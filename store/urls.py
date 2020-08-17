@@ -18,4 +18,7 @@ urlpatterns = [
     path('store/books/<slug:slug>', views.BooksDetailView.as_view(), name='book_detail'),
     path('store/magazine/', views.MagazineListView.as_view(), name='magazine'),
     path('store/magazine/<slug:slug>', views.MagazineDetailView.as_view(), name='magazine_detail'),
+    path('store/books/create/', views.BooksCreate.as_view(), name='magazine_create'),
+    path('store/magazine/update/<slug:slug>', views.MagazineUpdate.as_view(), name='magazine_update'),
+    path('store/magazine/delete/<slug:slug>', views.MagazineDelete.as_view(), name='magazine_delete'),
 ]

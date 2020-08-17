@@ -4,7 +4,7 @@
 
   {% if magazine_list %}
     <div class="col-12" style="overflow-x: scroll">
-      <a href="{% url 'store:book_create' %}">
+      <a href="{% url 'store:magazine_create' %}">
         <button type="button" class="btn btn-outline-primary btn-sm">View</button>
       </a>
 
@@ -23,7 +23,7 @@
           <th scope="col">Номер журнала в году</th>
           <th scope="col">Размеры</th>
           <th scope="col">Цена</th>
-          <th scope="col">Цена подписки</th>
+          <th scope="col">Цена подписки на год</th>
           <th scope="col">Скидка</th>
           <th scope="col">Измень</th>
           <th scope="col">Удалить</th>
@@ -40,11 +40,12 @@
             <td>{{ product.numb_in_year }}</td>
             <td>{{ product.size }}</td>
             <td>{{ product.price }}</td>
+            <td>{{ product.subs_price }}</td>
             <td>{{ product.Discounts }}</td>
-            <td><a href="{% url 'store:book_update' product.slug %}">
+            <td><a href="{% url 'store:magazine_update' product.slug %}">
               <button type="button" class="btn btn-outline-primary btn-sm">View</button>
             </a></td>
-            <td><a href="{% url 'store:book_delete' product.slug %}">
+            <td><a href="{% url 'store:magazine_delete' product.slug %}">
               <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
             </a></td>
           </tr>
