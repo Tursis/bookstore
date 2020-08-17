@@ -16,14 +16,14 @@
         <thead class="thead-dark">
         <tr>
           <th scope="col">Название</th>
-          <th scope="col">Автор</th>
           <th scope="col">Страницы</th>
           <th scope="col">Издатель</th>
           <th scope="col">Год публикации</th>
-          <th scope="col">Твердая обертка</th>
-          <th scope="col">Жанр</th>
-          <th scope="col">Размер</th>
+          <th scope="col">Номер журнала</th>
+          <th scope="col">Номер журнала в году</th>
+          <th scope="col">Размеры</th>
           <th scope="col">Цена</th>
+          <th scope="col">Цена подписки</th>
           <th scope="col">Скидка</th>
           <th scope="col">Измень</th>
           <th scope="col">Удалить</th>
@@ -33,20 +33,11 @@
         {% for product in magazine_list %}
           <tr>
             <td>{{ product.name }}</td>
-            <td>
-              {% for author in product.author.all %}
-                {{ author }}
-              {% endfor %}
-            </td>
             <td>{{ product.pages }}</td>
             <td>{{ product.publisher }}</td>
             <td>{{ product.pub_year }}</td>
-            <td>{{ product.hard_cover }}</td>
-            <td>
-              {% for genre in product.genre.all %}
-                {{ genre }}
-              {% endfor %}
-            </td>
+            <td>{{ product.numb }}</td>
+            <td>{{ product.numb_in_year }}</td>
             <td>{{ product.size }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.Discounts }}</td>

@@ -69,7 +69,6 @@ class BooksListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_list'] = Book.objects.all()
         return context
 
 
@@ -125,7 +124,6 @@ class MagazineListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_list'] = Magazine.objects.all()
         return context
 
 

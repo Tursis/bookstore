@@ -1,7 +1,36 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  {% include "store/product_list.html" %}
+  <div class="catalog  block_white">
+    <ul class="row catalog-grid">
+      {% for product in product_list %}
+        <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
+          <div class="item block_shadow">
+            <div class="item__img-wrapper">
+              <a href="{{ product.get_absolute_url }}"><img class="item__img" src="{{ product.image.url }}" alt=""></a>
+            </div>
+            <div class="item__heading">
+              <a href={{ product.get_absolute_url }}>{{ product.name }}</a>
+              {% if product.author.all %}
+                <p> Автор:
+                  {% for author in product.author.all %}
+                    {{ author }}
+                  {% endfor %}
+                </p>
+              {% endif %}
+            </div>
+            <div class="item__bottom">
+              <div class="item__price">
+                <p>{{ product.price }}</p>
+              </div>
+              <button class="item__button">Купить</button>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
   <div class="pagination">
           <span class="step-links">
               {% if product_list.has_previous %}
