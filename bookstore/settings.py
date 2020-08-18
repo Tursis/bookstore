@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store.apps.StoreConfig',
     'orders.apps.OrdersConfig',
-    'cart.apps.CartConfig'
+    'cart.apps.CartConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ ROOT_URLCONF = 'bookstore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'accounts/template/registration')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -168,5 +169,3 @@ else:
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.ukr.net'
 EMAIL_PORT = 465
-
-
