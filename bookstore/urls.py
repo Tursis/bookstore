@@ -19,12 +19,15 @@ from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
     path('store/', include('store.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('cart/', include('cart.urls', namespace='cart')),
+    path('account/', include('accounts.urls', namespace='accounts')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
