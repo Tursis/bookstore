@@ -40,7 +40,7 @@
             <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
           {% else %}
             <div><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>
-            <div><a href="{% url 'accounts:sign_up' %}?next={{ request.path }}">Регистрация</a></div>
+            <div><a href="{% url 'profile:sign_up' %}?next={{ request.path }}">Регистрация</a></div>
           {% endif %}
         </div>
       </div>

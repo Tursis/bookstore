@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'orders.apps.OrdersConfig',
     'cart.apps.CartConfig',
-    'accounts.apps.AccountsConfig'
+    'profile.apps.ProfileConfig',
+    'django_rename_app',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ ROOT_URLCONF = 'bookstore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'accounts/template/registration')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'profile/templates/')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
