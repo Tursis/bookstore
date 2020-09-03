@@ -11,19 +11,24 @@ from django.core.mail import EmailMessage
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.views import generic
 
 
 class SignUpView(CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/sign_up.html'
+    model = User
 
     def form_valid(self, form):
-        ActiveMailView.form_valid(self, form)
+        user = form.save(commit=False)
+        user.is_active = False  # Deactivate account till it is confirmed
+        user.save()
+        ActivateAccountMessageView.form_valid(self, form)
         return super(SignUpView, self).form_valid(form)
 
 
-class ActiveMailView(FormView):
+class ActivateAccountMessageView(FormView):
     form_class = SignUpForm
 
     def form_valid(self, form):
@@ -39,3 +44,11 @@ class ActiveMailView(FormView):
             msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
+
+
+class ActivateAccountView(generic.View):
+    model = User
+
+    def get(self, request, username, *args, **kwargs):
+        context = {'username': username}
+        return render(request, 'registration/account_activation_email.html', context=context)
