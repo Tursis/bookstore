@@ -37,7 +37,7 @@ class ActivateAccountMessageView(FormView):
         if form.is_valid():
             user_email = form.cleaned_data
             context = {'username': user_email['username'],
-                       'token': AccountToken.create_token(self)}
+                       'token': AccountToken.create_token(self, user_email['username'])}
             subject, from_email, to = 'hello', 'from@example.com', user_email['email']
             text_content = plaintext.render(context)
             html_content = html.render(context)
