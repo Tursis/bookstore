@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Book, Magazine, BookGenre, BookAuthor
-from profile.models import Profile
+from profile.models import Profile, Token
 from orders.models import Order, Purchase
 
 
@@ -37,3 +37,4 @@ admin.site.register(BookGenre, BookGenreAdmin)
 admin.site.register(BookAuthor, BookAuthorAdmin)
 admin.site.register(Order)
 admin.site.register(Purchase)
+admin.site.register(Token)

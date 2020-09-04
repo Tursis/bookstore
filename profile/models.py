@@ -18,4 +18,8 @@ class Profile(models.Model):
     birth_date = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     image = models.ImageField(upload_to='images/avatar/', verbose_name='Изображение', blank=True, null=True)
+
+
+class Token(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     token = models.CharField(max_length=256, blank=True, null=True)
