@@ -61,7 +61,6 @@ class ActivateAccountView(generic.View):
         user_token = Token(id=self.request)
         token_user = Token(token=token)
         if token_user.token == token:
-            token_user.save()
             context = {'username': token}
             return render(request, 'registration/account_activation_email.html', context=context)
         else:

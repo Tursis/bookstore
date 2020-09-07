@@ -174,3 +174,6 @@ EMAIL_HOST_USER = 'itucampusdestek@gmail.com'
 EMAIL_HOST_PASSWORD = '*******'
 DEFAULT_FROM_EMAIL = 'İTÜ CAMPUS Team'
 EMAIL_PORT = 587
+
+LOGIN_REDIRECT_URL = "admin/" #To go to home after login instead of getting redirected to accounts/profile on login which is default
+LOGOUT_REDIRECT_URL = "/admin/"
