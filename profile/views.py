@@ -47,7 +47,7 @@ class ActivateAccountMessageView(FormView):
             current_site = get_current_site(self.request)
             context = {'domain': current_site.domain,
                        'id': user.id,
-                       'token': AccountToken.create_token(self, user_form['username'])}
+                       'token': user.token.token}
             subject, from_email, to = 'Them', 'from@example.com', user_form['email']
             text_content = plaintext.render(context)
             html_content = html.render(context)
@@ -57,12 +57,11 @@ class ActivateAccountMessageView(FormView):
 
 
 class ActivateAccountView(generic.View):
+
     def get(self, request, token, *args, **kwargs):
-        user_token = Token(id=self.request)
-        token_user = Token(token=token)
-        if token_user.token == token:
-            context = {'username': token}
-            return render(request, 'registration/account_activation_email.html', context=context)
-        else:
-            context = {'username': 'пісос'}
-            return render(request, 'registration/account_activation_email.html', context=context)
+        token = Token.objects.get(token=token)
+        token.user.is_active = True  # Deactivate account till it is confirmed
+        token.delete()
+        token.user.save()
+        context = {'pk': token.user}
+        return render(request, 'registration/account_activation_email.html', context=context)

@@ -3,7 +3,6 @@ from .models import Token
 
 
 class AccountToken:
-
     def create_token(self, user):
         key = jwk.JWK(generate='oct', size=256)
         token = jwt.JWT(header={"alg": "HS256"},
