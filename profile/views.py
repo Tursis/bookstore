@@ -63,5 +63,5 @@ class ActivateAccountView(generic.View):
         token.user.is_active = True  # Deactivate account till it is confirmed
         token.delete()
         token.user.save()
-        context = {'pk': token.user}
+        context = {'username': token.user}
         return render(request, 'registration/account_activation_email.html', context=context)
