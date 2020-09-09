@@ -13,6 +13,8 @@ from django.template.loader import get_template
 from django.template import Context
 from django.views import generic
 from django.contrib.sites.shortcuts import get_current_site
+from datetime import timedelta
+from django.utils import timezone
 
 
 class SignUpView(CreateView):
@@ -59,9 +61,24 @@ class ActivateAccountMessageView(FormView):
 class ActivateAccountView(generic.View):
 
     def get(self, request, token, *args, **kwargs):
-        token = Token.objects.get(token=token)
-        token.user.is_active = True  # Deactivate account till it is confirmed
-        token.delete()
-        token.user.save()
-        context = {'username': token.user}
-        return render(request, 'registration/account_activation_email.html', context=context)
+        try:
+            token = Token.objects.get(token=token)
+            user = User.objects.get(id=token.user.id)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist, Token.DoesNotExist):
+            user = None
+            token = None
+
+        if user is not None and token is not None:
+            final_date = token.user.date_joined + timedelta(days=14)
+            if final_date >= timezone.now():
+                token.user.is_active = True  # Deactivate account till it is confirmed
+                token.delete()
+                token.user.save()
+                context = {'username': token.user}
+                return render(request, 'registration/account_activation_email.html', context=context)
+            else:
+                user.delete()
+                return render(request, 'registration/error.html')
+        else:
+            context = {'error': 'Пользователя не существует'}
+            return render(request, 'registration/error.html', context=context )

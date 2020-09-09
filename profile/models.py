@@ -23,3 +23,4 @@ class Profile(models.Model):
 class Token(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     token = models.CharField(max_length=256, blank=True, null=True)
+
