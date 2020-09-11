@@ -1,14 +1,13 @@
-from bookstore import settings
 from django.views.generic import CreateView
 from django.views.generic.edit import FormView
 from profile.forms import SignUpForm
 from .token import AccountToken
-from .models import Profile, Token
+from .models import Token
+from shared.send_message import EmailCommunication
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.views import generic
@@ -33,34 +32,30 @@ class SignUpView(CreateView):
             user_token.user = user
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
-        ActivateAccountMessageView.form_valid(self, form)
+            ActivateAccountMessageView(user_token.token)
+
         return super(SignUpView, self).form_valid(form)
 
 
-class ActivateAccountMessageView(FormView):
-    form_class = SignUpForm
+class ActivateAccountMessageView:
 
-    def form_valid(self, form):
+    def __init__(self, token):
+        self.send_message = EmailCommunication
+        ActivateAccountMessageView.send(self, token)
+
+    def send(self, token):
+        user_token = Token.objects.get(token=token)
+        user = User.objects.get(id=user_token.user.id)
         plaintext = get_template('registration/email.txt')
         html = get_template('registration/email.html')
-        if form.is_valid():
-            user_form = form.cleaned_data
-            user = User.objects.get(username=user_form['username'])
-            current_site = get_current_site(self.request)
-            context = {'domain': current_site.domain,
-                       'id': user.id,
-                       'token': user.token.token}
-            subject, from_email, to = 'Them', 'from@example.com', user_form['email']
-            text_content = plaintext.render(context)
-            html_content = html.render(context)
-            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+        context = {'id': user.id,
+                   'token': user.token.token}
+        return self.send_message.send(self, plaintext, html, user.email, context)
 
 
 class ActivateAccountView(generic.View):
 
-    def get(self, request, token, *args, **kwargs):
+    def get(self, request, token):
         try:
             token = Token.objects.get(token=token)
             user = User.objects.get(id=token.user.id)
@@ -81,4 +76,4 @@ class ActivateAccountView(generic.View):
                 return render(request, 'registration/error.html')
         else:
             context = {'error': 'Пользователя не существует'}
-            return render(request, 'registration/error.html', context=context )
+            return render(request, 'registration/error.html', context=context)
