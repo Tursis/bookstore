@@ -26,6 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -177,3 +178,5 @@ EMAIL_PORT = 587
 
 LOGIN_REDIRECT_URL = "admin/" #To go to home after login instead of getting redirected to accounts/profile on login which is default
 LOGOUT_REDIRECT_URL = "/admin/"
+
+SITE_URL = '127.0.0.1:8000'
