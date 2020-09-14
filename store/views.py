@@ -10,7 +10,8 @@ from operator import attrgetter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from cart.forms import CartAddProductForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import Group, Permission
 
 from django.http import HttpResponse
 
@@ -83,7 +84,7 @@ class BooksDetailView(generic.DetailView):
         return context
 
 
-class BooksManageView(LoginRequiredMixin, generic.ListView):
+class BooksManageView(PermissionRequiredMixin, generic.ListView):
     model = Book
     template_name = 'store/book/book_manage.html'
     paginate_by = 10
@@ -94,21 +95,21 @@ class BooksManageView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class BooksCreate(LoginRequiredMixin, CreateView):
+class BooksCreate(PermissionRequiredMixin, CreateView):
     model = Book
     form = BookForm
     fields = '__all__'
     template_name = 'store/book/book_create.html'
 
 
-class BooksUpdate(LoginRequiredMixin, UpdateView):
+class BooksUpdate(PermissionRequiredMixin, UpdateView):
     model = Book
     form = BookForm
     fields = '__all__'
     template_name = 'store/book/book_update.html'
 
 
-class BooksDelete(LoginRequiredMixin, DeleteView):
+class BooksDelete(PermissionRequiredMixin, DeleteView):
     model = Book
     form = BookForm
     template_name = 'store/book/book_delete.html'
@@ -137,7 +138,8 @@ class MagazineDetailView(generic.DetailView):
         return context
 
 
-class MagazineManageView(LoginRequiredMixin, generic.ListView):
+class MagazineManageView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('store.change_magazine', 'store.view_magazine')
     model = Magazine
     template_name = 'store/magazine/magazine_manage.html'
     paginate_by = 10
