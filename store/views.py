@@ -139,10 +139,11 @@ class MagazineDetailView(generic.DetailView):
 
 
 class MagazineManageView(PermissionRequiredMixin, generic.ListView):
-    permission_required = ('store.change_magazine', 'store.view_magazine')
+    groups = Group.objects.all()
     model = Magazine
     template_name = 'store/magazine/magazine_manage.html'
     paginate_by = 10
+    permission_required = (tuple(groups),)
 
     def get_context_data(self, **kwargs):
         context = super(MagazineManageView, self).get_context_data(**kwargs)

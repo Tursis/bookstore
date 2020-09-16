@@ -100,3 +100,6 @@ class Magazine(models.Model):
 
     def get_absolute_url(self):
         return reverse('store:magazine_detail', kwargs={'slug': self.slug})
+
+    def get_group_permissions(self):
+        return set()
