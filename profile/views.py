@@ -1,5 +1,4 @@
 from django.views.generic import CreateView
-from django.views.generic.edit import FormView
 from profile.forms import SignUpForm
 from .token import AccountToken
 from .models import Token
@@ -7,11 +6,8 @@ from shared.send_message import EmailCommunication
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
 from django.template.loader import get_template
-from django.template import Context
 from django.views import generic
-from django.contrib.sites.shortcuts import get_current_site
 from datetime import timedelta
 from django.utils import timezone
 
@@ -22,13 +18,14 @@ class SignUpView(CreateView):
     template_name = 'registration/sign_up.html'
     model = User
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
         user = form.save(commit=False)
         user.is_active = False  # Deactivate account till it is confirmed
         user.save()
         if form.is_valid():
             user_form = form.cleaned_data
-            user_token = Token(id=self.object)
+            user_token = Token(id=user.id)
             user_token.user = user
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
