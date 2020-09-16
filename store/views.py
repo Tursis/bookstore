@@ -2,8 +2,6 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from .forms import BookForm, MagazineForm
-from django.views.generic import TemplateView
-from django.utils import timezone
 from .models import Book, Magazine, BookGenre, BookAuthor
 from itertools import chain
 from operator import attrgetter
@@ -11,9 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from cart.forms import CartAddProductForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Group, Permission
-
-from django.http import HttpResponse
+from bookstore.settings import PERMISSION_ON_SITE
 
 
 # Create your views here.
@@ -85,6 +81,7 @@ class BooksDetailView(generic.DetailView):
 
 
 class BooksManageView(PermissionRequiredMixin, generic.ListView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Book
     template_name = 'store/book/book_manage.html'
     paginate_by = 10
@@ -96,6 +93,7 @@ class BooksManageView(PermissionRequiredMixin, generic.ListView):
 
 
 class BooksCreate(PermissionRequiredMixin, CreateView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Book
     form = BookForm
     fields = '__all__'
@@ -103,6 +101,7 @@ class BooksCreate(PermissionRequiredMixin, CreateView):
 
 
 class BooksUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Book
     form = BookForm
     fields = '__all__'
@@ -110,6 +109,7 @@ class BooksUpdate(PermissionRequiredMixin, UpdateView):
 
 
 class BooksDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Book
     form = BookForm
     template_name = 'store/book/book_delete.html'
@@ -139,11 +139,10 @@ class MagazineDetailView(generic.DetailView):
 
 
 class MagazineManageView(PermissionRequiredMixin, generic.ListView):
-    groups = Group.objects.all()
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Magazine
     template_name = 'store/magazine/magazine_manage.html'
     paginate_by = 10
-    permission_required = (tuple(groups),)
 
     def get_context_data(self, **kwargs):
         context = super(MagazineManageView, self).get_context_data(**kwargs)
@@ -151,21 +150,24 @@ class MagazineManageView(PermissionRequiredMixin, generic.ListView):
         return context
 
 
-class MagazineCreate(LoginRequiredMixin, CreateView):
+class MagazineCreate(PermissionRequiredMixin, CreateView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Magazine
     form = BookForm
     fields = '__all__'
     template_name = 'store/magazine/magazine_create.html'
 
 
-class MagazineUpdate(LoginRequiredMixin, UpdateView):
+class MagazineUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Magazine
     form = BookForm
     fields = '__all__'
     template_name = 'store/magazine/magazine_update.html'
 
 
-class MagazineDelete(LoginRequiredMixin, DeleteView):
+class MagazineDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = PERMISSION_ON_SITE['moderator']
     model = Book
     form = BookForm
     template_name = 'store/magazine/magazine_delete.html'

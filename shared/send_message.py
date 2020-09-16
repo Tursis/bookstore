@@ -1,13 +1,13 @@
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.shortcuts import get_current_site
-from bookstore.settings import SITE_URL
+from bookstore.settings import SITE_DOMAIN
 
 
 class EmailCommunication:
 
     def send(self, plaintext, html, email, context):
         context = context
-        context['domain'] = SITE_URL
+        context['domain'] = SITE_DOMAIN
         subject, from_email, to = 'Them', 'from@example.com', email
         text_content = plaintext.render(context)
         html_content = html.render(context)

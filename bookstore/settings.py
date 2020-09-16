@@ -26,7 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -168,7 +167,6 @@ if DEBUG:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'itucampusdestek@gmail.com'
@@ -176,7 +174,10 @@ EMAIL_HOST_PASSWORD = '*******'
 DEFAULT_FROM_EMAIL = 'İTÜ CAMPUS Team'
 EMAIL_PORT = 587
 
-LOGIN_REDIRECT_URL = "admin/" #To go to home after login instead of getting redirected to accounts/profile on login which is default
+LOGIN_REDIRECT_URL = "admin/"  # To go to home after login instead of getting redirected to accounts/profile on login which is default
 LOGOUT_REDIRECT_URL = "/admin/"
 
-SITE_URL = '127.0.0.1:8000'
+SITE_DOMAIN = '127.0.0.1:8000'
+PERMISSION_ON_SITE = {'moderator': ('store.change_magazine', 'store.view_magazine', 'store.delete_magazine'),
+              'user': ('store.view_book', 'store.view_magazine'),
+              }
