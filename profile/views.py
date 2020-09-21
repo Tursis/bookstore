@@ -10,9 +10,13 @@ from django.template.loader import get_template
 from django.views import generic
 from datetime import timedelta
 from django.utils import timezone
+from shared.mixins import AuthCheckerMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin
+from django.http import HttpResponseRedirect
+from bookstore.settings import LOGIN_REDIRECT_URL
 
 
-class SignUpView(CreateView):
+class SignUpView(AuthCheckerMixin, CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/sign_up.html'
@@ -30,7 +34,6 @@ class SignUpView(CreateView):
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
             ActivateAccountMessageView(user_token.token)
-
         return super(SignUpView, self).form_valid(form)
 
 
