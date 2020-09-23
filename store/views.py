@@ -6,7 +6,6 @@ from .models import Book, Magazine, BookGenre, BookAuthor
 from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from cart.forms import CartAddProductForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
