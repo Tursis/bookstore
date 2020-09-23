@@ -11,9 +11,6 @@ from django.views import generic
 from datetime import timedelta
 from django.utils import timezone
 from shared.mixins import AuthCheckerMixin
-from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin
-from django.http import HttpResponseRedirect
-from bookstore.settings import LOGIN_REDIRECT_URL
 
 
 class SignUpView(AuthCheckerMixin, CreateView):

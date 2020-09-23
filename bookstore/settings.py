@@ -75,6 +75,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 """
 CART_SESSION_ID = 'cart'
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
