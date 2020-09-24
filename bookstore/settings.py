@@ -54,9 +54,12 @@ MIDDLEWARE = [
 
 ]
 
+
+"""
 'django.middleware.cache.UpdateCacheMiddleware',
 'django.middleware.cache.FetchFromCacheMiddleware',
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 
 CACHES = {
     'default': {
@@ -70,13 +73,14 @@ CACHE_MIDDLEWARE_SECONDS = 6000
 
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
-CART_SESSION_ID = 'cart'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+"""
+CART_SESSION_ID = 'cart'
 
 ROOT_URLCONF = 'bookstore.urls'
 

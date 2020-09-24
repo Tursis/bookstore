@@ -5,7 +5,7 @@ from itertools import chain
 from django.core.cache import cache
 
 
-class Cart(object):
+class Cart:
 
     def __init__(self, request):
         """
@@ -54,7 +54,7 @@ class Cart(object):
         product_ids = self.cart.keys()
         # получение объектов product и добавление их в корзину
 
-        products = chain(Book.objects.filter(id__in=product_ids), Magazine.objects.filter(id__in=product_ids))
+        products = Book.objects.filter(id__in=product_ids)
         for product in products:
             self.cart[str(product.id)]['product'] = product
         for item in self.cart.values():
