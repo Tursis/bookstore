@@ -54,7 +54,6 @@ MIDDLEWARE = [
 
 ]
 
-"""
 'django.middleware.cache.UpdateCacheMiddleware',
 'django.middleware.cache.FetchFromCacheMiddleware',
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
@@ -67,13 +66,10 @@ CACHES = {
     }
 }
 
-
 CACHE_MIDDLEWARE_SECONDS = 6000
 
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
-
-"""
 CART_SESSION_ID = 'cart'
 
 MIDDLEWARE_CLASSES = [
@@ -180,5 +176,5 @@ LOGOUT_REDIRECT_URL = "/admin/"
 
 SITE_DOMAIN = '127.0.0.1:8000'
 PERMISSION_ON_SITE = {'moderator': ('store.change_magazine', 'store.view_magazine', 'store.delete_magazine'),
-              'user': ('store.view_book', 'store.view_magazine'),
-              }
+                      'user': ('store.view_book', 'store.view_magazine'),
+                      }

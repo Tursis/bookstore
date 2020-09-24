@@ -75,7 +75,6 @@ class BooksDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
-        context['cart_product_form'] = CartAddProductForm()
         return context
 
 
