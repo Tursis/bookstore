@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
-
+from cart.forms import CartAddProductForm
 
 # Create your views here.
 
@@ -75,6 +75,7 @@ class BooksDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
+        context['cart_product_form'] = CartAddProductForm()
         return context
 
 
