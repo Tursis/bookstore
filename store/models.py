@@ -25,7 +25,8 @@ class BookGenre(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Категория товару', help_text="Enter product category.", blank=True)
+    name = models.CharField(max_length=50, verbose_name='Категория товару', help_text="Enter product category.",
+                            blank=True)
     slug = models.SlugField(max_length=100)
 
     def __str__(self):
@@ -43,12 +44,7 @@ class Publisher(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=100, verbose_name='Название', help_text="Enter book name.", blank=True)
-    pages = models.CharField(max_length=5, verbose_name='Количество страниц', help_text="Enter number of pages",
-                             blank=True)
-    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
-    pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
-                                   null=True)
-    size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
+
     price = models.DecimalField(max_digits=10, verbose_name='Цена', decimal_places=2, help_text="Enter price book",
                                 blank=True)
     Discounts = models.DecimalField(max_digits=10, verbose_name='Скидка', decimal_places=2, help_text="Enter discounts",
@@ -74,9 +70,15 @@ class Product(models.Model):
 
 class Book(Product):
     author = models.ManyToManyField(BookAuthor, verbose_name='Автор')
+    genre = models.ManyToManyField(BookGenre, verbose_name='Жанр')
     hard_cover = models.CharField(max_length=1, verbose_name='Твердая обложка', help_text="Enter hard cover book (+/-)",
                                   blank=True)
-    genre = models.ManyToManyField(BookGenre, verbose_name='Жанр')
+    pages = models.CharField(max_length=5, verbose_name='Количество страниц', help_text="Enter number of pages",
+                             blank=True)
+    pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
+                                   null=True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
+    size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
 
     def get_absolute_url(self):
         return reverse('store:book_detail', kwargs={'slug': self.slug})
@@ -89,6 +91,12 @@ class Magazine(Product):
     subs_price = models.DecimalField(max_digits=10, verbose_name='Цена подписки', decimal_places=2,
                                      help_text="Enter price book", blank=True,
                                      null=True)
+    pages = models.CharField(max_length=5, verbose_name='Количество страниц', help_text="Enter number of pages",
+                             blank=True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
+    pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
+                                   null=True)
+    size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
 
     def get_absolute_url(self):
         return reverse('store:magazine_detail', kwargs={'slug': self.slug})
