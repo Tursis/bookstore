@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Magazine, BookGenre, BookAuthor
+from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
 
@@ -13,6 +13,9 @@ class ProfileAdmin(admin.ModelAdmin):
     radio_fields = {'gender': admin.VERTICAL}
 
 
+class ProductAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+
 
 class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
@@ -23,18 +26,29 @@ class MagazineAdmin(admin.ModelAdmin):
 
 
 class BookGenreAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('genre',)}
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class BookAuthorAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class PublisherAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+
+
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Magazine, MagazineAdmin)
 admin.site.register(BookGenre, BookGenreAdmin)
 admin.site.register(BookAuthor, BookAuthorAdmin)
+admin.site.register(Publisher, PublisherAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order)
 admin.site.register(Purchase)
 admin.site.register(Token)
