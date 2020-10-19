@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
-from store.models import Book, Magazine
+from store.models import Product
 from itertools import chain
 from django.core.cache import cache
 
@@ -54,8 +54,7 @@ class Cart:
         """
         product_ids = self.cart.keys()
         # получение объектов product и добавление их в корзину
-
-        products = Book.objects.filter(id__in=product_ids)
+        products = Product.objects.filter(id__in=product_ids)
         for product in products:
             self.cart[str(product.id)]['product'] = product
         for item in self.cart.values():
