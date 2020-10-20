@@ -5,7 +5,7 @@ from itertools import chain
 from django.core.cache import cache
 
 
-class Cart:
+class CartInSession:
 
     def __init__(self, request):
         """

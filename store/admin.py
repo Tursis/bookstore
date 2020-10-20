@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
+from cart.models import Cart
 
 
 # Register your models here.
@@ -50,5 +51,6 @@ admin.site.register(BookAuthor, BookAuthorAdmin)
 admin.site.register(Publisher, PublisherAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order)
+admin.site.register(Cart)
 admin.site.register(Purchase)
 admin.site.register(Token)
