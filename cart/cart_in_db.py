@@ -8,12 +8,8 @@ class CartInDataBase:
         self.cart = Cart()
         self.cart.user = request.user
 
-
     def add(self, product, quantity=1, update_quantity=False):
-        products = Product.objects.get(id=product.id)
-        self.cart.product = products
-        self.cart.price = products.price
+        self.cart.product = product
+        self.cart.price = product.price
         self.cart.quantity = quantity
         self.cart.save()
-
-
