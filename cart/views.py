@@ -5,13 +5,14 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, View
 from store.models import Product
 from .cart import CartInSession
+from .cart_in_db import CartInDataBase
 from .forms import CartAddProductForm
 
 
 class CartAddView(View):
 
     def post(self, request, product_id):
-        cart = CartInSession(request)
+        cart = CartInDataBase(request)
         product = get_object_or_404(Product, id=product_id)
         form = CartAddProductForm(request.POST)
         if form.is_valid():
@@ -30,7 +31,6 @@ def cart_remove(request, product_id):
 
 
 def cart_detail(request):
-    cart = CartInSession(request)
-    for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+    cart = CartInDataBase(request)
+
     return render(request, 'cart/detail.html', {'cart': cart})
