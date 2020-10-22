@@ -12,3 +12,5 @@ class Cart(models.Model):
     price = models.DecimalField(max_digits=10, verbose_name='Цена', decimal_places=2, help_text="Цена товара",
                                 default=0,
                                 blank=True)
+
+
