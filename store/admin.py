@@ -14,6 +14,12 @@ class ProfileAdmin(admin.ModelAdmin):
     radio_fields = {'gender': admin.VERTICAL}
 
 
+class СartAdmin(admin.ModelAdmin):
+    list_display = ('user', 'product', 'quantity', 'price',)
+    list_filter = ['user']
+    search_fields = ['user']
+
+
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
@@ -51,6 +57,6 @@ admin.site.register(BookAuthor, BookAuthorAdmin)
 admin.site.register(Publisher, PublisherAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order)
-admin.site.register(Cart)
+admin.site.register(Cart, СartAdmin)
 admin.site.register(Purchase)
 admin.site.register(Token)
