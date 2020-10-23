@@ -12,16 +12,17 @@ from .forms import CartAddProductForm
 class CartAddView(View):
 
     def post(self, request, product_id):
-        context = {'user': request.user}
         cart = CartInDataBase()
-        product = get_object_or_404(Product, id=product_id)
         form = CartAddProductForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            cart.add(request, product=product,
+            cart.add(request, product_id=product_id,
                      quantity=cd['quantity'],
                      update_quantity=cd['update'])
+
+            context = {'user': request.user, }
         return redirect('cart:cart_detail')
+
 
 def cart_remove(request, product_id):
     cart = CartInSession(request)
