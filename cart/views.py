@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, View
 from store.models import Product
-from .cart import CartInSession
+from .cart import CartManager
 from .cart_in_db import CartInDataBase
 from .forms import CartAddProductForm
 
@@ -12,7 +12,7 @@ from .forms import CartAddProductForm
 class CartAddView(View):
 
     def post(self, request, product_id):
-        cart = CartInDataBase()
+        cart = CartManager(request)
         form = CartAddProductForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
@@ -25,12 +25,12 @@ class CartAddView(View):
 
 
 def cart_remove(request, product_id):
-    cart = CartInSession(request)
+    cart = CartManager(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart:cart_detail')
 
 
 def cart_detail(request):
-    cart = CartInDataBase()
+    cart = CartManager(request)
     return render(request, 'cart/detail.html', {'cart': cart})

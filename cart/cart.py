@@ -1,9 +1,10 @@
 from decimal import Decimal
 from django.conf import settings
 from store.models import Product
+from .cart_in_db import CartInDataBase
 
 
-class CartInSession:
+class CartManager:
 
     def __init__(self, request):
         """
@@ -15,20 +16,23 @@ class CartInSession:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, product_id, quantity=1, update_quantity=False):
+    def add(self, request, product_id, quantity=1, update_quantity=False):
         """
         Добавить продукт в корзину или обновить его количество.
         """
         product = Product.objects.get(id=product_id)
         if product_id not in self.cart:
-            self.cart[product_id] = {'name': product,
-                                     'quantity': 0,
-                                     }
+            self.cart[product_id] = {'quantity': 0,
+                                     'price': str(product.price)}
         if update_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
             self.cart[product_id]['quantity'] += quantity
         self.save()
+
+        if request.user.is_authenticated:
+            cart = CartInDataBase()
+            cart.add(request.user, product, quantity)
 
     def save(self):
         # Обновление сессии cart
