@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from store.models import Product
 from decimal import Decimal
-from django.db.models import Sum
+from django.db.models import Sum, Count, Avg
 from django.conf import settings
 from .models import Cart
 
@@ -81,4 +81,5 @@ class CartInDataBase:
             self.cart.save()
 
     def __len__(self):
-        return self.cart
+        queryset = Cart.objects.aggregate(Sum('quantity'))
+        return queryset['quantity__sum']
