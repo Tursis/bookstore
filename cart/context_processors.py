@@ -1,6 +1,6 @@
 from .cart import CartManager
-from .cart_in_db import CartInDataBase
+from .cart_save import CartInDataBase, CartInSession
 
 
 def cart(request):
-    return {'cart': CartManager(request)}
+    return {'cart': CartInDataBase()}
