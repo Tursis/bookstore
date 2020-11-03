@@ -1,11 +1,9 @@
-from django.shortcuts import render
-# Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, View
+from django.views.generic import View
 from store.models import Product
 from .cart import CartManager
-from .cart_in_db import CartInDataBase
+from .cart_save import CartInSession
+from .models import Cart
 from .forms import CartAddProductForm
 
 
@@ -32,5 +30,8 @@ def cart_remove(request, product_id):
 
 
 def cart_detail(request):
-    cart = CartManager(request)
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user)
+    else:
+        cart = CartInSession(request)
     return render(request, 'cart/detail.html', {'cart': cart})
