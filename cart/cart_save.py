@@ -16,8 +16,9 @@ class CartInSession:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, product, quantity=1, update_quantity=False):
-        product_id = product.id
+    def add(self, product_id, quantity=1, update_quantity=False):
+        product = Product.objects.get(id=product_id)
+        product_id = product_id
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
                                      'price': str(product.price)}
@@ -64,22 +65,33 @@ class CartInSession:
 
 
 class CartInDataBase:
-    def __init__(self):
-        self.cart = Cart()
+    """
+    Клас сохранение товаров в корзину
+    """
 
-    def add(self, user, product, quantity=1, update_quantity=False):
-        product = product
-        if Cart.objects.filter(user=user).filter(product=product):
-            self.cart = Cart.objects.get(user=user, product=product)
+    def __init__(self, request):
+        self.cart = Cart()
+        self.user = request.user
+
+    def add(self, product_id, quantity=1, update_quantity=False):
+        """
+        Додавания товара в корзину
+        """
+        product = Product.objects.get(id=product_id)
+        if Cart.objects.filter(user=self.user).filter(product=product):
+            self.cart = Cart.objects.get(user=self.user, product=product)
             self.cart.quantity += quantity
             self.cart.save()
         else:
-            self.cart.user = user
+            self.cart.user = self.user
             self.cart.product = product
             self.cart.price = product.price
             self.cart.quantity = quantity
             self.cart.save()
 
     def __len__(self):
-        queryset = Cart.objects.aggregate(Sum('quantity'))
+        """
+        Подсчет всех товаров в корзине.
+        """
+        queryset = Cart.objects.filter(user=self.user).aggregate(Sum('quantity'))
         return queryset['quantity__sum']
