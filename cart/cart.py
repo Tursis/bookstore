@@ -25,7 +25,13 @@ class CartManager:
             self.cart.add(product_id, quantity, update_quantity=False)
 
         else:
-            self.cart.add(request.user, product_id, quantity)
+            self.cart.add(product_id, quantity)
 
     def __len__(self):
         return self.cart.__len__()
+
+    def get_total_price(self):
+        return self.cart.get_total_price()
+
+    def remove(self, product):
+        return self.cart.remove(product)

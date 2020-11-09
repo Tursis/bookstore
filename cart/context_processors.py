@@ -3,4 +3,4 @@ from .cart_save import CartInDataBase, CartInSession
 
 
 def cart(request,):
-    return {'cart': CartManager(request)}
+    return {'cart_info': CartManager(request)}

@@ -17,13 +17,12 @@
         <div class="col-6"><a href="{% url 'store:index' %}">Logo</a></div>
         <div class="col-6 login-menu">
           <div class="cart">
-            {% with total_items=cart|length %}
-                {{ cart|length  }}
-              {% if cart|length > 0 %}
+            {% with total_items=cart_info|length %}
+              {% if cart_info|length > 0 %}
                 Your cart:
                 <a href="{% url "cart:cart_detail" %}">
                   {{ total_items }} item{{ total_items|pluralize }},
-                  ${{ cart.get_total_price }}
+                  {{ cart_info.get_total_price }} UAH
                 </a>
               {% else %}
                 Your cart is empty.

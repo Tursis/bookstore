@@ -63,6 +63,14 @@ class CartInSession:
         """
         return sum(item['quantity'] for item in self.cart.values())
 
+    def get_total_price(self):
+
+        """
+        Подсчет стоимости товаров в корзине.
+        """
+        return sum(Decimal(item['price']) * item['quantity'] for item in
+                   self.cart.values())
+
 
 class CartInDataBase:
     """
@@ -73,7 +81,7 @@ class CartInDataBase:
         self.cart = Cart()
         self.user = request.user
 
-    def add(self, product_id, quantity=1, update_quantity=False):
+    def add(self, product_id, quantity=1):
         """
         Додавания товара в корзину
         """
@@ -93,5 +101,16 @@ class CartInDataBase:
         """
         Подсчет всех товаров в корзине.
         """
-        queryset = Cart.objects.filter(user=self.user).aggregate(Sum('quantity'))
-        return queryset['quantity__sum']
+        quantity = Cart.objects.filter(user=self.user).aggregate(Sum('quantity'))
+        return quantity['quantity__sum']
+
+    def get_total_price(self):
+        return sum(Decimal(item['price']) * item['quantity'] for item in
+                   Cart.objects.filter(user=self.user).values())
+
+    def remove(self, product):
+        """
+        Удаление товара из корзины.
+        """
+        product = Cart.objects.get(product=product)
+        product.delete()
