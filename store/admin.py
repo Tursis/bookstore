@@ -15,7 +15,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class СartAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'quantity', 'price',)
+    list_display = ('user', 'product', 'quantity', )
     list_filter = ['user']
     search_fields = ['user']
 
