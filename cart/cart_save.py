@@ -21,7 +21,7 @@ class CartInSession:
         product_id = product_id
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
-                                     'price': str(product.price)}
+                                     }
         if update_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
@@ -53,8 +53,6 @@ class CartInSession:
         for product in products:
             self.cart[str(product.id)]['product'] = product
         for item in self.cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
             yield item
 
     def __len__(self):
@@ -68,13 +66,13 @@ class CartInSession:
         """
         Подсчет стоимости товаров в корзине.
         """
-        return sum(Decimal(item['price']) * item['quantity'] for item in
+        return sum(Decimal(item['quantity']) * item['quantity'] for item in
                    self.cart.values())
 
 
 class CartInDataBase:
     """
-    Клас сохранение товаров в корзину
+    Клас сохранение корзины в модель
     """
 
     def __init__(self, request):
@@ -93,7 +91,7 @@ class CartInDataBase:
         else:
             self.cart.user = self.user
             self.cart.product = product
-            self.cart.price = product.price
+            # self.cart.price = product.price
             self.cart.quantity = quantity
             self.cart.save()
 
@@ -105,8 +103,8 @@ class CartInDataBase:
         return quantity['quantity__sum']
 
     def get_total_price(self):
-        return sum(Decimal(item['price']) * item['quantity'] for item in
-                   Cart.objects.filter(user=self.user).values())
+        return sum((item.product.price * item.quantity for item in
+                    Cart.objects.filter(user=self.user)))
 
     def remove(self, product):
         """

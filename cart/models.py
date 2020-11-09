@@ -9,8 +9,6 @@ class Cart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар', null=True)
     quantity = models.IntegerField(verbose_name='Количество', help_text="Количество товара", blank=True, default=0,
                                    null=True)
-    price = models.DecimalField(max_digits=10, verbose_name='Цена', decimal_places=2, help_text="Цена товара",
-                                default=0,
-                                blank=True)
+
 
 
