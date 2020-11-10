@@ -43,5 +43,6 @@ class CartInModel:
         """
         Удаление товара из корзины.
         """
-        product = Cart.objects.get(product=product)
-        product.id.delete()
+        cart_item = Cart.objects.filter(user=self.user).filter(product=product)
+        cart_item.delete()
+
