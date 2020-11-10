@@ -32,6 +32,6 @@ class CartManager:
         return self.cart.get_total_price()
 
     def remove(self, product):
-        return self.cart.remove(product)
+        self.cart.remove(product)
 
 

@@ -63,7 +63,7 @@ class ActivateAccountView(generic.View):
         if user is not None and token is not None:
             final_date = token.user.date_joined + timedelta(days=14)
             if final_date >= timezone.now():
-                token.user.is_active = True  # Deactivate account till it is confirmed
+                token.user.is_active = True  # activate account till it is confirmed
                 token.delete()
                 token.user.save()
                 context = {'username': token.user}
