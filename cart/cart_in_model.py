@@ -44,4 +44,4 @@ class CartInModel:
         Удаление товара из корзины.
         """
         product = Cart.objects.get(product=product)
-        product.delete()
+        product.id.delete()
