@@ -1,7 +1,5 @@
-from decimal import Decimal
-from django.conf import settings
-from store.models import Product
-from .cart_save import CartInDataBase, CartInSession
+from .cart_in_model import CartInModel
+from .cart_in_session import CartInSession
 
 
 class CartManager:
@@ -14,7 +12,7 @@ class CartManager:
             self.cart = CartInSession(request)
 
         else:
-            self.cart = CartInDataBase(request)
+            self.cart = CartInModel(request)
 
     def add(self, request, product_id, quantity=1, update_quantity=False):
         """
@@ -35,3 +33,5 @@ class CartManager:
 
     def remove(self, product):
         return self.cart.remove(product)
+
+
