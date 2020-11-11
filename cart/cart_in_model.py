@@ -1,6 +1,8 @@
-from store.models import Product
 from django.db.models import Sum, Count, Avg
+from store.models import Product
 from .models import Cart
+from .cart_in_session import CartInSession
+from bookstore import settings
 
 
 class CartInModel:
@@ -9,8 +11,16 @@ class CartInModel:
     """
 
     def __init__(self, request):
+        """"
+        Инициализация корзины, та заполнение модели корзины данными из сесии
+        """
         self.cart = Cart()
         self.user = request.user
+        self.cart_session = CartInSession(request)
+        if self.cart_session.cart:
+            for product in self.cart_session.cart:
+                CartInModel.add(self, int(product), self.cart_session.cart[product]['quantity'])
+            self.cart_session.clear()
 
     def add(self, product_id, quantity=1):
         """
@@ -46,3 +56,5 @@ class CartInModel:
         cart_item = Cart.objects.filter(user=self.user).filter(product=product)
         cart_item.delete()
 
+    def test(self):
+        return self.cart_session.cart

@@ -34,4 +34,5 @@ class CartManager:
     def remove(self, product):
         self.cart.remove(product)
 
-
+    def test(self):
+        return self.cart.test()

@@ -63,3 +63,13 @@ class CartInSession:
         """
         return sum(Decimal(item['quantity']) * item['quantity'] for item in
                    self.cart.values())
+
+    def test(self):
+        return self.cart
+
+    def clear(self):
+        """
+         удаление корзины из сессии
+        """
+        del self.session[settings.CART_SESSION_ID]
+        self.session.modified = True
