@@ -16,7 +16,7 @@
     {% for item in cart %}
       {% with product=item.product %}
         <tr>
-          <td>
+          <td><img class="item__img" src="{{ product.image.url }}" alt=""></a></td>
           <td>{{ product.name }}</td>
           <td>{{ item.quantity }}</td>
           <td class="num">{%  widthratio item.quantity 1 item.product.price%}  UAH</td>
