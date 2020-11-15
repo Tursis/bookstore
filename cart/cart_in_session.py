@@ -68,11 +68,15 @@ class CartInSession:
         """
 
     def get_total_price(self):
-
+        product_ids = self.cart.keys()
+        # получение объектов product и добавление их в корзину
+        products = Product.objects.filter(id__in=product_ids)
         """
         Подсчет суммы товаров в корзине.
         """
-        return sum(Decimal(item['quantity']) * item['quantity'] for item in
+        for product in products:
+            self.cart[str(product.id)]['price'] = product.price
+        return sum(Decimal(item['price']) * item['quantity'] for item in
                    self.cart.values())
 
     def clear(self):
