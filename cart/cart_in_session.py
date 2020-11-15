@@ -6,6 +6,9 @@ from django.conf import settings
 class CartInSession:
 
     def __init__(self, request):
+        """
+        Инициализация корзины в сесии
+        """
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
@@ -13,6 +16,9 @@ class CartInSession:
         self.cart = cart
 
     def add(self, product_id, quantity=1, update_quantity=False):
+        """
+        Добавление товара в корзину
+        """
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
                                      }
@@ -52,20 +58,22 @@ class CartInSession:
 
     def __len__(self):
         """
-        Подсчет всех товаров в корзине.
+        Подсчет количества товара в корзине
         """
         return sum(item['quantity'] for item in self.cart.values())
+
+    def get_price_product(self):
+        """
+        Подсчет стоимости товара в корзине.
+        """
 
     def get_total_price(self):
 
         """
-        Подсчет стоимости товаров в корзине.
+        Подсчет суммы товаров в корзине.
         """
         return sum(Decimal(item['quantity']) * item['quantity'] for item in
                    self.cart.values())
-
-    def test(self):
-        return self.cart
 
     def clear(self):
         """

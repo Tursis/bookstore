@@ -40,12 +40,21 @@ class CartInModel:
 
     def __len__(self):
         """
-        Подсчет всех товаров в корзине.
+        Подсчет количества товара в корзине
         """
         quantity = Cart.objects.filter(user=self.user).aggregate(Sum('quantity'))
         return quantity['quantity__sum']
 
+    def get_price_product(self):
+        """
+        Подсчет стоимости товара в корзине.
+        """
+        return self.cart.product * self.cart.quantity
+
     def get_total_price(self):
+        """
+        Подсчет суммы товаров в корзине.
+        """
         return sum((item.product.price * item.quantity for item in
                     Cart.objects.filter(user=self.user)))
 
@@ -55,6 +64,3 @@ class CartInModel:
         """
         cart_item = Cart.objects.filter(user=self.user).filter(product=product)
         cart_item.delete()
-
-    def test(self):
-        return self.cart_session.cart

@@ -26,13 +26,25 @@ class CartManager:
             self.cart.add(product_id, quantity)
 
     def __len__(self):
+        """
+        Подсчет количества товара в корзине
+        """
         return self.cart.__len__()
 
+    def get_price_product(self):
+        """
+          Подсчет стоимости товара в корзине.
+        """
+        return self.cart.get_price_product()
+
     def get_total_price(self):
+        """
+        Подсчет суммы товаров в корзине.
+        """
         return self.cart.get_total_price()
 
     def remove(self, product):
+        """
+        Удаление товара из корзины
+        """
         self.cart.remove(product)
-
-    def test(self):
-        return self.cart.test()
