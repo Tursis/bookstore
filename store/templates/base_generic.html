@@ -18,7 +18,6 @@
         <div class="col-6 login-menu">
           <div class="cart">
             {% with total_items=cart_info|length %}
-              {{ cart_info.test }}
               {% if cart_info|length > 0 %}
                 Your cart:
                 <a href="{% url "cart:cart_detail" %}">
