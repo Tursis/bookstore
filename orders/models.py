@@ -17,9 +17,11 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False, verbose_name='Проплата', null=True)
 
+    def __str__(self):
+        return self.email
+
 
 class Purchase(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ', null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар', null=True)
     price = models.DecimalField(max_digits=10, verbose_name='Цена', decimal_places=2, help_text="Enter price book",
@@ -27,3 +29,6 @@ class Purchase(models.Model):
     quantity = models.IntegerField(verbose_name='Количество', help_text="Количество товара", blank=True, default=0,
                                    null=True)
     purchase_date = models.DateTimeField('Дата покупки', auto_now=True)
+
+    def __str__(self):
+        return self.order
