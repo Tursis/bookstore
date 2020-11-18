@@ -15,9 +15,16 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class СartAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'quantity', )
+    list_display = ('user', 'product', 'quantity',)
     list_filter = ['user']
     search_fields = ['user']
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'first_name', 'last_name', 'email',
+                    'address', 'postal_code', 'city', 'paid',
+                    'created', 'updated']
+    list_filter = ['paid', 'created', 'updated']
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -56,7 +63,7 @@ admin.site.register(BookGenre, BookGenreAdmin)
 admin.site.register(BookAuthor, BookAuthorAdmin)
 admin.site.register(Publisher, PublisherAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Order)
+admin.site.register(Order, OrderAdmin)
 admin.site.register(Cart, СartAdmin)
 admin.site.register(Purchase)
 admin.site.register(Token)
