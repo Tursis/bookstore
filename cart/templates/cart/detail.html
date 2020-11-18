@@ -19,7 +19,7 @@
           <td><img class="item__img" src="{{ product.image.url }}" alt=""></a></td>
           <td>{{ product.name }}</td>
           <td>{{ item.quantity }}</td>
-          <td class="num">{%  widthratio item.quantity 1 item.product.price%}  UAH</td>
+          <td class="num">{% widthratio item.quantity 1 item.product.price %} UAH</td>
           <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
         </tr>
       {% endwith %}
@@ -31,4 +31,9 @@
     </tr>
     </tbody>
   </table>
+  <form action="{% url "order:index" %}" method="post">
+    {% csrf_token %}
+    <button class="info-box__button" type="submit" value="Add to order">Оформить заказ</button>
+  </form>
+
 {% endblock %}

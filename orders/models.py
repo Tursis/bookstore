@@ -18,7 +18,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False, verbose_name='Проплата', null=True)
 
     def __str__(self):
-        return self.email
+        return '{}'.format(self.id)
 
 
 class Purchase(models.Model):
