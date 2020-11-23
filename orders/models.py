@@ -31,4 +31,4 @@ class Purchase(models.Model):
     purchase_date = models.DateTimeField('Дата покупки', auto_now=True)
 
     def __str__(self):
-        return self.order
+        return'{}'.format(self.id)
