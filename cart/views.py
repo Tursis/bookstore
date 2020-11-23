@@ -17,8 +17,6 @@ class CartAddView(View):
             cart.add(request, product_id=product_id,
                      quantity=cd['quantity'],
                      update_quantity=cd['update'])
-
-            context = {'user': request.user, }
         return redirect('cart:cart_detail')
 
 
