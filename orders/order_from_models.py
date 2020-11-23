@@ -9,7 +9,7 @@ class OrderFromModels:
         self.cart = CartInSession(request)
         self.purchase = Purchase()
 
-    def add_to_order(self, request):
+    def add_to_order(self, request, order_form):
         form = OrderCreateForm(request.POST)
         if form.is_valid():
             order = form.save()

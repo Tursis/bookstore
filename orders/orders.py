@@ -10,5 +10,5 @@ class OrdersCreate:
         else:
             self.order = OrderFromModels(request)
 
-    def add_to_order(self, request):
-        self.order.add_to_order(request)
+    def add_to_order(self, request, order_form):
+        self.order.add_to_order(request, order_form)

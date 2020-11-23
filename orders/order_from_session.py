@@ -9,14 +9,14 @@ class OrderFromSession:
         self.cart = CartInSession(request)
         self.purchase = Purchase()
 
-    def add_to_order(self, request):
-        form = OrderCreateForm(request.POST)
+    def add_to_order(self, request, order_form):
+        form = order_form
         if form.is_valid():
             order = form.save()
             for item in self.cart:
                 Purchase.objects.create(order=order,
                                         product=item['product'],
-                                        price=item['quantity'],
+                                        price=2,
                                         quantity=item['quantity'])
             # очистка корзины
             self.cart.clear()

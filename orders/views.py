@@ -10,8 +10,9 @@ from .orders import OrdersCreate
 class OrderView(View):
     def post(self, request):
         order_create = OrdersCreate(request)
-
         if request.method == 'POST':
-            order_create.add_to_order(request)
-
-        return render(request, 'orders/detail.html', )
+            form = OrderCreateForm(request.POST)
+            order_create.add_to_order(request, order_form=form)
+        else:
+            form = OrderCreateForm
+        return render(request, 'orders/detail.html', {'form': form})
