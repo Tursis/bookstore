@@ -16,7 +16,7 @@
     {% for item in cart %}
       {% with product=item.product %}
         <tr>
-          <td><img class="item__img" src="{{ product.image.url }}" alt=""></a></td>
+          <td><img class="item__img" src="{{ product.image.url }}" alt=""></td>
           <td>{{ product.name }}</td>
           <td>{{ item.quantity }}</td>
           <td class="num">{% widthratio item.quantity 1 item.product.price %} UAH</td>
@@ -31,7 +31,7 @@
     </tr>
     </tbody>
   </table>
-  <form action="{% url "order:index" %}" method="post">
+  <form action="{% url "order:order_view" %}" method="post">
     {% csrf_token %}
     <button class="info-box__button" type="submit" value="Add to order">Оформить заказ</button>
   </form>
