@@ -15,4 +15,4 @@ class OrderView(View):
             order_create.add_to_order(request, order_form=form)
         else:
             form = OrderCreateForm
-        return render(request, 'orders/detail.html', {'form': form})
+        return render(request, 'orders/created.html', {'form': form})
