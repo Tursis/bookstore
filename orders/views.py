@@ -12,7 +12,8 @@ class OrderView(View):
         order_create = OrdersCreate(request)
         if request.method == 'POST':
             form = OrderCreateForm(request.POST)
-            order_create.add_to_order(request, order_form=form)
-        else:
-            form = OrderCreateForm
-        return render(request, 'orders/created.html', {'form': form})
+            if form.is_valid():
+                order = form.save()
+                order_create.add_to_order(request, order)
+                return render(request, 'orders/created.html', {'order': order})
+        return render(request, 'orders/detail.html', {'form': OrderCreateForm})
