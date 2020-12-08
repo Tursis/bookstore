@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.views.generic import View
-from cart.models import Cart
+from django.views.generic import View, ListView, DetailView
 from .models import Order, Purchase
 from .forms import OrderCreateForm
 from .orders import OrdersCreate
@@ -24,4 +23,13 @@ class OrderView(View):
                                             'email': user.email})
         else:
             form = OrderCreateForm
-        return render(request, 'orders/detail.html', {'form': form})
+        return render(request, 'orders/create.html', {'form': form})
+
+
+class OrdersListView(ListView):
+    model = Order
+    template_name = 'orders/orders_list.html'
+
+
+class OrdersDetailView(DetailView):
+    model = Purchase

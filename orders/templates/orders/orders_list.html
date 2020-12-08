@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+  {% for item in order_list %}
+    #{{ item }}
+  {% endfor %}
+
+{% endblock %}
