@@ -9,7 +9,7 @@ class OrderFromSession:
         self.cart = CartInSession(request)
         self.purchase = Purchase()
 
-    def add_to_order(self, order):
+    def add_to_order(self, request, order):
         for item in self.cart:
             product = Product.objects.get(name=item['product'])
             Purchase.objects.create(order=order,
