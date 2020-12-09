@@ -3,9 +3,21 @@
 {% block title %}Checkout{% endblock %}
 
 {% block content %}
-
-  {% for item in order_list %}
-    #{{ item }}
-  {% endfor %}
+  <table class="table">
+    <tbody>
+    {% for item in order_list %}
+      <tr>
+      <td>#{{ item }}</td>
+      <td>{{ item.paid }}</td>
+      <td>
+        {% for item_purchase in purchase %}
+          {{ item_purchase.product}}<br>
+         {% endfor %}
+      </td>
+      <td>{{ item.created}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock %}

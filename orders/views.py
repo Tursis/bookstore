@@ -30,6 +30,11 @@ class OrdersListView(ListView):
     model = Order
     template_name = 'orders/orders_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(OrdersListView, self).get_context_data(**kwargs)
+        context['purchase'] = Purchase.objects.all()
+        return context
+
 
 class OrdersDetailView(DetailView):
     model = Purchase
