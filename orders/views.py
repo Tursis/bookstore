@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.generic import View, ListView, DetailView
 from .models import Order, Purchase
@@ -26,14 +26,21 @@ class OrderView(View):
         return render(request, 'orders/create.html', {'form': form})
 
 
-class OrdersListView(ListView):
-    model = Order
-    template_name = 'orders/orders_list.html'
+class OrdersListView(View):
 
-    def get_context_data(self, **kwargs):
-        context = super(OrdersListView, self).get_context_data(**kwargs)
-        context['purchase'] = Purchase.objects.all()
-        return context
+    def get(self, request):
+        user = User.objects.get(username=request.user)
+        if request.user.is_authenticated:
+            order = Order.objects.filter(email=user.email)
+            return render(request, 'orders/orders_list.html', {'orders_list': order})
+
+    def get_queryset(self):
+        """
+        Return list of Blog objects created by BlogAuthor (author id specified in URL)
+        """
+        id = self.kwargs['pk']
+        target_author = get_object_or_404(Order, pk=id)
+        return Purchase.objects.filter(author=target_author)
 
 
 class OrdersDetailView(DetailView):
