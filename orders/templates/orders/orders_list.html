@@ -5,13 +5,13 @@
 {% block content %}
   <table class="table">
     <tbody>
-    {% for item in order_list %}
+    {% for item in orders_list %}
       <tr>
       <td>#{{ item }}</td>
       <td>{{ item.paid }}</td>
       <td>
         {% for item_purchase in purchase %}
-          {{ item_purchase.product}}<br>
+          {{ item_purchase}}<br>
          {% endfor %}
       </td>
       <td>{{ item.created}}</td>
