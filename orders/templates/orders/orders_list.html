@@ -10,9 +10,9 @@
       <td>#{{ item }}</td>
       <td>{{ item.paid }}</td>
       <td>
-        {% for item_purchase in purchase %}
-          {{ item_purchase.product}}<br>
-         {% endfor %}
+      {% for item_purchase in item.purchase_set.select_related %}
+          {{item_purchase.product}}<br>
+      {% endfor %}
       </td>
       <td>{{ item.created}}</td>
       </tr>
