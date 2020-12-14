@@ -32,7 +32,8 @@ class OrdersListView(View):
         user = User.objects.get(username=request.user)
         if request.user.is_authenticated:
             order = Order.objects.filter(email=user.email)
-            return render(request, 'orders/orders_list.html', {'orders_list': order})
+            purchase = Purchase.objects.filter(order__in=order)
+            return render(request, 'orders/orders_list.html', {'orders_list': order, 'purchase': purchase})
 
     def get_queryset(self):
         """
@@ -40,7 +41,7 @@ class OrdersListView(View):
         """
         id = self.kwargs['pk']
         target_author = get_object_or_404(Order, pk=id)
-        return Purchase.objects.filter(author=target_author)
+        return Purchase.objects.filter(order=target_author)
 
 
 class OrdersDetailView(DetailView):

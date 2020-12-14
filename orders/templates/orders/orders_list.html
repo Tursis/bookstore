@@ -11,7 +11,7 @@
       <td>{{ item.paid }}</td>
       <td>
         {% for item_purchase in purchase %}
-          {{ item_purchase}}<br>
+          {{ item_purchase.product}}<br>
          {% endfor %}
       </td>
       <td>{{ item.created}}</td>
