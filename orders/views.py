@@ -32,16 +32,9 @@ class OrdersListView(View):
         user = User.objects.get(username=request.user)
         if request.user.is_authenticated:
             order = Order.objects.filter(email=user.email)
-            purchase = Purchase.objects.filter(order__in=order)
-            return render(request, 'orders/orders_list.html', {'orders_list': order, 'purchase': purchase})
 
-    def get_queryset(self):
-        """
-        Return list of Blog objects created by BlogAuthor (author id specified in URL)
-        """
-        id = self.kwargs['pk']
-        target_author = get_object_or_404(Order, pk=id)
-        return Purchase.objects.filter(order=target_author)
+            return render(request, 'orders/orders_list.html', {'orders_list': order})
+
 
 
 class OrdersDetailView(DetailView):
