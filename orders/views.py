@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.generic import View, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Order, Purchase
 from .forms import OrderCreateForm
 from .orders import OrdersCreate
@@ -26,7 +27,7 @@ class OrderView(View):
         return render(request, 'orders/create.html', {'form': form})
 
 
-class OrdersListView(View):
+class OrdersListView(LoginRequiredMixin, View):
 
     def get(self, request):
         user = User.objects.get(username=request.user)
