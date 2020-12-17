@@ -7,7 +7,7 @@
     <tbody>
     {% for item in orders_list %}
       <tr>
-      <td>#{{ item }}</td>
+      <td><a href="{% url "order:order_detail" item.id %}">#{{ item }}</a></td>
       <td>{{ item.paid }}</td>
       <td>
       {% for item_purchase in item.purchase_set.select_related %}
