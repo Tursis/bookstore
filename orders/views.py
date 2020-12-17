@@ -37,6 +37,6 @@ class OrdersListView(LoginRequiredMixin, View):
             return render(request, 'orders/orders_list.html', {'orders_list': order})
 
 
-
-class OrdersDetailView(DetailView):
-    model = Purchase
+class OrdersDetailView(LoginRequiredMixin, View):
+    def get(self, request, order_id):
+        return render(request, 'orders/orders_detail.html')
