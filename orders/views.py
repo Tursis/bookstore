@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.generic import View, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,4 +39,12 @@ class OrdersListView(LoginRequiredMixin, View):
 
 class OrdersDetailView(LoginRequiredMixin, View):
     def get(self, request, order_id):
-        return render(request, 'orders/orders_detail.html')
+        user = User.objects.get(username=request.user)
+        order = Order.objects.get(id=order_id)
+        if request.user.is_authenticated:
+            if user.email == order.email:
+                purchase = Purchase.objects.filter(order=order_id)
+                return render(request, 'orders/orders_detail.html',
+                              context={'order_id': order_id, 'purchase': purchase})
+            else:
+                return redirect('order:orders_list')
