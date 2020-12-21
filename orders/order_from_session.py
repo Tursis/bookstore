@@ -5,6 +5,9 @@ from .forms import OrderCreateForm
 
 
 class OrderFromSession:
+    """
+    Перенос даних корзины из сесии в заказ.
+    """
     def __init__(self, request):
         self.cart = CartInSession(request)
         self.purchase = Purchase()

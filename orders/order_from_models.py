@@ -6,6 +6,9 @@ from .forms import OrderCreateForm
 
 
 class OrderFromModels:
+    """
+    Перенос товаров из модели корзины в заказ.
+    """
     def __init__(self, request):
         self.cart = Cart.objects.filter(user=request.user)
 
