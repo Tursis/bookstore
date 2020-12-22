@@ -1,6 +1,9 @@
-from django.contrib.sites import requests
+
+
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.shortcuts import get_current_site
+from pip._vendor import requests
+
 from bookstore.settings import SITE_DOMAIN
 
 
