@@ -54,7 +54,6 @@ MIDDLEWARE = [
 
 ]
 
-
 """
 'django.middleware.cache.UpdateCacheMiddleware',
 'django.middleware.cache.FetchFromCacheMiddleware',
@@ -75,6 +74,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 
 MIDDLEWARE_CLASSES = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
@@ -154,6 +154,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/image/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 DATE_INPUT_FORMATS = [
     '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y',  # '2006-10-25', '10/25/2006', '10/25/06'
     '%b %d %Y', '%b %d, %Y',  # 'Oct 25 2006', 'Oct 25, 2006'
@@ -161,7 +166,6 @@ DATE_INPUT_FORMATS = [
     '%B %d %Y', '%B %d, %Y',  # 'October 25 2006', 'October 25, 2006'
     '%d %B %Y', '%d %B, %Y',  # '25 October 2006', '25 October, 2006'
 ]
-
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
