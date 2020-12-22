@@ -1,15 +1,15 @@
 from django.views.generic import CreateView
-from profile.forms import SignUpForm
-from .token import AccountToken
-from .models import Token
-from shared.send_message import EmailCommunication
-from django.shortcuts import render
+from django.utils import timezone
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.template.loader import get_template
 from django.views import generic
+from django.shortcuts import render
+from profile.forms import SignUpForm
+from .token import AccountToken
+from .models import Token
 from datetime import timedelta
-from django.utils import timezone
+from shared.send_message import EmailCommunication, send_simple_message
 from shared.mixins import AuthCheckerMixin
 
 
@@ -31,6 +31,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
             ActivateAccountMessageView(user_token.token)
+            send_simple_message()
         return super(SignUpView, self).form_valid(form)
 
 
