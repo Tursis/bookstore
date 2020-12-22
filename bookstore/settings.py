@@ -24,7 +24,7 @@ SECRET_KEY = '&mrr^809gpyig2%dp)mfdr!-=#&lczd7my4opc*vc-i*le-p4b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['stormy-scrubland-27758.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-
+    # 'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,7 +54,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
-
 
 """
 'django.middleware.cache.UpdateCacheMiddleware',
@@ -75,6 +75,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 
 MIDDLEWARE_CLASSES = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
@@ -148,11 +149,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/store/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/image/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DATE_INPUT_FORMATS = [
     '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y',  # '2006-10-25', '10/25/2006', '10/25/06'
@@ -161,7 +171,6 @@ DATE_INPUT_FORMATS = [
     '%B %d %Y', '%B %d, %Y',  # 'October 25 2006', 'October 25, 2006'
     '%d %B %Y', '%d %B, %Y',  # '25 October 2006', '25 October, 2006'
 ]
-
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
