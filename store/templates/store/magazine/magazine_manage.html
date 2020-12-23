@@ -7,11 +7,7 @@
       <a href="{% url 'store:magazine_create' %}">
         <button type="button" class="btn btn-outline-primary btn-sm">View</button>
       </a>
-
-
       <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
-
-
       <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -61,7 +57,6 @@
       </div>
     </div>
   {% endif %}
-
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript">
       $("#dropdown-menu").on("click", () => {
@@ -69,6 +64,4 @@
           //     $('body').toggleClass('overlay');
       });
   </script>
-
-
 {% endblock %}

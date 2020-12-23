@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from bookstore.settings import PERMISSION_ON_SITE
 from cart.forms import CartAddProductForm
 
+
 # Create your views here.
 
 def index(request):
@@ -35,22 +36,6 @@ def index(request):
 
 def product_manage(request):
     return render(request, 'store/product_manage.html')
-
-
-class ProductDetailView(generic.ListView):
-    template_name = 'store/templates/product_detail.html'
-    context_object_name = "product"
-
-    def get_queryset(self):
-        return
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['books'] = Book.objects.all()
-        context['magazine'] = Magazine.objects.all()
-        context['product'] = sorted(chain(Book.objects.all(), Magazine.objects.all()), key=attrgetter('id'))
-        context['is_shown_by_default'] = True
-        return context
 
 
 class BookGenresListView(generic.ListView):
