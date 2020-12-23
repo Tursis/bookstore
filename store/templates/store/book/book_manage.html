@@ -1,17 +1,12 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-
   {% if book_list %}
     <div class="col-12" style="overflow-x: scroll">
       <a href="{% url 'store:book_create' %}">
         <button type="button" class="btn btn-outline-primary btn-sm">View</button>
       </a>
-
-
       <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
-
-
       <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -77,6 +72,4 @@
           //     $('body').toggleClass('overlay');
       });
   </script>
-
-
 {% endblock %}
