@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    """
+    Модель профиля
+    """
     GENDER_CHOICES = (
         ('М', 'Мужской'),
         ('Ж', 'Женский')

@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.views.generic import CreateView
 from django.utils import timezone
 from django.urls import reverse_lazy
@@ -8,7 +9,6 @@ from django.shortcuts import render
 from profile.forms import SignUpForm
 from .token import AccountToken
 from .models import Token
-from datetime import timedelta
 from shared.send_message import EmailCommunication, send_simple_message
 from shared.mixins import AuthCheckerMixin
 
