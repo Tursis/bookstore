@@ -14,6 +14,9 @@ from shared.mixins import AuthCheckerMixin
 
 
 class SignUpView(AuthCheckerMixin, CreateView):
+    """
+    Форма регистрации
+    """
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'registration/sign_up.html'
@@ -36,7 +39,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
 
 
 class ActivateAccountMessageView:
-
+    """Отправка письма активации пользовалетя"""
     def __init__(self, token):
         self.send_message = EmailCommunication
         ActivateAccountMessageView.send(self, token)
@@ -52,7 +55,9 @@ class ActivateAccountMessageView:
 
 
 class ActivateAccountView(generic.View):
-
+    """"
+    Активация пользователя
+    """
     def get(self, request, token):
         try:
             token = Token.objects.get(token=token)
