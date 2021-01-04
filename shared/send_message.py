@@ -1,5 +1,3 @@
-
-
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.shortcuts import get_current_site
 from pip._vendor import requests
@@ -11,6 +9,7 @@ class EmailCommunication:
     """
     Отправка писем
     """
+
     def send(self, plaintext, html, email, context):
         context = context
         context['domain'] = SITE_DOMAIN
