@@ -1,5 +1,7 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
+from django.http import JsonResponse
 from store.models import Product
 from .cart import CartManager
 from .cart_in_session import CartInSession
@@ -32,4 +34,29 @@ def cart_detail(request):
         cart = Cart.objects.filter(user=request.user)
     else:
         cart = CartInSession(request)
-    return render(request, 'cart/detail.html', {'cart': cart})
+    return render(request, 'cart/cart.html', {'cart': cart})
+
+
+def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    print('Action:', action)
+    print('Product:', productId)
+
+    customer = request.user.customer
+    product = Product.objects.get(id=productId)
+
+    CartItem = Cart.objects.get(product=product)
+
+    if action == 'add':
+        CartItem.quantity = (CartItem.quantity + 1)
+    elif action == 'remove':
+        CartItem.quantity = (CartItem.quantity - 1)
+
+    CartItem.save()
+
+    if CartItem.quantity <= 0:
+        CartItem.delete()
+
+    return JsonResponse('Item was added', safe=False)

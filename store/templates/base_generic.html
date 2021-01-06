@@ -35,10 +35,10 @@
             {% endif %}
             <div class="avatar">
               <a href="{% url 'order:orders_list' %}">
-              <div class="avatar__image">
-                {{ user.get_username|first|upper }}
-              </div>
-              {{ user.get_username }}
+                <div class="avatar__image">
+                  {{ user.get_username|first|upper }}
+                </div>
+                {{ user.get_username }}
               </a>
             </div>
             <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
@@ -94,6 +94,7 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {

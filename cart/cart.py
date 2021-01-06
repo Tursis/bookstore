@@ -48,3 +48,4 @@ class CartManager:
         Удаление товара из корзины
         """
         self.cart.remove(product)
+
