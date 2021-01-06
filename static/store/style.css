@@ -254,3 +254,17 @@ ul li {
     height: 100%;
     width: 302px;
 }
+
+.quantity {
+    display: inline-block;
+    font-weight: 700;
+    padding-right: 10px;
+}
+
+.arrow-icon {
+    width: 12px;
+    cursor: pointer;
+    display: block;
+    margin-top: 5px;
+    transition: .1s;
+}
