@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'profile.apps.ProfileConfig',
     'django_rename_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

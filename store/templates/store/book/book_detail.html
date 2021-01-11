@@ -28,7 +28,7 @@
               {% endfor %}
             </p>
             <p>{{ book.price }}₴</p>
-            <button class="info-box__button" type="button">Купить</button>
+            <button class="info-box__button update-cart" type="button">Купить</button>
                        <form action="{% url "cart:cart_add" book.id%}" method="post">
                           {{ cart_product_form }}
                           {% csrf_token %}

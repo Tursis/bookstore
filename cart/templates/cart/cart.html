@@ -24,11 +24,12 @@
             <div class="quantity">
               <img data-product="{{ product.id }}" data-action="add" class="arrow-icon update-cart"
                    src=" {% static 'images/arrow-up.png' %} " alt="1">
+
               <img data-product="{{ product.id }}" data-action="remove" class="arrow-icon update-cart"
                    src="{% static 'images/arrow-down.png' %}" alt="2">
             </div>
           </td>
-          <td class=" num">{% widthratio item.quantity 1 item.product.price %} UAH
+          <td class="num">{% widthratio item.quantity 1 item.product.price %} UAH
           </td>
           <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
         </tr>
@@ -47,4 +48,5 @@
   </form>
 
   <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
 {% endblock %}
