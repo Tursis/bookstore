@@ -1,12 +1,18 @@
 import json
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 from store.models import Product
 from .cart import CartManager
 from .cart_in_session import CartInSession
 from .models import Cart
 from .forms import CartAddProductForm
+from .serializers import CartSerializer
 
 
 class CartAddView(View):
@@ -37,7 +43,7 @@ def cart_detail(request):
     return render(request, 'cart/cart.html', {'cart': cart})
 
 
-def updateItem(request):
+def update_item(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
@@ -60,3 +66,48 @@ def updateItem(request):
         CartItem.delete()
 
     return JsonResponse('Item was added', safe=False)
+
+
+@api_view(['GET', 'POST'])
+def testing_list(request, format=None):
+    """
+    List all code snippets, or create a new snippet.
+    """
+    if request.method == 'GET':
+        snippets = Cart.objects.all()
+        serializer = CartSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = CartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def testing_api(request, pk, format=None):
+    try:
+        cart = Cart.objects.get(pk=pk)
+    except Cart.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = CartSerializer(cart)
+        data = serializer.data['product']
+        print(data)
+        CartItem = Cart.objects.get(product=data)
+        CartItem.quantity = (CartItem.quantity + 1)
+        CartItem.save()
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = CartSerializer(cart, data=data)
+        if serializer.is_valid():
+            data = serializer.data['product']
+            print(data)
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)

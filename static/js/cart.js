@@ -35,7 +35,7 @@ function updateUserOrder(productId, action) {
             location.reload()
         });
 }
-//
+
 // function addCookieItem(productId, action) {
 //     console.log('User is not authenticated')
 //
