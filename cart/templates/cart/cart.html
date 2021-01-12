@@ -2,51 +2,61 @@
 {% load static %}
 {% block content %}
   <h1>Корзина</h1>
-  <table class="table">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Название</th>
-      <th scope="col">Количество</th>
-      <th scope="col">Цена</th>
-
-    </tr>
-    </thead>
-    <tbody>
-    {% for item in cart %}
-      {% with product=item.product %}
-        <tr>
-          <td><img class="item__img" src="{{ product.image.url }}" alt=""></td>
-          <td>{{ product.name }}</td>
-          <td>
-
-            <p class="quantity"></p>{{ item.quantity }}
-            <div class="quantity">
-              <img data-product="{{ product.id }}" data-action="add" class="arrow-icon update-cart"
-                   src=" {% static 'images/arrow-up.png' %} " alt="1">
-
-              <img data-product="{{ product.id }}" data-action="remove" class="arrow-icon update-cart"
-                   src="{% static 'images/arrow-down.png' %}" alt="2">
-            </div>
-          </td>
-          <td class="num">{% widthratio item.quantity 1 item.product.price %} UAH
-          </td>
-          <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
-        </tr>
-      {% endwith %}
-    {% endfor %}
-    <tr class="total">
-      <td class="num">На сумму</td>
-      <td colspan="2"></td>
-      <td class="num">{{ cart_info.get_total_price }}UAH</td>
-    </tr>
-    </tbody>
-  </table>
+  <form id="card_form">
+    <table class="table">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Название</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Цена</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <td><img class="item__img" src="{{ product.image.url }}" alt=""></td>
+            <td>{{ product.name }}</td>
+            <td>
+              <p class="quantity"></p>{{ item.quantity }}
+              <div class="quantity">
+                <label>
+                  <input
+                          name= {{ product.id }}
+                          min="0"
+                          max="100"
+                          value={{ item.quantity }}
+                          readonly
+                          data-price="230"
+                  />
+                  <img data-product="{{ product.id }}" data-action="card_form_plus" class="arrow-icon"
+                       src=" {% static 'images/arrow-up.png' %} " alt="1">
+                  <img data-product="{{ product.id }}" data-action="card_form_minus" class="arrow-icon"
+                       src="{% static 'images/arrow-down.png' %}" alt="2">
+                </label>
+              </div>
+            </td>
+            <td class="num">{% widthratio item.quantity 1 item.product.price %} UAH
+            </td>
+            <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td class="num">На сумму</td>
+        <td colspan="2"></td>
+        <td class="num">{{ cart_info.get_total_price }}UAH
+          Сумма: <span id="total">0</span> грн
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
   <form action="{% url "order:order_view" %}" method="post">
     {% csrf_token %}
     <button class="info-box__button" type="submit" value="Add to order">Оформить заказ</button>
   </form>
-
   <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 
 {% endblock %}

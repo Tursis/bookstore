@@ -81,6 +81,7 @@ def testing_list(request, format=None):
     elif request.method == 'POST':
         serializer = CartSerializer(data=request.data)
         if serializer.is_valid():
+            print('test')
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
