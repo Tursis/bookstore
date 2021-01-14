@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.http import HttpResponse, JsonResponse
 from rest_framework.views import APIView
+from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -45,33 +46,15 @@ def cart_detail(request):
 
 
 class CartUpdate(APIView):
-    """
-    List all snippets, or create a new snippet.
-    """
-
-    def get(self, request, format=None):
-        cart = Cart.objects.all()
-        print('test')
-        serializer = CartSerializer(cart, many=True)
-        cart = Cart.objects.get(pk='116')
-        cart.quantity = (cart.quantity + 1)
-
-        cart.save()
-        return Response(serializer.data)
-
-        # data = serializer.data['product']
-        # print(data)
-        # CartItem = Cart.objects.get(product=data)
-        # CartItem.quantity = (CartItem.quantity + 1)
-        # CartItem.save()
 
     def post(self, request, format=None):
         cartM = CartManager(request)
         cart = Cart.objects.all()
-        print('test')
         serializer = CartSerializer(cart, many=True)
         cart = Cart.objects.get(pk='116')
         cart.quantity = (cart.quantity + 1)
         cart.save()
-        cartM.get_total_price()
-        return Response('test')
+
+        json = JSONRenderer().render({'test': 'hello'})
+
+        return Response(json)
