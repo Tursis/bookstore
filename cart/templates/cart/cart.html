@@ -3,6 +3,7 @@
 {% block content %}
   <h1>Корзина</h1>
   <form id="card_form">
+  {% csrf_token %}
     <table class="table">
       <thead class="thead-dark">
       <tr>
@@ -46,8 +47,9 @@
       <tr class="total">
         <td class="num">На сумму</td>
         <td colspan="2"></td>
-        <td class="num">{{ cart_info.get_total_price }}UAH
+        <td id="cart_total_price" class="num">{{ cart_info.get_total_price }}UAH
           Сумма: <span id="total">0</span> грн
+          Сумма: <span id="card_total_price">0</span> грн
         </td>
       </tr>
       </tbody>
