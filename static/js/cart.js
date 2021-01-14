@@ -36,17 +36,23 @@ function send() {
     debug(body); // just for log, you can remove this line and function declaration
     fetch("cart_update/", {
         method: "POST",
-        body
+        body,
 
     })
-        .then((response) => {
-            // do something with response
-            element.textContent = value
-            console.log(response)
-        })
-        .catch((e) => {
-            // do something in case you got error
-        });
+        .then((response => response.json()))  // convert to json
+
+        .then(json => element.textContent =json)    //print data to console
+        .catch(err => console.log('Request Failed', err)); // Catch errors
+    // .then((response) => {
+    //     // do something with response
+    //     element.textContent = JSON.parse(this.response)
+    //
+    //     // console.log(JSON.parse(response.body))
+    //     console.log(response)
+    // })
+    // .catch((e) => {
+    //     // do something in case you got error
+    // });
 }
 
 function removeElement(element) {
