@@ -45,11 +45,13 @@ class CartInModel:
         quantity = Cart.objects.filter(user=self.user).aggregate(Sum('quantity'))
         return quantity['quantity__sum']
 
-    def get_price_product(self):
+    def get_price_product(self, ):
+        Cart.objects.filter(user=self.user)
+
         """
         Подсчет стоимости товара в корзине.
         """
-        return self.cart.product * self.cart.quantity
+        return self.user
 
     def get_total_price(self):
         """

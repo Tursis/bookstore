@@ -15,6 +15,7 @@ class CartManager:
             self.cart = CartInModel(request)
 
     def add(self, request, product_id, quantity=1, update_quantity=False):
+
         """
         Добавить продукт в корзину или обновить его количество.
         """
@@ -48,4 +49,3 @@ class CartManager:
         Удаление товара из корзины
         """
         self.cart.remove(product)
-
