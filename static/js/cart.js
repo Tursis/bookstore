@@ -39,20 +39,16 @@ function send() {
         body,
 
     })
-        .then((response => response.json()))  // convert to json
+        .then(response => {
+            console.log(response);
+            return response.json()
+        })  // convert to json
+        .then(json => {
+            element.textContent = json;
+            console.log(json);
 
-        .then(json => element.textContent =json)    //print data to console
+        })  //print data to console
         .catch(err => console.log('Request Failed', err)); // Catch errors
-    // .then((response) => {
-    //     // do something with response
-    //     element.textContent = JSON.parse(this.response)
-    //
-    //     // console.log(JSON.parse(response.body))
-    //     console.log(response)
-    // })
-    // .catch((e) => {
-    //     // do something in case you got error
-    // });
 }
 
 function removeElement(element) {
