@@ -23,12 +23,13 @@
               <div class="quantity">
                 <label>
                   <input
-                          name={{ product.id }}
-                                  min="0"
+                          name="{{ product.id }}"
+                          min="0"
                           max="100"
-                          value={{ item.quantity }}
-                                  readonly
-                          data-price="230"
+                          value= "{{ item.quantity }}"
+                          readonly
+                          data-price={{ item.product.price }}
+
                   />
                   <img data-product="{{ product.id }}" data-action="card_form_plus" class="arrow-icon"
                        src=" {% static 'images/arrow-up.png' %} " alt="1">
@@ -38,7 +39,7 @@
               </div>
             </td>
             <td class="num">
-              {% widthratio item.quantity 1 item.product.price %} UAH
+              <span data-sum> {% widthratio item.quantity 1 item.product.price %} UAH </span>
             </td>
             <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
           </tr>
@@ -47,18 +48,18 @@
       <tr class="total">
         <td class="num">На сумму</td>
         <td colspan="2"></td>
-        <td id="cart_total_price" class="num"><span id="card_total_price">{{ cart_info.get_total_price }} </span>UAH
-          Сумма: <span id="total">0</span> грн
-
+        <td class="num"><span id="card_total_price">{{ cart_info.get_total_price }}</span>UAH
+        Сумма: <span id="total">0</span> грн
         </td>
       </tr>
       </tbody>
     </table>
   </form>
+
   <form action="{% url "order:order_view" %}" method="post">
     {% csrf_token %}
     <button class="info-box__button" type="submit" value="Add to order">Оформить заказ</button>
   </form>
-  <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
 
 {% endblock %}
