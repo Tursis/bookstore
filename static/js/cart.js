@@ -32,9 +32,11 @@ document.querySelectorAll("#card_form img").forEach((img) => {
 });
 
 function send() {
+
     const form = document.querySelector("#card_form");
-    const element = document.querySelector(".card_total_price")
     const body = new FormData(form);
+    const element = document.getElementsByClassName("card_total_price");
+
     debug(body); // just for log, you can remove this line and function declaration
     fetch("cart_update/", {
         method: "POST",
@@ -46,7 +48,10 @@ function send() {
             return response.json()
         })  // convert to json
         .then(json => {
-            element.textContent = json;
+            for (let i = 0; i < element.length; i++) {
+                element[i].textContent = json;
+            }
+
             console.log(json);
 
         })  //print data to console
