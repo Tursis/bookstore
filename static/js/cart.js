@@ -1,25 +1,27 @@
 const total = document.querySelector("#card_form #total");
 const inputs = document.querySelectorAll("#card_form input");
 
-
 totalUpdate();
 document.querySelectorAll("#card_form img").forEach((img) => {
     img.addEventListener("click", (e) => {
         const action = e.currentTarget.dataset.action;
-        const label = e.currentTarget.parentNode.parentNode;
-        const input = label.querySelector("input");
+        const tr = e.currentTarget.closest('tr');
+        const input = tr.querySelector("input");
+
         switch (action) {
             case "card_form_plus":
                 input.value++;
                 send();
+                calculateSumItem(tr, input)
                 break;
             case "card_form_minus":
                 if (Number(input.value) > 0) {
                     input.value--;
                     send();
+                    calculateSumItem(tr, input)
                 }
                 if (Number(input.value) === 0) {
-                    removeElement(label);
+                    removeElement(tr);
                 }
                 break;
             default:
@@ -31,7 +33,7 @@ document.querySelectorAll("#card_form img").forEach((img) => {
 
 function send() {
     const form = document.querySelector("#card_form");
-    const element = document.querySelector("#card_total_price")
+    const element = document.querySelector(".card_total_price")
     const body = new FormData(form);
     debug(body); // just for log, you can remove this line and function declaration
     fetch("cart_update/", {
@@ -61,6 +63,15 @@ function totalUpdate() {
         sum += input.value * input.dataset.price;
     });
     total.textContent = sum;
+
+}
+
+function calculateSumItem(tr, input) {
+    const sumElement = tr.querySelector('[data-sum]')
+    const itemPrice = Number(input.dataset.price)
+    const itemAmount = Number(input.value)
+    const itemSum = itemPrice * itemAmount
+    sumElement.textContent = itemSum
 
 }
 
