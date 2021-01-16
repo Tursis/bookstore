@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
   <h1>Корзина</h1>
-  <form id="card_form">
+  <form id="cart_form">
     {% csrf_token %}
     <table class="table">
       <thead class="thead-dark">
@@ -31,9 +31,9 @@
                           data-price={{ item.product.price }}
 
                   />
-                  <img data-product="{{ product.id }}" data-action="card_form_plus" class="arrow-icon"
+                  <img data-product="{{ product.id }}" data-action="cart_form_plus" class="arrow-icon"
                        src=" {% static 'images/arrow-up.png' %} " alt="1">
-                  <img data-product="{{ product.id }}" data-action="card_form_minus" class="arrow-icon"
+                  <img data-product="{{ product.id }}" data-action="cart_form_minus" class="arrow-icon"
                        src="{% static 'images/arrow-down.png' %}" alt="2">
                 </label>
               </div>
@@ -48,7 +48,7 @@
       <tr class="total">
         <td class="num">На сумму</td>
         <td colspan="2"></td>
-        <td class="num"><span class="card_total_price">{{ cart_info.get_total_price }}</span>UAH
+        <td class="num"><span class="cart_total_price">{{ cart_info.get_total_price }}</span>UAH
         Сумма: <span id="total">0</span> грн
         </td>
       </tr>

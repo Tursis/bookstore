@@ -22,7 +22,7 @@
                 Your cart:
                 <a href="{% url "cart:cart_detail" %}">
                   {{ total_items }} item{{ total_items|pluralize }},
-                 <span class="card_total_price"> {{ cart_info.get_total_price }} </span> UAH
+                 <span class="cart_total_price"> {{ cart_info.get_total_price }} </span> UAH
                 </a>
               {% else %}
                 Your cart is empty.
