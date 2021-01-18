@@ -1,16 +1,12 @@
-import json
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-from django.http import HttpResponse, JsonResponse
+from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
 from store.models import Product
-from .cart import CartManager
+from .cart import CartManager, cart_quantity_update
 from .cart_in_session import CartInSession
 from .models import Cart
 from .forms import CartAddProductForm
@@ -48,13 +44,19 @@ def cart_detail(request):
 class CartUpdate(APIView):
 
     def post(self, request, format=None):
-        cart_manager = CartManager(request)
         cart = Cart.objects.all()
-        serializer = CartSerializer(cart, many=True)
+        cart_manager = CartManager(request)
+        # data = JSONParser().parse(request)
+        # print(data)
+        print(request.data)
+        serializer = CartSerializer(data=request.data)
 
-        cart = Cart.objects.get(pk='116')
-        cart.quantity = (cart.quantity + 1)
-        cart.save()
+        if serializer.is_valid():
+            print(serializer.data)
+
+
+
+        # serializer = CartSerializer(request.data)
+        # cart_quantity_update(serializer)
         json = JSONRenderer().render([cart_manager.get_total_price(), cart_manager.__len__()])
-
         return Response(json)

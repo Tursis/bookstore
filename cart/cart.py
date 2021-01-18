@@ -1,5 +1,7 @@
 from .cart_in_model import CartInModel
 from .cart_in_session import CartInSession
+from .models import Cart
+from store.models import Product
 
 
 class CartManager:
@@ -32,12 +34,6 @@ class CartManager:
         """
         return self.cart.__len__()
 
-    def get_price_product(self):
-        """
-          Подсчет стоимости товара в корзине.
-        """
-        return self.cart.get_price_product()
-
     def get_total_price(self):
         """
         Подсчет суммы товаров в корзине.
@@ -49,3 +45,15 @@ class CartManager:
         Удаление товара из корзины
         """
         self.cart.remove(product)
+
+
+def cart_quantity_update(serializer):
+    print(serializer.data)
+    for x in serializer.data:
+        # product = Product.objects.get(id=x['product'])
+        # cart = Cart.objects.get(id=x['id'], product=product)
+        # print(cart)
+        # print(product)
+        # cart.quantity = x['quantity']
+        # cart.save()
+        print(x)
