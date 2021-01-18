@@ -21,7 +21,7 @@
               {% if cart_info|length > 0 %}
                 Your cart:
                 <a href="{% url "cart:cart_detail" %}">
-                  {{ total_items }} item{{ total_items|pluralize }},
+                  <span id="cart_quantity">{{ total_items }} </span> item{{ total_items|pluralize }},
                  <span class="cart_total_price"> {{ cart_info.get_total_price }} </span> UAH
                 </a>
               {% else %}

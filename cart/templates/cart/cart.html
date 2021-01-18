@@ -1,5 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
+{% load cart_extras %}
 {% block content %}
   <h1>Корзина</h1>
   <form id="cart_form">
@@ -26,7 +27,7 @@
                           name="{{ product.id }}"
                           min="0"
                           max="100"
-                          value= "{{ item.quantity }}"
+                          value="{{ item.quantity }}"
                           readonly
                           data-price={{ item.product.price }}
 
@@ -39,7 +40,7 @@
               </div>
             </td>
             <td class="num">
-              <span data-sum> {% widthratio item.quantity 1 item.product.price %}</span> UAH
+              <span data-sum> {{ item.quantity|mul:item.product.price }} </span> UAH
             </td>
             <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
           </tr>
@@ -49,7 +50,6 @@
         <td class="num">На сумму</td>
         <td colspan="2"></td>
         <td class="num"><span class="cart_total_price">{{ cart_info.get_total_price }}</span>UAH
-        Сумма: <span id="total">0</span> грн
         </td>
       </tr>
       </tbody>
