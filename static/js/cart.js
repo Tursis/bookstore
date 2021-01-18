@@ -39,10 +39,10 @@ function send() {
 
 
     debug(body); // just for log, you can remove this line and function declaration
+
     fetch("cart_update/", {
         method: "POST",
         body,
-
     })
         .then(response => {
             console.log(response);

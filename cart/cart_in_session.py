@@ -62,11 +62,6 @@ class CartInSession:
         """
         return sum(item['quantity'] for item in self.cart.values())
 
-    def get_price_product(self):
-        """
-        Подсчет стоимости товара в корзине.
-        """
-
     def get_total_price(self):
         product_ids = self.cart.keys()
         # получение объектов product и добавление их в корзину
