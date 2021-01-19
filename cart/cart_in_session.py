@@ -20,12 +20,8 @@ class CartInSession:
         Добавление товара в корзину
         """
         if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 0,
+            self.cart[product_id] = {'quantity': quantity,
                                      }
-        if update_quantity:
-            self.cart[product_id]['quantity'] = quantity
-        else:
-            self.cart[product_id]['quantity'] += quantity
         self.save()
 
     def save(self):
@@ -80,3 +76,12 @@ class CartInSession:
         """
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True
+
+    def cart_quantity_update(self, data):
+        for product in data:
+            if product != 'csrfmiddlewaretoken':
+                if product in self.cart:
+                    self.cart[product]['quantity'] = int(data[product])
+                    print(self.cart[product])
+                    print((data[product]))
+
