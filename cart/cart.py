@@ -18,14 +18,14 @@ class CartManager:
         else:
             self.cart = CartInModel(request)
 
-    def add(self, request, product_id, quantity=1, update_quantity=False):
+    def add(self, request, product_id, quantity=1):
 
         """
         Добавить продукт в корзину или обновить его количество.
         """
 
         if request.user.is_anonymous:
-            self.cart.add(product_id, quantity, update_quantity=False)
+            self.cart.add(product_id, quantity)
 
         else:
             self.cart.add(product_id, quantity)
@@ -48,15 +48,8 @@ class CartManager:
         """
         self.cart.remove(product)
 
-
-def cart_quantity_update(data):
-    for product in data:
-        if product != 'csrfmiddlewaretoken':
-            cart = get_object_or_404(Cart, product=product)
-            # product = Product.objects.get(id=x['product'])
-            # cart = Cart.objects.get(product=product)
-            # print(cart)
-            print(product)
-            cart.quantity = data[product]
-            cart.save()
-            print(data[product])
+    def cart_quantity_update(self, data):
+        """
+        Обновление количества товара в корзине
+        """
+        return self.cart.cart_quantity_update(data)

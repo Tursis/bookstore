@@ -1,8 +1,8 @@
-from django.db.models import Sum, Count, Avg
+from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 from store.models import Product
 from .models import Cart
 from .cart_in_session import CartInSession
-from bookstore import settings
 
 
 class CartInModel:
@@ -58,3 +58,11 @@ class CartInModel:
         """
         cart_item = Cart.objects.filter(user=self.user).filter(product=product)
         cart_item.delete()
+
+    def cart_quantity_update(self, data):
+        for product in data:
+            if product != 'csrfmiddlewaretoken':
+                cart = get_object_or_404(Cart, product=product)
+                cart.quantity = data[product]
+                cart.save()
+
