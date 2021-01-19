@@ -8,7 +8,7 @@ from .cart import CartManager
 from .cart_in_session import CartInSession
 from .models import Cart
 from .forms import CartAddProductForm
-from .serializers import CartSerializer
+
 
 
 class CartAddView(View):
@@ -17,10 +17,8 @@ class CartAddView(View):
         cart = CartManager(request)
         form = CartAddProductForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
             cart.add(request, product_id=product_id,
-                     quantity=1,
-                     update_quantity=cd['update'])
+                     quantity=1, )
         return redirect('cart:cart_detail')
 
 
@@ -43,6 +41,7 @@ class CartUpdate(APIView):
     """
     Клас обновление корзины(количества товара, сумы)
     """
+
     def post(self, request, format=None):
         cart_manager = CartManager(request)
         cart_manager.cart_quantity_update(request.data)
