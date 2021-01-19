@@ -65,4 +65,3 @@ class CartInModel:
                 cart = get_object_or_404(Cart, product=product)
                 cart.quantity = data[product]
                 cart.save()
-
