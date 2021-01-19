@@ -44,19 +44,10 @@ def cart_detail(request):
 class CartUpdate(APIView):
 
     def post(self, request, format=None):
-        cart = Cart.objects.all()
         cart_manager = CartManager(request)
         # data = JSONParser().parse(request)
         # print(data)
-        print(request.data)
-        serializer = CartSerializer(data=request.data)
-
-        if serializer.is_valid():
-            print(serializer.data)
-
-
-
         # serializer = CartSerializer(request.data)
-        # cart_quantity_update(serializer)
+        cart_quantity_update(request.data)
         json = JSONRenderer().render([cart_manager.get_total_price(), cart_manager.__len__()])
         return Response(json)

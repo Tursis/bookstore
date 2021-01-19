@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from .cart_in_model import CartInModel
 from .cart_in_session import CartInSession
 from .models import Cart
@@ -47,13 +49,14 @@ class CartManager:
         self.cart.remove(product)
 
 
-def cart_quantity_update(serializer):
-    print(serializer.data)
-    for x in serializer.data:
-        # product = Product.objects.get(id=x['product'])
-        # cart = Cart.objects.get(id=x['id'], product=product)
-        # print(cart)
-        # print(product)
-        # cart.quantity = x['quantity']
-        # cart.save()
-        print(x)
+def cart_quantity_update(data):
+    for product in data:
+        if product != 'csrfmiddlewaretoken':
+            cart = get_object_or_404(Cart, product=product)
+            # product = Product.objects.get(id=x['product'])
+            # cart = Cart.objects.get(product=product)
+            # print(cart)
+            print(product)
+            cart.quantity = data[product]
+            cart.save()
+            print(data[product])
