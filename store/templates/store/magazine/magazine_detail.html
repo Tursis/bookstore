@@ -7,7 +7,7 @@
   </ol>
 {% endblock %}
 {% block content %}
-  {% if magazine%}
+  {% if magazine %}
     <div class="catalog  block_white">
       <div class="row product">
         <div class="col-12 col-md-6 product__picture-box">
@@ -24,7 +24,6 @@
               {% endfor %}
             </p>
             <p>{{ magazine.price }}₴</p>
-            <button class="info-box__button" type="button">Купить</button>
             <form action="{% url "cart:cart_add" magazine.id %}" method="post">
               {% csrf_token %}
               <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>
@@ -33,11 +32,11 @@
           <div class="info-box__body">
             <h3>Описание</h3>
             <p> Издательство: {{ magazine.publisher }}</p>
-              <p>Жанр:
-                {% for genre in magazine.genre.all %}
-                  {{ genre }}
-                {% endfor %}
-              </p>
+            <p>Жанр:
+              {% for genre in magazine.genre.all %}
+                {{ genre }}
+              {% endfor %}
+            </p>
             <p> Год издания: {{ magazine.pub_year }} </p>
             <p> Количество страниц: {{ magazine.pages }}</p>
             <p> Твердый переплёт: {{ magazine.hard_cover }}</p>
