@@ -19,9 +19,11 @@ class CartInSession:
         """
         Добавление товара в корзину
         """
-        if product_id not in self.cart:
+        if str(product_id) not in self.cart:
             self.cart[product_id] = {'quantity': quantity,
                                      }
+        elif str(product_id) in self.cart:
+            self.cart[str(product_id)]['quantity'] += 1
         self.save()
 
     def save(self):
@@ -66,7 +68,7 @@ class CartInSession:
         Подсчет суммы товаров в корзине.
         """
         for product in products:
-            self.cart[str(product.id)]['price'] = product.price
+            self.cart[str(product.id)]['price'] = str(product.price)
         return sum(Decimal(item['price']) * item['quantity'] for item in
                    self.cart.values())
 
@@ -82,6 +84,5 @@ class CartInSession:
             if product != 'csrfmiddlewaretoken':
                 if product in self.cart:
                     self.cart[product]['quantity'] = int(data[product])
-                    print(self.cart[product])
-                    print((data[product]))
-
+                    print(self.cart)
+                    self.save()
