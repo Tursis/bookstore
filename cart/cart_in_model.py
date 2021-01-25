@@ -62,6 +62,9 @@ class CartInModel:
     def cart_quantity_update(self, data):
         for product in data:
             if product != 'csrfmiddlewaretoken':
-                cart_item = Cart.objects.filter(user=self.user).get(product=product)
-                cart_item.quantity = data[product]
-                cart_item.save()
+                if data[product] == '0':
+                    CartInModel.remove(self, product)
+                else:
+                    cart_item = Cart.objects.filter(user=self.user).get(product=product)
+                    cart_item.quantity = data[product]
+                    cart_item.save()
