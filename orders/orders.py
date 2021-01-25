@@ -1,7 +1,6 @@
-from django.contrib.auth.models import User
 from .order_from_models import OrderFromModels
 from .order_from_session import OrderFromSession
-from .models import Purchase
+
 
 
 class OrdersCreate:
@@ -9,7 +8,6 @@ class OrdersCreate:
     Создание закака.
     """
     def __init__(self, request):
-        self.user = User.objects.get(username=request.user)
         if request.user.is_anonymous:
             self.order = OrderFromSession(request)
 

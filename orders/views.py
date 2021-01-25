@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.views.generic import View, ListView, DetailView
+from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Order, Purchase
 from .forms import OrderCreateForm
@@ -12,9 +12,9 @@ class OrderView(View):
     """
     Отображение формы заказа
     """
+
     def post(self, request):
         order_create = OrdersCreate(request)
-        user = User.objects.get(username=request.user)
         if request.method == 'POST':
             form = OrderCreateForm(request.POST)
             if form.is_valid():
@@ -22,6 +22,7 @@ class OrderView(View):
                 order_create.add_to_order(request, order)
                 return render(request, 'orders/created.html', {'order': order})
         if request.user.is_authenticated:
+            user = User.objects.get(username=request.user)
             form = OrderCreateForm(initial={'first_name': user.first_name,
                                             'last_name': user.last_name,
                                             'email': user.email})
@@ -39,7 +40,6 @@ class OrdersListView(LoginRequiredMixin, View):
         user = User.objects.get(username=request.user)
         if request.user.is_authenticated:
             order = Order.objects.filter(email=user.email)
-
             return render(request, 'orders/orders_list.html', {'orders_list': order})
 
 
