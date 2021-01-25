@@ -62,6 +62,6 @@ class CartInModel:
     def cart_quantity_update(self, data):
         for product in data:
             if product != 'csrfmiddlewaretoken':
-                cart = get_object_or_404(Cart, product=product)
-                cart.quantity = data[product]
-                cart.save()
+                cart_item = Cart.objects.filter(user=self.user).get(product=product)
+                cart_item.quantity = data[product]
+                cart_item.save()
