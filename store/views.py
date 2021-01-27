@@ -1,15 +1,16 @@
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from .forms import BookForm, MagazineForm
-from .models import Book, Magazine, BookGenre, BookAuthor
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from itertools import chain
 from operator import attrgetter
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
+from .forms import BookForm, MagazineForm, ProductCommentForm
+from .models import Book, Magazine, BookGenre
 from cart.forms import CartAddProductForm
+from .comments import product_comments
 
 
 # Create your views here.
@@ -57,10 +58,15 @@ class BooksDetailView(generic.DetailView):
     model = Book
     template_name = 'store/book/book_detail.html'
 
+    def post(self, request, product_id):
+        comment = product_comments(request, product_id)
+        context = {'comment_form': 'hello'}
+        return render('store/book/book_detail.html', context)
+
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
-        context['cart_product_form'] = CartAddProductForm()
+        context['product_comment_form'] = ProductCommentForm()
         return context
 
 

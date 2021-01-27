@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category
+from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category, ProductComment
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
 from cart.models import Cart
@@ -66,4 +66,5 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Cart, СartAdmin)
 admin.site.register(Purchase)
+admin.site.register(ProductComment)
 admin.site.register(Token)
