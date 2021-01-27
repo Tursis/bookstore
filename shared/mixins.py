@@ -3,6 +3,9 @@ from django.shortcuts import redirect
 
 
 class AuthCheckerMixin(UserPassesTestMixin):
+    """
+    Миксин для возвращение не авторизированого пользователя на страницу авторизации
+    """
     login_url = 'login'
     redirect_field_name = 'registration/login.html'
 

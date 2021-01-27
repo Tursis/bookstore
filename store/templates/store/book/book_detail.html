@@ -51,6 +51,16 @@
         </div>
       </div>
     </div>
+    <form action="{% url "store:books" %}" method="post">
+      {{ comment_form }}
+      {% csrf_token %}
+      <button class="info-box__button" type="submit" value="Add to cart">Отправить</button>
+    </form>
+    <form action="." method="post">
+      {{ comment_form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="Add comment"></p>
+    </form>
   {% endif %}
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript">
