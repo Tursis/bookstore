@@ -103,7 +103,7 @@ class Magazine(Product):
 
 
 class ProductComment(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=400, verbose_name='Коментарий', help_text='Enter your comment here')
     pub_date = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -58,10 +58,10 @@ class BooksDetailView(generic.DetailView):
     model = Book
     template_name = 'store/book/book_detail.html'
 
-    def post(self, request, product_id):
-        comment = product_comments(request, product_id)
-        context = {'comment_form': 'hello'}
-        return render('store/book/book_detail.html', context)
+    def post(self,request, slug, **kwargs):
+        product_comments(request, slug)
+        return redirect('store:book_detail', slug=slug)
+
 
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
