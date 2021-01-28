@@ -47,6 +47,14 @@
         </div>
       </div>
     </div>
+      {% for comment in comment_list %}
+      {{ comment.description }}
+    {% endfor %}
+    <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
+      {{ product_comment_form }}
+      {% csrf_token %}
+      <button class="info-box__button" type="submit" value="Add to cart">Отправить</button>
+    </form>
   {% endif %}
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript">

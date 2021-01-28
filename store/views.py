@@ -122,10 +122,15 @@ class MagazineDetailView(generic.DetailView):
     template_name = 'store/magazine/magazine_detail.html'
     model = Magazine
 
+    def post(self, request, slug, **kwargs):
+        product_comments(request, slug)
+        return redirect('store:magazine_detail', slug=slug)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_shown_by_default'] = True
-        context['cart_product_form'] = CartAddProductForm()
+        context['product_comment_form'] = ProductCommentForm()
+        context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
 
