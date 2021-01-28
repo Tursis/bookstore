@@ -51,8 +51,11 @@
         </div>
       </div>
     </div>
+    {% for comment in comment_list %}
+      {{ comment.description }}
+    {% endfor %}
     <form action="{% url "store:book_detail" book.slug %}" method="post">
-      {{ product_comment_form}}
+      {{ product_comment_form }}
       {% csrf_token %}
       <button class="info-box__button" type="submit" value="Add to cart">Отправить</button>
     </form>

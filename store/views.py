@@ -8,7 +8,7 @@ from itertools import chain
 from operator import attrgetter
 from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm, MagazineForm, ProductCommentForm
-from .models import Book, Magazine, BookGenre
+from .models import Book, Magazine, BookGenre, ProductComment
 from cart.forms import CartAddProductForm
 from .comments import product_comments
 
@@ -58,15 +58,15 @@ class BooksDetailView(generic.DetailView):
     model = Book
     template_name = 'store/book/book_detail.html'
 
-    def post(self,request, slug, **kwargs):
+    def post(self, request, slug, **kwargs):
         product_comments(request, slug)
         return redirect('store:book_detail', slug=slug)
-
 
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['product_comment_form'] = ProductCommentForm()
+        context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
 
