@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -7,10 +7,12 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from itertools import chain
 from operator import attrgetter
 from bookstore.settings import PERMISSION_ON_SITE
-from .forms import BookForm, MagazineForm, ProductCommentForm
-from .models import Book, Magazine, BookGenre, ProductComment
-from cart.forms import CartAddProductForm
-from .comments import product_comments
+from .forms import BookForm
+from .models import Book, Magazine, BookGenre
+from comments.forms import ProductCommentForm
+from comments.models import ProductComment
+from comments.comments import product_comments
+
 
 
 # Create your views here.

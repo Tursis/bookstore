@@ -102,22 +102,4 @@ class Magazine(Product):
         return reverse('store:magazine_detail', kwargs={'slug': self.slug})
 
 
-class ProductComment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    description = models.TextField(max_length=400, verbose_name='Коментарий', help_text='Enter your comment here')
-    pub_date = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        ordering = ['pub_date']
-
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        len_title = 75
-        if len(self.description) > len_title:
-            titlestring = self.description[:len_title] + '...'
-        else:
-            titlestring = self.description
-        return titlestring

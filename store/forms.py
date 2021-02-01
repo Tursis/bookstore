@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book, Magazine, ProductComment
+from .models import Book, Magazine
 
 
 class BookForm(forms.ModelForm):
@@ -14,7 +14,3 @@ class MagazineForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ProductCommentForm(forms.ModelForm):
-    class Meta:
-        model = ProductComment
-        fields = ('description',)
