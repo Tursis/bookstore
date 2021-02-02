@@ -7,10 +7,10 @@ from .forms import ProductReviewsForm
 def product_reviews(request, slug, form):
     product = get_object_or_404(Product, slug=slug)
     if form.is_valid():
-        new_comment = form.save(commit=False)
-        new_comment.product = product
-        new_comment.user = request.user
-        new_comment.save()
+        new_reviews = form.save(commit=False)
+        new_reviews.product = product
+        new_reviews.user = request.user
+        new_reviews.save()
 
 
 
