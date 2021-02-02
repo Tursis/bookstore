@@ -9,10 +9,9 @@ from operator import attrgetter
 from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
 from .models import Book, Magazine, BookGenre
-from comments.forms import ProductCommentForm
+from comments.forms import ProductReviewsForm
 from comments.models import ProductComment
-from comments.comments import product_comments
-
+from comments.comments import product_reviews
 
 
 # Create your views here.
@@ -60,14 +59,9 @@ class BooksDetailView(generic.DetailView):
     model = Book
     template_name = 'store/book/book_detail.html'
 
-    def post(self, request, slug, **kwargs):
-        product_comments(request, slug)
-        return redirect('store:book_detail', slug=slug)
-
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
-        context['product_comment_form'] = ProductCommentForm()
         context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
@@ -124,14 +118,13 @@ class MagazineDetailView(generic.DetailView):
     template_name = 'store/magazine/magazine_detail.html'
     model = Magazine
 
-    def post(self, request, slug, **kwargs):
-        product_comments(request, slug)
-        return redirect('store:magazine_detail', slug=slug)
+    # def post(self, request, slug, **kwargs):
+    #     product_comments(request, slug)
+    #     return redirect('store:magazine_detail', slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_shown_by_default'] = True
-        context['product_comment_form'] = ProductCommentForm()
         context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
