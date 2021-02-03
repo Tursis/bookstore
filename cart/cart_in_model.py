@@ -60,6 +60,9 @@ class CartInModel:
         cart_item.delete()
 
     def cart_quantity_update(self, data):
+        """
+        Обновление количества товара
+        """
         for product in data:
             if product != 'csrfmiddlewaretoken':
                 if data[product] == '0':

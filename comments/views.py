@@ -6,7 +6,9 @@ from .forms import ProductReviewsForm
 
 
 class ProductReviewsView(View):
-
+    """
+    Отображение формы заполнения отзыва
+    """
     def post(self, request, slug, **kwargs):
         if request.method == 'POST':
             form = ProductReviewsForm(request.POST)

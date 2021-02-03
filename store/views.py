@@ -11,7 +11,7 @@ from .forms import BookForm
 from .models import Book, Magazine, BookGenre
 from comments.forms import ProductReviewsForm
 from comments.models import ProductComment
-from comments.comments import product_reviews
+from comments.comments import product_reviews, quantity_reviews
 
 
 # Create your views here.
@@ -62,6 +62,7 @@ class BooksDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
+        context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
@@ -118,13 +119,10 @@ class MagazineDetailView(generic.DetailView):
     template_name = 'store/magazine/magazine_detail.html'
     model = Magazine
 
-    # def post(self, request, slug, **kwargs):
-    #     product_comments(request, slug)
-    #     return redirect('store:magazine_detail', slug=slug)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_shown_by_default'] = True
+        context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
