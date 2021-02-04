@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Avg
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
@@ -77,8 +77,11 @@ class Product(models.Model):
             return reverse('store:magazine_detail', kwargs={'slug': self.slug})
 
     def get_rating(self):
-        p = self.productcomment_set.all().aggregate(Sum('rating'))
-        return p['rating__sum']
+        rating = self.productcomment_set.all().aggregate(Avg('rating'))
+        if rating['rating__avg']:
+            return rating['rating__avg']
+        else:
+            return ''
 
 
 class Book(Product):
