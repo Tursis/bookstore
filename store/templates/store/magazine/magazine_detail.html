@@ -47,13 +47,9 @@
         </div>
       </div>
     </div>
-      {% for comment in comment_list %}
-      {{ comment.description }}
-    {% endfor %}
-    <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
-      {{ product_comment_form }}
+ <form action="{% url "reviews:product_reviews" magazine.slug%}?next={{ request.path|urlencode }}" method="post">
       {% csrf_token %}
-      <button class="info-box__button" type="submit" value="Add to cart">Отправить</button>
+      <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
     </form>
   {% endif %}
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

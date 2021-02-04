@@ -1,10 +1,13 @@
 from django.db import models
+from django.db.models import Sum
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
 # Create your models here.
+
+
 class BookAuthor(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя', help_text="Enter author name.", blank=True)
     slug = models.SlugField(max_length=100)
@@ -67,6 +70,16 @@ class Product(models.Model):
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        if self.category.name == 'Книги':
+            return reverse('store:book_detail', kwargs={'slug': self.slug})
+        else:
+            return reverse('store:magazine_detail', kwargs={'slug': self.slug})
+
+    def get_rating(self):
+        p = self.productcomment_set.all().aggregate(Sum('rating'))
+        return p['rating__sum']
+
 
 class Book(Product):
     author = models.ManyToManyField(BookAuthor, verbose_name='Автор')
@@ -79,9 +92,6 @@ class Book(Product):
                                    null=True)
     publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
     size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
-
-    def get_absolute_url(self):
-        return reverse('store:book_detail', kwargs={'slug': self.slug})
 
 
 class Magazine(Product):
@@ -97,9 +107,3 @@ class Magazine(Product):
     pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
                                    null=True)
     size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
-
-    def get_absolute_url(self):
-        return reverse('store:magazine_detail', kwargs={'slug': self.slug})
-
-
-

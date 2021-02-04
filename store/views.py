@@ -8,32 +8,22 @@ from itertools import chain
 from operator import attrgetter
 from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
-from .models import Book, Magazine, BookGenre
-from comments.forms import ProductReviewsForm
+from .models import Product, Book, Magazine, BookGenre
+
 from comments.models import ProductComment
 from comments.comments import product_reviews, quantity_reviews
 
 
 # Create your views here.
 
-def index(request):
-    book = Book.objects.all()
-    magazine = Magazine.objects.all()
-    genre = BookGenre.objects.all()
-    product_list = sorted(
-        chain(book, magazine),
-        key=attrgetter('id'))
-    paginator = Paginator(product_list, 6)
-    page = request.GET.get('page')
-    try:
-        product_list = paginator.page(page)
-    except PageNotAnInteger:
-        product_list = paginator.page(1)
-    except EmptyPage:
-        product_list = paginator.page(paginator.num_pages)
+class ProductListView(generic.ListView):
+    template_name = 'index.html'
+    model = Product
+    paginate_by = 10
 
-    context = {'book': book, 'magazine': magazine, 'genre': genre, 'product_list': product_list}
-    return render(request, 'index.html', context=context)
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        return context
 
 
 def product_manage(request):

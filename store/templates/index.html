@@ -4,6 +4,7 @@
   <div class="catalog  block_white">
     <ul class="row catalog-grid">
       {% for product in product_list %}
+
         <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
           <div class="item block_shadow">
             <div class="item__img-wrapper">
@@ -23,33 +24,15 @@
               <div class="item__price">
                 <p>{{ product.price }}</p>
               </div>
+              {{product.get_rating}}
               <form action="{% url "cart:cart_add" product.id %}" method="post">
-              {% csrf_token %}
-              <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>
-            </form>
+                {% csrf_token %}
+                <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>
+              </form>
             </div>
           </div>
         </li>
       {% endfor %}
     </ul>
   </div>
-
-  <div class="pagination">
-          <span class="step-links">
-              {% if product_list.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ product_list.previous_page_number }}">previous</a>
-              {% endif %}
-            <span class="current">
-                  Page {{ product_list.number }} of {{ product_list.paginator.num_pages }}.
-              </span>
-            {% if product_list.has_next %}
-              <a href="?page={{ product_list.next_page_number }}">next</a>
-              <a href="?page={{ product_list.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-          </span>
-  </div>
-
-
-
 {% endblock %}

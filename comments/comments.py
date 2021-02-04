@@ -23,4 +23,11 @@ def quantity_reviews(slug):
     """
     product = Product.objects.get(slug=slug)
     products_reviews = ProductComment.objects.filter(product=product).aggregate(Sum('product'))
-    return products_reviews['product__sum']
+    if products_reviews['product__sum']:
+        return products_reviews['product__sum']
+    else:
+        return 0
+
+
+def get_average_rating(slug):
+    return slug
