@@ -1,7 +1,7 @@
 from django.db.models import Sum, Count
 from django.shortcuts import get_object_or_404
 from store.models import Product
-from .models import ProductComment
+from .models import ProductReviews
 from .forms import ProductReviewsForm
 
 
@@ -22,7 +22,7 @@ def quantity_reviews(slug):
     Подсчет количества отзывов товара
     """
     product = Product.objects.get(slug=slug)
-    products_reviews = ProductComment.objects.filter(product=product).aggregate(Count('product'))
+    products_reviews = ProductReviews.objects.filter(product=product).aggregate(Count('product'))
     if products_reviews['product__count']:
         return products_reviews['product__count']
     else:

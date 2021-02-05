@@ -77,7 +77,7 @@ class Product(models.Model):
             return reverse('store:magazine_detail', kwargs={'slug': self.slug})
 
     def get_rating(self):
-        rating = self.productcomment_set.all().aggregate(Avg('rating'))
+        rating = self.productreviews_set.all().aggregate(Avg('rating'))
         if rating['rating__avg']:
             return round(float(rating['rating__avg']), 2)
         else:

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from store.models import Product
 
 
-class ProductComment(models.Model):
+class ProductReviews(models.Model):
     RATING_CHOICES = (
         (1, 1),
         (2, 2),

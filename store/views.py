@@ -10,7 +10,7 @@ from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre
 
-from comments.models import ProductComment
+from comments.models import ProductReviews
 from comments.comments import product_reviews, quantity_reviews
 
 
@@ -53,7 +53,7 @@ class BooksDetailView(generic.DetailView):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
-        context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
+        context['comment_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
 
@@ -113,7 +113,7 @@ class MagazineDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
-        context['comment_list'] = ProductComment.objects.filter(product__slug=self.kwargs['slug'])
+        context['comment_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
         return context
 
 

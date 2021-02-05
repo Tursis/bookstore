@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category
-from comments.models import ProductComment
+from comments.models import ProductReviews
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
 from cart.models import Cart
@@ -56,7 +56,7 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-class ProductCommentAdmin(admin.ModelAdmin):
+class ProductReviewsAdmin(admin.ModelAdmin):
     list_display = ('user', 'product', 'description', 'rating', 'pub_date', 'active')
     list_filter = ['user']
     search_fields = ['user']
@@ -74,5 +74,5 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Cart, СartAdmin)
 admin.site.register(Purchase)
-admin.site.register(ProductComment, ProductCommentAdmin)
+admin.site.register(ProductReviews, ProductReviewsAdmin)
 admin.site.register(Token)

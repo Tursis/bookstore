@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import ProductComment
+from .models import ProductReviews
 
 
 class ProductReviewsForm(forms.ModelForm):
-    rating = forms.ChoiceField(widget=forms.RadioSelect, choices=ProductComment.RATING_CHOICES)
+    rating = forms.ChoiceField(widget=forms.RadioSelect, choices=ProductReviews.RATING_CHOICES)
 
     class Meta:
-        model = ProductComment
+        model = ProductReviews
         fields = ('rating', 'description',)
