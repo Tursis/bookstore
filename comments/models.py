@@ -35,5 +35,16 @@ class ProductReviews(models.Model):
         return titlestring
 
 
+class ReviewComment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    reviews = models.ForeignKey(ProductReviews, on_delete=models.SET_NULL, null=True)
+    comment = models.TextField(max_length=400, verbose_name='Коментарий', help_text='Enter your comment here')
+    pub_date = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True, verbose_name='активация коментария')
+
+    class Meta:
+        ordering = ['pub_date']
+
+
 
 

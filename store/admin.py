@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category
-from comments.models import ProductReviews
+from comments.models import ProductReviews, ReviewComment
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
 from cart.models import Cart
@@ -63,6 +63,13 @@ class ProductReviewsAdmin(admin.ModelAdmin):
     radio_fields = {'rating': admin.VERTICAL}
 
 
+class ReviewCommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'comment', 'pub_date', 'active')
+    list_filter = ['user']
+    search_fields = ['user']
+
+
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Book, BookAdmin)
@@ -75,4 +82,5 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Cart, СartAdmin)
 admin.site.register(Purchase)
 admin.site.register(ProductReviews, ProductReviewsAdmin)
+admin.site.register(ReviewComment, ReviewCommentAdmin)
 admin.site.register(Token)
