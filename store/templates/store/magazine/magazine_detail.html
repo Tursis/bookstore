@@ -18,11 +18,7 @@
         <div class="col-12 col-md-6 product__info-box">
           <div class="info-box__header">
             <p>{{ magazine.name }}</p>
-            <p> Автор:
-              {% for author in magazine.author.all %}
-                {{ author }}
-              {% endfor %}
-            </p>
+            <p>Оценка: {{ magazine.get_rating }}</p>
             <p>{{ magazine.price }}₴</p>
             <form action="{% url "cart:cart_add" magazine.id %}" method="post">
               {% csrf_token %}
@@ -47,7 +43,15 @@
         </div>
       </div>
     </div>
- <form action="{% url "reviews:product_reviews" magazine.slug%}?next={{ request.path|urlencode }}" method="post">
+    Коментарии({{ quantity_reviews }})
+    {% for comment in comment_list %}
+      <br>
+      {{ comment.user.first_name }}
+      {{ comment.user.last_name }}
+      <br>
+      {{ comment.description }}
+    {% endfor %}
+    <form action="{% url "reviews:product_reviews" magazine.slug %}?next={{ request.path|urlencode }}" method="post">
       {% csrf_token %}
       <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
     </form>

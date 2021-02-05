@@ -79,7 +79,7 @@ class Product(models.Model):
     def get_rating(self):
         rating = self.productcomment_set.all().aggregate(Avg('rating'))
         if rating['rating__avg']:
-            return rating['rating__avg']
+            return round(float(rating['rating__avg']), 2)
         else:
             return ''
 
