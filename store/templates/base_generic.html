@@ -19,13 +19,13 @@
           <div class="cart">
             {% with total_items=cart_info|length %}
               {% if cart_info|length > 0 %}
-                Your cart:
+                Ваша корзина:
                 <a href="{% url "cart:cart_detail" %}">
-                  <span id="cart_quantity">{{ total_items }} </span> item{{ total_items|pluralize }},
+                  <span id="cart_quantity">{{ total_items }} </span>,
                  <span class="cart_total_price"> {{ cart_info.get_total_price }} </span> UAH
                 </a>
               {% else %}
-                Your cart is empty.
+                Ваша корзина пуста.
               {% endif %}
             {% endwith %}
           </div>

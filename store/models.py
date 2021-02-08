@@ -3,6 +3,7 @@ from django.db.models import Avg
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 
 
 # Create your models here.
@@ -49,8 +50,10 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', help_text="Enter book name.", blank=True)
 
     price = models.DecimalField(max_digits=10, verbose_name='Цена', decimal_places=2, help_text="Enter price book",
+                                validators=[MinValueValidator(1)],
                                 blank=True)
     Discounts = models.DecimalField(max_digits=10, verbose_name='Скидка', decimal_places=2, help_text="Enter discounts",
+                                    validators=[MinValueValidator(0)],
                                     blank=True)
     image = models.ImageField(upload_to='images/books/', verbose_name='Изображение', blank=True, null=True)
     slug = models.SlugField(max_length=100)
@@ -83,6 +86,21 @@ class Product(models.Model):
         else:
             return ''
 
+    def get_discount(self):
+        category_discount = self.category.categorydiscount_set.get(category=self.category)
+        if category_discount.discount > self.Discounts:
+            return category_discount.discount
+        else:
+            return self.Discounts
+
+    def get_discounted_price(self):
+        discount = self.get_discount()
+        if discount > 0:
+            price = self.price - (self.price * (discount / 100))
+            return round(float(price), 2)
+        if discount == 0:
+            return self.price
+
 
 class Book(Product):
     author = models.ManyToManyField(BookAuthor, verbose_name='Автор')
@@ -110,3 +128,11 @@ class Magazine(Product):
     pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
                                    null=True)
     size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
+
+
+class CategoryDiscount(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    discount = models.DecimalField(max_digits=10, verbose_name='Скидка', decimal_places=2, help_text="Enter discounts",
+                                   validators=[MinValueValidator(0)],
+                                   blank=True)
+    active = models.BooleanField(default=False, verbose_name='активация скидки')

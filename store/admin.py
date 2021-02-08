@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category
+from .models import Product, Book, Magazine, BookGenre, BookAuthor, Publisher, Category, CategoryDiscount
 from comments.models import ProductReviews, ReviewComment
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
@@ -69,6 +69,9 @@ class ReviewCommentAdmin(admin.ModelAdmin):
     search_fields = ['user']
 
 
+class CategoryDiscountAdmin(admin.ModelAdmin):
+    list_display = ('category', 'discount')
+
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Product, ProductAdmin)
@@ -84,3 +87,4 @@ admin.site.register(Purchase)
 admin.site.register(ProductReviews, ProductReviewsAdmin)
 admin.site.register(ReviewComment, ReviewCommentAdmin)
 admin.site.register(Token)
+admin.site.register(CategoryDiscount, CategoryDiscountAdmin)

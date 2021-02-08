@@ -23,6 +23,8 @@
             <div class="item__bottom">
               <div class="item__price">
                 <p>{{ product.price }}</p>
+                <p>{{ product.get_discount}}%</p>
+                <p>{{ product.get_discounted_price }}</p>
               </div>
               {{product.get_rating}}
               <form action="{% url "cart:cart_add" product.id %}" method="post">
