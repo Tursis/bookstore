@@ -34,7 +34,6 @@ class CartInModel:
         else:
             self.cart.user = self.user
             self.cart.product = product
-            # self.cart.price = product.price
             self.cart.quantity = quantity
             self.cart.save()
 
@@ -49,7 +48,7 @@ class CartInModel:
         """
         Подсчет суммы товаров в корзине.
         """
-        return sum((item.product.price * item.quantity for item in
+        return sum((item.product.get_discounted_price() * item.quantity for item in
                     Cart.objects.filter(user=self.user)))
 
     def remove(self, product):

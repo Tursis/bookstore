@@ -17,7 +17,7 @@ class OrderFromSession:
             product = Product.objects.get(name=item['product'])
             Purchase.objects.create(order=order,
                                     product=item['product'],
-                                    price=product.price,
+                                    price=product.get_discounted_price(),
                                     quantity=item['quantity'])
             # очистка корзины
         self.cart.clear()

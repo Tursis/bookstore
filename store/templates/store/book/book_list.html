@@ -20,7 +20,13 @@
             </div>
             <div class="item__bottom">
               <div class="item__price">
-                <p>{{ product.price }}</p>
+                {% if product.get_discount > 0 %}
+                  <p>{{ product.price }} UAH</p>
+                  <p>{{ product.get_discount }}%</p>
+                  <p>{{ product.get_discounted_price }} UAH</p>
+                {% else %}
+                  <p>{{ product.price }} UAH</p>
+                {% endif %}
               </div>
               {{product.get_rating}}
               <button class="item__button">Купить</button>

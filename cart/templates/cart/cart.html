@@ -31,7 +31,7 @@
                           max="100"
                           value="{{ item.quantity }}"
                           readonly
-                          data-price={{ item.product.price }}
+                          data-price={{ item.product.get_discounted_price }}
 
                   />
                   <img data-product="{{ product.id }}" data-action="cart_form_plus" class="arrow-icon"
@@ -42,7 +42,7 @@
               </div>
             </td>
             <td class="num">
-              <span data-sum> {{ item.quantity|mul:item.product.price }} </span> UAH
+              <span data-sum> {{ item.quantity|mul:item.product.get_discounted_price }} </span> UAH
             </td>
             <td><a href="{% url "cart:cart_remove" product.id %}">Удалить</a></td>
           </tr>

@@ -17,7 +17,7 @@ class OrderFromModels:
             product = Product.objects.get(name=item_cart.product)
             Purchase.objects.create(order=order,
                                     product=item_cart.product,
-                                    price=product.price,
+                                    price=product.get_discounted_price(),
                                     quantity=item_cart.quantity)
             # очистка корзины
             item_cart.delete()

@@ -70,7 +70,7 @@ class ReviewCommentAdmin(admin.ModelAdmin):
 
 
 class CategoryDiscountAdmin(admin.ModelAdmin):
-    list_display = ('category', 'discount')
+    list_display = ('category', 'discount', 'active')
 
 
 admin.site.register(Profile, ProfileAdmin)

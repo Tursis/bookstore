@@ -22,5 +22,5 @@ def get_total_price(purchase):
     """
     Подсчет суммы товаров в заказе.
     """
-    return sum((item.product.price * item.quantity for item in
+    return sum((item.product.get_discounted_price() * item.quantity for item in
                 purchase))

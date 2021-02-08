@@ -22,11 +22,15 @@
             </div>
             <div class="item__bottom">
               <div class="item__price">
-                <p>{{ product.price }}</p>
-                <p>{{ product.get_discount}}%</p>
-                <p>{{ product.get_discounted_price }}</p>
+                {% if product.get_discount > 0 %}
+                  <p>{{ product.price }} UAH</p>
+                  <p>{{ product.get_discount }}%</p>
+                  <p>{{ product.get_discounted_price }} UAH</p>
+                {% else %}
+                  <p>{{ product.price }} UAH</p>
+                {% endif %}
               </div>
-              {{product.get_rating}}
+              {{ product.get_rating }}
               <form action="{% url "cart:cart_add" product.id %}" method="post">
                 {% csrf_token %}
                 <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>

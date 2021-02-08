@@ -26,7 +26,13 @@
                 {{ author }}
               {% endfor %}
             </p>
-            <p>{{ book.price }}₴</p>
+            {% if book.get_discount > 0 %}
+              <p>{{ book.price }} UAH</p>
+              <p>{{ book.get_discount }}%</p>
+              <p>{{ book.get_discounted_price }} UAH</p>
+            {% else %}
+              <p>{{ book.price }} UAH</p>
+            {% endif %}
             <form action="{% url "cart:cart_add" book.id %}" method="post">
               {% csrf_token %}
               <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>

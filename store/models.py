@@ -74,19 +74,28 @@ class Product(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
+        """
+        ссылка на товар
+        """
         if self.category.name == 'Книги':
             return reverse('store:book_detail', kwargs={'slug': self.slug})
         else:
             return reverse('store:magazine_detail', kwargs={'slug': self.slug})
 
     def get_rating(self):
+        """
+        Получение рейтинга товара
+        """
         rating = self.productreviews_set.all().aggregate(Avg('rating'))
         if rating['rating__avg']:
-            return round(float(rating['rating__avg']), 2)
+            return 'Рейтинг: %s' % (round(float(rating['rating__avg']), 2))
         else:
             return ''
 
     def get_discount(self):
+        """
+        Получение скидки больше
+        """
         category_discount = self.category.categorydiscount_set.get(category=self.category)
         if category_discount.discount > self.Discounts:
             return category_discount.discount
@@ -94,6 +103,9 @@ class Product(models.Model):
             return self.Discounts
 
     def get_discounted_price(self):
+        """
+        Получение цены товара на основе скидки
+        """
         discount = self.get_discount()
         if discount > 0:
             price = self.price - (self.price * (discount / 100))
@@ -136,3 +148,6 @@ class CategoryDiscount(models.Model):
                                    validators=[MinValueValidator(0)],
                                    blank=True)
     active = models.BooleanField(default=False, verbose_name='активация скидки')
+
+    def __str__(self):
+        return self.discount

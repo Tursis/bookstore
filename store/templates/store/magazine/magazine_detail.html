@@ -19,7 +19,13 @@
           <div class="info-box__header">
             <p>{{ magazine.name }}</p>
             <p>Оценка: {{ magazine.get_rating }}</p>
-            <p>{{ magazine.price }}₴</p>
+            {% if magazine.get_discount > 0 %}
+              <p>{{ magazine.price }} UAH</p>
+              <p>{{ magazine.get_discount }}%</p>
+              <p>{{ magazine.get_discounted_price }} UAH</p>
+            {% else %}
+              <p>{{ magazine.price }} UAH</p>
+            {% endif %}
             <form action="{% url "cart:cart_add" magazine.id %}" method="post">
               {% csrf_token %}
               <button class="info-box__button" type="submit" value="Add to cart">В корзину</button>

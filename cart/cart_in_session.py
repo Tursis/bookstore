@@ -68,7 +68,7 @@ class CartInSession:
         Подсчет суммы товаров в корзине.
         """
         for product in products:
-            self.cart[str(product.id)]['price'] = str(product.price)
+            self.cart[str(product.id)]['price'] = str(product.get_discounted_price())
         return sum(Decimal(item['price']) * item['quantity'] for item in
                    self.cart.values())
 
