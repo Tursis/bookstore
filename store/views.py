@@ -2,16 +2,13 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from itertools import chain
-from operator import attrgetter
 from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre
-
 from comments.models import ProductReviews
-from comments.comments import product_reviews, quantity_reviews
+from comments.comments import quantity_reviews
+from comments.forms import ReviewCommentForm
 
 
 # Create your views here.
@@ -53,7 +50,8 @@ class BooksDetailView(generic.DetailView):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
-        context['comment_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
+        context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
+        context['comments_list'] = ReviewCommentForm()
         return context
 
 
@@ -113,7 +111,8 @@ class MagazineDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
-        context['comment_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
+        context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
+        context['comments_list'] = ReviewCommentForm()
         return context
 
 

@@ -56,17 +56,23 @@
         </div>
       </div>
     </div>
-    Коментарии({{ quantity_reviews }})
-    {% for comment in comment_list %}
+    Отзывы({{ quantity_reviews }})
+    {% for review in reviews_list %}
       <br>
-      {{ comment.user.first_name }}
-      {{ comment.user.last_name }}
+      {{ review.user.first_name }}
+      {{ review.user.last_name }}
       <br>
-      {{ comment.description }}
+      {{ review.description }}
     {% endfor %}
+    <p>Коментарии()</p>
     <form action="{% url "reviews:product_reviews" book.slug %}?next={{ request.path|urlencode }}" method="post">
       {% csrf_token %}
       <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
+    </form>
+    <form action="{% url "store:book_detail" book.slug %}" method="post">
+      {% csrf_token %}
+      <button class="" type="submit" value="Add comment">Оставить коментарий</button>
+      {{ comments_list }}
     </form>
   {% endif %}
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

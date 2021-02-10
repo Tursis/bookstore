@@ -5,7 +5,7 @@ from .models import ProductReviews
 from .forms import ProductReviewsForm
 
 
-def product_reviews(request, slug, form):
+def add_product_reviews(request, slug, form):
     """
     Функция добавление отзыва товара
     """
@@ -15,6 +15,11 @@ def product_reviews(request, slug, form):
         new_reviews.product = product
         new_reviews.user = request.user
         new_reviews.save()
+
+
+def add_review_comment(request, slug, form):
+    print('hello')
+    pass
 
 
 def quantity_reviews(slug):
@@ -27,6 +32,3 @@ def quantity_reviews(slug):
         return products_reviews['product__count']
     else:
         return 0
-
-
-

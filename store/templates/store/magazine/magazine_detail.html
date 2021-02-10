@@ -49,14 +49,15 @@
         </div>
       </div>
     </div>
-    Коментарии({{ quantity_reviews }})
-    {% for comment in comment_list %}
+    Отзывы({{ quantity_reviews }})
+    {% for review in reviews_list %}
       <br>
-      {{ comment.user.first_name }}
-      {{ comment.user.last_name }}
+      {{ review.user.first_name }}
+      {{ review.user.last_name }}
       <br>
-      {{ comment.description }}
+      {{ review.description }}
     {% endfor %}
+    <p>Коментарии()</p>
     <form action="{% url "reviews:product_reviews" magazine.slug %}?next={{ request.path|urlencode }}" method="post">
       {% csrf_token %}
       <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
