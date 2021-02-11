@@ -56,6 +56,10 @@
         </div>
       </div>
     </div>
+    <form action="{% url "reviews:product_reviews" book.slug %}?next={{ request.path|urlencode }}" method="post">
+      {% csrf_token %}
+      <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
+    </form>
     Отзывы({{ quantity_reviews }})
     {% for review in reviews_list %}
       <br>
@@ -63,18 +67,18 @@
       {{ review.user.last_name }}
       <br>
       {{ review.description }}
+      <p>Коментарии()</p>
+      {% for item in review.reviewcomment_set.values %}
+      <p>{{ item.comment }}</p>
+       {% endfor %}
+      <form action="{% url "store:book_detail" book.slug %}" method="post">
+        {% csrf_token %}
+        <button class="" type="submit" name="reviews" value="{{ review.id }}">Оставить коментарий</button>
+        {{ comment_form }}
+      </form>
     {% endfor %}
-    <p>Коментарии()</p>
-    <form action="{% url "reviews:product_reviews" book.slug %}?next={{ request.path|urlencode }}" method="post">
-      {% csrf_token %}
-      <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
-    </form>
-    <form action="{% url "store:book_detail" book.slug %}" method="post">
-      {% csrf_token %}
-      <button class="" type="submit" value="Add comment">Оставить коментарий</button>
-      {{ comments_list }}
-    </form>
   {% endif %}
+
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript">
       $("#dropdown-menu").on("click", () => {

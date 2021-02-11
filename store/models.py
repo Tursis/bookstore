@@ -109,7 +109,7 @@ class Product(models.Model):
         discount = self.get_discount()
         if discount > 0:
             price = self.price - (self.price * (discount / 100))
-            return round(float(price), 2)
+            return price
         if discount == 0:
             return self.price
 

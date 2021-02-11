@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
 from .comments import add_product_reviews, add_review_comment
@@ -12,10 +13,8 @@ class ProductReviewsView(View):
         if request.method == 'POST':
             form = ProductReviewsForm(request.POST)
             if form.is_valid():
-                form_reviews = form.save()
                 add_product_reviews(request, slug, form)
-                return redirect('store:book_detail', slug=slug)
-
+                return HttpResponseRedirect(request.POST.get('next', '/'))
             else:
                 form_reviews = ProductReviewsForm
             return render(request, 'product_reviews.html', {'form_reviews': form_reviews, 'slug': slug})

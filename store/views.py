@@ -7,7 +7,7 @@ from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre
 from comments.models import ProductReviews
-from comments.comments import quantity_reviews
+from comments.comments import quantity_reviews, add_review_comment
 from comments.forms import ReviewCommentForm
 
 
@@ -46,12 +46,19 @@ class BooksDetailView(generic.DetailView):
     model = Book
     template_name = 'store/book/book_detail.html'
 
+    def post(self, request, slug, **kwargs):
+        if request.method == 'POST':
+            form = ReviewCommentForm(request.POST)
+            if form.is_valid():
+                add_review_comment(request, slug, form)
+        return redirect('store:book_detail', slug=slug)
+
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
-        context['comments_list'] = ReviewCommentForm()
+        context['comment_form'] = ReviewCommentForm
         return context
 
 
@@ -107,12 +114,19 @@ class MagazineDetailView(generic.DetailView):
     template_name = 'store/magazine/magazine_detail.html'
     model = Magazine
 
+    def post(self, request, slug, **kwargs):
+        if request.method == 'POST':
+            form = ReviewCommentForm(request.POST)
+            if form.is_valid():
+                add_review_comment(request, slug, form)
+        return redirect('store:magazine_detail', slug=slug)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
-        context['comments_list'] = ReviewCommentForm()
+        context['comment_form'] = ReviewCommentForm
         return context
 
 
