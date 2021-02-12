@@ -10,7 +10,6 @@ from .models import Cart
 from .forms import CartAddProductForm
 
 
-
 class CartAddView(View):
 
     def post(self, request, product_id):

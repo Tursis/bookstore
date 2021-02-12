@@ -9,6 +9,7 @@ from .models import Product, Book, Magazine, BookGenre
 from comments.models import ProductReviews
 from comments.comments import quantity_reviews, add_review_comment
 from comments.forms import ReviewCommentForm
+from comments.views import ReviewCommentView
 
 
 # Create your views here.
@@ -47,10 +48,7 @@ class BooksDetailView(generic.DetailView):
     template_name = 'store/book/book_detail.html'
 
     def post(self, request, slug, **kwargs):
-        if request.method == 'POST':
-            form = ReviewCommentForm(request.POST)
-            if form.is_valid():
-                add_review_comment(request, slug, form)
+        ReviewCommentView.post(self, request, slug)
         return redirect('store:book_detail', slug=slug)
 
     def get_context_data(self, **kwargs):
@@ -115,10 +113,7 @@ class MagazineDetailView(generic.DetailView):
     model = Magazine
 
     def post(self, request, slug, **kwargs):
-        if request.method == 'POST':
-            form = ReviewCommentForm(request.POST)
-            if form.is_valid():
-                add_review_comment(request, slug, form)
+        ReviewCommentView.post(self, request, slug)
         return redirect('store:magazine_detail', slug=slug)
 
     def get_context_data(self, **kwargs):
