@@ -7,7 +7,7 @@ from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre
 from comments.models import ProductReviews
-from comments.comments import quantity_reviews, add_review_comment
+from comments.comments import quantity_reviews
 from comments.forms import ReviewCommentForm
 from comments.views import ReviewCommentView
 

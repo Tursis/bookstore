@@ -21,7 +21,7 @@
               {% if cart_info|length > 0 %}
                 Ваша корзина:
                 <a href="{% url "cart:cart_detail" %}">
-                  <span id="cart_quantity">{{ total_items }} </span>,
+                  <span id="cart_quantity">{{ total_items }} </span>;
                  <span class="cart_total_price"> {{ cart_info.get_total_price }} </span> UAH
                 </a>
               {% else %}

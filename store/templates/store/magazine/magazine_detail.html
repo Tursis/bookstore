@@ -64,11 +64,13 @@
       {% for item in review.reviewcomment_set.values %}
         <p>{{ item.comment }}</p>
       {% endfor %}
-      <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
-        {% csrf_token %}
-        <button class="" type="submit" name="reviews" value="{{ review.id }}">Оставить коментарий</button>
-        {{ comment_form }}
-      </form>
+      {% if user.is_authenticated %}
+        <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
+          {% csrf_token %}
+          <button class="" type="submit" name="reviews" value="{{ review.id }}">Оставить коментарий</button>
+          {{ comment_form }}
+        </form>
+      {% endif %}
     {% endfor %}
   {% endif %}
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

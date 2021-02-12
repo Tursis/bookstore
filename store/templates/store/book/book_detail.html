@@ -71,11 +71,13 @@
       {% for item in review.reviewcomment_set.values %}
       <p>{{ item.comment }}</p>
        {% endfor %}
+      {% if user.is_authenticated %}
       <form action="{% url "store:book_detail" book.slug %}" method="post">
         {% csrf_token %}
         <button class="" type="submit" name="reviews" value="{{ review.id }}">Оставить коментарий</button>
         {{ comment_form }}
       </form>
+      {% endif %}
     {% endfor %}
   {% endif %}
 
