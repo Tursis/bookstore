@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
 from .forms import BookForm
-from .models import Product, Book, Magazine, BookGenre
+from .models import Product, Book, Magazine, BookGenre, BookAuthor
 from comments.models import ProductReviews
 from comments.comments import quantity_reviews
 from comments.forms import ReviewCommentForm
@@ -21,6 +21,8 @@ class ProductListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
+        context['author_list'] = BookAuthor.objects.all()
+        context['genre_list'] = BookGenre.objects.all()
         return context
 
 
