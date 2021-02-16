@@ -14,21 +14,23 @@
       </li>
       <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
     </ul>
-    <form action="">
+    <form action="" method="post">
+      {% csrf_token %}
       <ul> Автор:
         {% for author in author_list.all %}
           <li><label>
-            <input type="checkbox" name="choices" value=""> {{ author }}
+            <input type="checkbox" name="author" value={{ author.id }}> {{ author }}
           </label></li>
         {% endfor %}
       </ul>
       <ul> Жанр:
         {% for genre in genre_list.all %}
           <li><label>
-            <input type="checkbox" name="choices" value=""> {{ genre }}
+            <input type="checkbox" name="genre" value={{ genre.id }}> {{ genre }}
           </label></li>
         {% endfor %}
       </ul>
+      <button class="" type="submit" value="apply">Применить</button>
     </form>
   </div>
 </nav>

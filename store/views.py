@@ -19,11 +19,25 @@ class ProductListView(generic.ListView):
     model = Product
     paginate_by = 10
 
+    def post(self, request, **kwargs):
+        print(request.POST.getlist('author'))
+        print(request.POST.getlist('genre'))
+        filter_test(genre=request.POST.getlist('genre'), author=request.POST.getlist('author'))
+        product_list = Book.objects.filter(genre__in=request.POST.getlist('genre'))
+
+        # return redirect('store:index',)
+        return render(request, 'index.html', context={'product_list': set(product_list)})
+
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context['author_list'] = BookAuthor.objects.all()
         context['genre_list'] = BookGenre.objects.all()
         return context
+
+
+def filter_test(**kwargs):
+    z = Book.objects.filter(genre__in=kwargs['genre'], author__in=kwargs['author'])
+    print(z)
 
 
 def product_manage(request):
