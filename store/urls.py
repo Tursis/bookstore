@@ -6,7 +6,8 @@ from django.urls import path
 app_name = 'store'
 urlpatterns = [
     path('', views.ProductListView.as_view(), name='index'),
-    path('store/', views.ProductListView.as_view(), name='index'),
+    url(r'^store(?:/(?P<dummy1>[a-zA-Z]+))?(?:/(?P<dummy2>[a-zA-Z]+))?(?:/(?P<dummy3>[a-zA-Z]+))?/$',
+        views.ProductListView.as_view(), name='index'),
     path('store/manage/', views.product_manage, name='product_manage'),
     path('store/manage/book/', views.BooksManageView.as_view(), name='book_manage'),
     path('store/manage/magizne/', views.MagazineManageView.as_view(), name='magazine_manage'),

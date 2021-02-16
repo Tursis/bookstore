@@ -14,7 +14,7 @@
       </li>
       <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
     </ul>
-    <form action="" method="post">
+    <form action="{% url 'store:index' 'hello' 'hello' 'hello'%}" method="post">
       {% csrf_token %}
       <ul> Автор:
         {% for author in author_list.all %}

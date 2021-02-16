@@ -19,7 +19,7 @@ class ProductListView(generic.ListView):
     model = Product
     paginate_by = 10
 
-    def post(self, request, **kwargs):
+    def post(self, request, dummy1='hello', dummy='hello', dummy3='hell', **kwargs):
         print(request.POST.getlist('author'))
         print(request.POST.getlist('genre'))
         filter_test(genre=request.POST.getlist('genre'), author=request.POST.getlist('author'))
