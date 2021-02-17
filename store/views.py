@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
@@ -14,19 +14,31 @@ from comments.views import ReviewCommentView
 
 # Create your views here.
 
-class ProductListView(generic.ListView):
+class ProductListView(View):
     template_name = 'index.html'
     model = Product
     paginate_by = 10
 
-    def post(self, request, dummy1='hello', dummy='hello', dummy3='hell', **kwargs):
-        print(request.POST.getlist('author'))
-        print(request.POST.getlist('genre'))
-        filter_test(genre=request.POST.getlist('genre'), author=request.POST.getlist('author'))
-        product_list = Book.objects.filter(genre__in=request.POST.getlist('genre'))
+    def get(self, request, optional_parameter='genre'):
+        product_list = Product.objects.all()
 
-        # return redirect('store:index',)
-        return render(request, 'index.html', context={'product_list': set(product_list)})
+        context = {'product_list': set(product_list), 'author_list': BookAuthor.objects.all(),
+                   'genre_list': BookGenre.objects.all(), 'genre': 4}
+        return render(request, 'index.html', context=context)
+
+    # def post(self, request, genre, optional_parameter='genre', **kwargs):
+    #     print(request.POST.getlist('author'))
+    #     print(request.POST.getlist('genre'))
+    #     filter_test(genre=request.POST.getlist('genre'), author=request.POST.getlist('author'))
+    #     product_list = Book.objects.filter(genre__in=request.POST.getlist('genre'))
+    #     context = {'product_list': set(product_list), 'author_list': BookAuthor.objects.all(),
+    #                'genre_list': BookGenre.objects.all(), 'genre': request.POST.getlist('genre')}
+    #     # return redirect('store:index',)
+    #     return render(request, 'index.html', context=context)
+
+    def post(self, request, genre, optional_parameter='genre', **kwargs):
+        product = Book.objects.filter(genre=genre)
+        return render(request, 'index.html', context={'product_list': product})
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
