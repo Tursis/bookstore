@@ -12,9 +12,7 @@ class ProductFilter(django_filters.FilterSet):
     book__author = django_filters.ModelMultipleChoiceFilter(queryset=BookAuthor.objects.all(),
                                                             widget=forms.CheckboxSelectMultiple)
     book__publisher = django_filters.ModelMultipleChoiceFilter(queryset=Publisher.objects.all(),
-                                                            widget=forms.CheckboxSelectMultiple)
-
-
+                                                               widget=forms.CheckboxSelectMultiple)
 
     price = django_filters.CharFilter(lookup_expr='iexact')
 
@@ -22,5 +20,8 @@ class ProductFilter(django_filters.FilterSet):
         model = Product
         fields = [
             'category',
+            'book__genre',
+            'book__author',
+            'book__publisher',
             'price',
         ]
