@@ -4,6 +4,7 @@ from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
+from .filters import ProductFilter
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre, BookAuthor
 from comments.models import ProductReviews
@@ -21,9 +22,9 @@ class ProductListView(View):
 
     def get(self, request, optional_parameter='genre'):
         product_list = Product.objects.all()
-
+        f = ProductFilter(request.GET, queryset=Product.objects.all())
         context = {'product_list': set(product_list), 'author_list': BookAuthor.objects.all(),
-                   'genre_list': BookGenre.objects.all(), 'genre': 4}
+                   'genre_list': BookGenre.objects.all(), 'genre': 4, 'filter': f}
         return render(request, 'index.html', context=context)
 
     # def post(self, request, genre, optional_parameter='genre', **kwargs):
@@ -35,10 +36,6 @@ class ProductListView(View):
     #                'genre_list': BookGenre.objects.all(), 'genre': request.POST.getlist('genre')}
     #     # return redirect('store:index',)
     #     return render(request, 'index.html', context=context)
-
-    def post(self, request, genre, optional_parameter='genre', **kwargs):
-        product = Book.objects.filter(genre=genre)
-        return render(request, 'index.html', context={'product_list': product})
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)

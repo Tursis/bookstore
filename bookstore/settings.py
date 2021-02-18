@@ -36,12 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_rename_app',
+    'django_filters',
     'rest_framework',
     'store.apps.StoreConfig',
     'orders.apps.OrdersConfig',
     'cart.apps.CartConfig',
     'profile.apps.ProfileConfig',
-    'comments.apps.CommentsConfig'
+    'comments.apps.CommentsConfig',
 ]
 
 MIDDLEWARE = [

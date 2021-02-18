@@ -14,23 +14,30 @@
       </li>
       <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
     </ul>
-    <form action="{% url "store:index" genre %}"  method="post">
-      {% csrf_token %}
-      <ul> Автор:
-        {% for author in author_list.all %}
-          <li><label>
-            <input type="checkbox" name="author" value={{ author.id }}> {{ author }}
-          </label></li>
-        {% endfor %}
-      </ul>
-      <ul> Жанр:
-        {% for genre in genre_list.all %}
-          <li><label>
-            <input type="checkbox" name="genre" value={{ genre.id }}> {{ genre }}
-          </label></li>
-        {% endfor %}
-      </ul>
-      <button class="" type="submit" value="apply">Применить</button>
+    {#    <form action="{% url "store:index" genre %}"  method="post">#}
+    {#      {% csrf_token %}#}
+    {#      <ul> Автор:#}
+    {#        {% for author in author_list.all %}#}
+    {#          <li><label>#}
+    {#            <input type="checkbox" name="author" value={{ author.id }}> {{ author }}#}
+    {#          </label></li>#}
+    {#        {% endfor %}#}
+    {#      </ul>#}
+    {#      <ul> Жанр:#}
+    {#        {% for genre in genre_list.all %}#}
+    {#          <li><label>#}
+    {#            <input type="checkbox" name="genre" value={{ genre.id }}> {{ genre }}#}
+    {#          </label></li>#}
+    {#        {% endfor %}#}
+    {#      </ul>#}
+    {#      <button class="" type="submit" value="apply">Применить</button>#}
+    {#    </form>#}
+    <form method="get">
+      {{ filter.form.as_p }}
+      <input type="submit"/>
     </form>
+    {% for obj in filter.qs %}
+      {{ obj.name }} - {{ obj.price }} UAH<br/>
+    {% endfor %}
   </div>
 </nav>

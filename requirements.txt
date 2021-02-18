@@ -14,3 +14,4 @@ whitenoise==5.2.0
 
 djangorestframework~=3.12.2
 pip~=20.3.3
+django-filter~=2.4.0

@@ -1,8 +1,14 @@
-from rest_framework.filters import BaseFilterBackend
+import django_filters
 
-class CatalogFilterBackend(BaseFilterBackend):
+from .models import Product, Book, Magazine
+from django import forms
 
-    def filter_queryset(self, request, queryset, view):
-        print('hello')
-        queryset = queryset.order_by('attribute__sortmetric')
-        return queryset
+
+class ProductFilter(django_filters.FilterSet):
+    # name = django_filters.CharFilter(lookup_expr='iexact')
+    name = django_filters.ModelMultipleChoiceFilter(queryset=Product.objects.all(),
+                                                           widget=forms.CheckboxSelectMultiple)
+
+    class Meta:
+        model = Product
+        fields = ['price']
