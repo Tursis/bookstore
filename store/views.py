@@ -37,17 +37,6 @@ class ProductListView(View):
     #     # return redirect('store:index',)
     #     return render(request, 'index.html', context=context)
 
-    def get_context_data(self, **kwargs):
-        context = super(ProductListView, self).get_context_data(**kwargs)
-        context['author_list'] = BookAuthor.objects.all()
-        context['genre_list'] = BookGenre.objects.all()
-        return context
-
-
-def filter_test(**kwargs):
-    z = Book.objects.filter(genre__in=kwargs['genre'], author__in=kwargs['author'])
-    print(z)
-
 
 def product_manage(request):
     return render(request, 'store/product_manage.html')
