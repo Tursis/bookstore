@@ -16,26 +16,11 @@ from comments.views import ReviewCommentView
 # Create your views here.
 
 class ProductListView(View):
-    template_name = 'index.html'
-    model = Product
-    paginate_by = 10
 
-    def get(self, request, optional_parameter='genre'):
-        product_list = Product.objects.all()
+    def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
-        context = {'product_list': set(product_list), 'author_list': BookAuthor.objects.all(),
-                   'genre_list': BookGenre.objects.all(), 'genre': 4, 'filter': f}
-        return render(request, 'index.html', context=context)
 
-    # def post(self, request, genre, optional_parameter='genre', **kwargs):
-    #     print(request.POST.getlist('author'))
-    #     print(request.POST.getlist('genre'))
-    #     filter_test(genre=request.POST.getlist('genre'), author=request.POST.getlist('author'))
-    #     product_list = Book.objects.filter(genre__in=request.POST.getlist('genre'))
-    #     context = {'product_list': set(product_list), 'author_list': BookAuthor.objects.all(),
-    #                'genre_list': BookGenre.objects.all(), 'genre': request.POST.getlist('genre')}
-    #     # return redirect('store:index',)
-    #     return render(request, 'index.html', context=context)
+        return render(request, 'index.html', context={'filter': f})
 
 
 def product_manage(request):
