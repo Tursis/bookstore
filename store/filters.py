@@ -14,7 +14,7 @@ class ProductFilter(django_filters.FilterSet):
     book__publisher = django_filters.ModelMultipleChoiceFilter(queryset=Publisher.objects.all(),
                                                                widget=forms.CheckboxSelectMultiple)
 
-    price = django_filters.CharFilter(lookup_expr='iexact')
+    price = django_filters.CharFilter(field_name='price', lookup_expr='iexact')
 
     class Meta:
         model = Product
