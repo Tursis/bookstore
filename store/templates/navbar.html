@@ -16,11 +16,23 @@
     </ul>
     <form method="get">
       <p>Категории</p>
+      <hr>
+      <p>Категории</p>
       {{ filter.form.category }}
+      <hr>
+      <p>Жанры</p>
       {{ filter.form.book__genre }}
+      <hr>
+      <p>Авторы</p>
       {{ filter.form.book__author }}
+      <hr>
+      <p>Издатели</p>
       {{ filter.form.book__publisher }}
-      {{ filter.form.price }}
+      <hr>
+      <p>Цена</p>
+      {{ filter.form.price__gt }}
+      {{ filter.form.price__lt }}
+      {{ filter.len}}
 
       <input type="submit"/>
     </form>

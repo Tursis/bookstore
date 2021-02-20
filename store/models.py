@@ -1,3 +1,5 @@
+from itertools import count
+
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
@@ -35,6 +37,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def len(self):
+        product_list = Product.objects.filter(category=self.name)
+        return count(product_list)
 
 
 class Publisher(models.Model):
