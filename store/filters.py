@@ -25,6 +25,7 @@ class ProductFilter(django_filters.FilterSet):
     def len(self):
         print(self.qs)
         print('1111111111111111')
+        return Product.objects.values('name').count()
 
         # return count(self.qs)
 

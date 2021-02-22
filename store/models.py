@@ -39,8 +39,7 @@ class Category(models.Model):
         return self.name
 
     def len(self):
-        product_list = Product.objects.filter(category=self.name)
-        return count(product_list)
+        return Product.objects.filter(category=self.id).count()
 
 
 class Publisher(models.Model):

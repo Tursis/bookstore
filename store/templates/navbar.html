@@ -15,10 +15,10 @@
       <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
     </ul>
     <form method="get">
-      <p>Категории</p>
       <hr>
       <p>Категории</p>
       {{ filter.form.category }}
+      {{ filter.form.category.len }}
       <hr>
       <p>Жанры</p>
       {{ filter.form.book__genre }}
@@ -33,6 +33,7 @@
       {{ filter.form.price__gt }}
       {{ filter.form.price__lt }}
       {{ filter.len}}
+
 
       <input type="submit"/>
     </form>

@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
 from .filters import ProductFilter
 from .forms import BookForm
-from .models import Product, Book, Magazine, BookGenre, BookAuthor
+from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category
 from comments.models import ProductReviews
 from comments.comments import quantity_reviews
 from comments.forms import ReviewCommentForm
@@ -19,18 +19,10 @@ class ProductListView(View):
 
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
-        filt(request, f, f.queryset)
-        return render(request, 'index.html', context={'filter': f})
+        return render(request, 'index.html', context={'filter': f, 'category': Category.objects.all()})
 
 
-def filt(request, f, queryset):
-    print(f.request)
-    print(request.GET)
-    # for item in request.GET:
-    #     print(request.GET.getlist(item))
-    #     print()
 
-    # print(queryset)
 
 
 def product_manage(request):
