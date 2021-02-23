@@ -18,7 +18,7 @@
       <hr>
       <p>Категории</p>
       {{ filter.form.category }}
-      {{ filter.form.category.len }}
+      {{ filter.form.label_from_instance }}
       <hr>
       <p>Жанры</p>
       {{ filter.form.book__genre }}
@@ -32,9 +32,7 @@
       <p>Цена</p>
       {{ filter.form.price__gt }}
       {{ filter.form.price__lt }}
-      {{ filter.len}}
-
-
+      {{ filter.form.as_p }}
       <input type="submit"/>
     </form>
   </div>
