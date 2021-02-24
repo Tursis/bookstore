@@ -4,7 +4,7 @@
   <div class="catalog  block_white">
     <ul class="row catalog-grid">
       {% for product in filter.qs %}
-
+        {{ product.count }}
         <li class="col-6 col-md-6 col-xl-3  catalog-grid__cell ">
           <div class="item block_shadow">
             <div class="item__img-wrapper">

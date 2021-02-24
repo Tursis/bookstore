@@ -18,6 +18,8 @@ class BookAuthor(models.Model):
     def __str__(self):
         return self.name + ';'
 
+    def len(self):
+        return Book.objects.filter(author=self.id).count()
 
 class BookGenre(models.Model):
     name = models.CharField(max_length=50, verbose_name='Жанр', help_text="Enter book genre.", blank=True)
@@ -29,6 +31,8 @@ class BookGenre(models.Model):
     def get_absolute_url(self):
         return reverse('store:book_genres', kwargs={'slug': self.slug})
 
+    def len(self):
+        return Book.objects.filter(genre=self.id).count()
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Категория товару', help_text="Enter product category.",
@@ -48,6 +52,9 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
+
+    def len(self):
+        return Book.objects.filter(publisher=self.id).count()
 
 
 class Product(models.Model):

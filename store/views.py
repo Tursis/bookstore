@@ -19,10 +19,8 @@ class ProductListView(View):
 
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
+
         return render(request, 'index.html', context={'filter': f, 'category': Category.objects.all()})
-
-
-
 
 
 def product_manage(request):
