@@ -18,8 +18,8 @@
       <hr>
       <p>Категории</p>
       {{ filter.form.category }}
-      {% for item in filter.form.fields.category.queryset %}
-      {{ item.len}}
+      {% for item in filter.category_counter %}
+        {{ item}}
       {% endfor %}
       <hr>
       <p>Жанры</p>

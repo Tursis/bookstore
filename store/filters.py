@@ -12,22 +12,21 @@ from .models import Product, Book, Magazine, Category, BookGenre, BookAuthor, Pu
 class CategoryMultipleChoceFilter(django_filters.ModelMultipleChoiceFilter):
 
     def filter(self, qs, value):
+
         return super().filter(qs, value)
 
 
-class MyPropertyFilter(django_filters.Filter):
+class MyPropertyFilter(django_filters.ModelMultipleChoiceFilter):
     def filter(self, qs, value):
-        result = qs
-        result.count = len(result)
-        return result
+        return super().filter(qs, value)
 
 
 class ProductFilter(django_filters.FilterSet):
-    category = django_filters.ModelMultipleChoiceFilter(required=False,
-                                                        queryset=Category.objects.all(),
-                                                        widget=forms.CheckboxSelectMultiple(),
-                                                        label="Non-compliant Assets"
-                                                        )
+    category = MyPropertyFilter(required=False,
+                                queryset=Category.objects.all(),
+                                widget=forms.CheckboxSelectMultiple(),
+                                label="Non-compliant Assets"
+                                )
 
     book__genre = django_filters.ModelMultipleChoiceFilter(field_name='book__genre', queryset=BookGenre.objects.all(),
                                                            widget=forms.CheckboxSelectMultiple)
@@ -38,7 +37,6 @@ class ProductFilter(django_filters.FilterSet):
     book__publisher = django_filters.ModelMultipleChoiceFilter(field_name='book__publisher',
                                                                queryset=Publisher.objects.all(),
                                                                widget=forms.CheckboxSelectMultiple)
-    print(book__publisher.queryset)
     price__gt = django_filters.NumberFilter(field_name='price', lookup_expr='gt')
     price__lt = django_filters.NumberFilter(field_name='price', lookup_expr='lt')
 
@@ -55,4 +53,20 @@ class ProductFilter(django_filters.FilterSet):
     def __init__(self, *args, **kwargs):
         super(ProductFilter, self).__init__(*args, **kwargs)
         for item in self.form.fields['category'].queryset:
-            print(item.len())
+            item.len() + 1
+        print(self.qs.filter())
+
+    def category_counter(self):
+        print(self.data)
+        counter = []
+        for item in self.form.fields['category'].queryset:
+            counter.append(item.len())
+        return counter
+
+    def genre_counter(self):
+        counter = []
+        print(self.form.fields)
+
+        for item in self.form.fields['category'].queryset:
+            counter.append(item.len())
+        return counter

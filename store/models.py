@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 
+from .filter_counter import test
 
 # Create your models here.
 
@@ -21,6 +22,7 @@ class BookAuthor(models.Model):
     def len(self):
         return Book.objects.filter(author=self.id).count()
 
+
 class BookGenre(models.Model):
     name = models.CharField(max_length=50, verbose_name='Жанр', help_text="Enter book genre.", blank=True)
     slug = models.SlugField(max_length=100)
@@ -32,7 +34,9 @@ class BookGenre(models.Model):
         return reverse('store:book_genres', kwargs={'slug': self.slug})
 
     def len(self):
+
         return Book.objects.filter(genre=self.id).count()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Категория товару', help_text="Enter product category.",

@@ -4,6 +4,7 @@ from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from bookstore.settings import PERMISSION_ON_SITE
+from .filter_counter import test
 from .filters import ProductFilter
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category
@@ -19,7 +20,7 @@ class ProductListView(View):
 
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
-
+        test(request)
         return render(request, 'index.html', context={'filter': f, 'category': Category.objects.all()})
 
 
