@@ -7,7 +7,6 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 
-from .filter_counter import test
 
 # Create your models here.
 

@@ -54,7 +54,7 @@ class ProductFilter(django_filters.FilterSet):
         super(ProductFilter, self).__init__(*args, **kwargs)
         for item in self.form.fields['category'].queryset:
             item.len() + 1
-        print(self.qs.filter())
+
 
     def category_counter(self):
         print(self.data)
