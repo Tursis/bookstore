@@ -22,19 +22,15 @@ class MyPropertyFilter(django_filters.ModelMultipleChoiceFilter):
 
 
 class ProductFilter(django_filters.FilterSet):
-    category = MyPropertyFilter(required=False,
-                                queryset=Category.objects.all(),
-                                widget=forms.CheckboxSelectMultiple(),
-                                label="Non-compliant Assets"
-                                )
+    category = django_filters.ModelMultipleChoiceFilter(required=False, queryset=Category.objects.all(),)
 
-    book__genre = django_filters.ModelMultipleChoiceFilter(field_name='book__genre', queryset=BookGenre.objects.all(),
+    book__genre = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__genre', queryset=BookGenre.objects.all(),
                                                            widget=forms.CheckboxSelectMultiple)
 
-    book__author = django_filters.ModelMultipleChoiceFilter(field_name='book__author',
+    book__author = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__author',
                                                             queryset=BookAuthor.objects.all(),
                                                             widget=forms.CheckboxSelectMultiple)
-    book__publisher = django_filters.ModelMultipleChoiceFilter(field_name='book__publisher',
+    book__publisher = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__publisher',
                                                                queryset=Publisher.objects.all(),
                                                                widget=forms.CheckboxSelectMultiple)
     price__gt = django_filters.NumberFilter(field_name='price', lookup_expr='gt')
@@ -49,12 +45,6 @@ class ProductFilter(django_filters.FilterSet):
             'book__publisher',
             'price',
         ]
-
-    def __init__(self, *args, **kwargs):
-        super(ProductFilter, self).__init__(*args, **kwargs)
-        for item in self.form.fields['category'].queryset:
-            item.len() + 1
-
 
     # def category_counter(self):
     #     print(self.data)

@@ -49,7 +49,7 @@
       {% endfor %}
     </form>
 
-  <form action="{% url 'store:json_filter' %}" method="get"  name="filter">
+  <form  method="get" >
 
         <ul> Категория:
         {% for category in category_list %}
@@ -61,14 +61,14 @@
       <ul> Автор:
         {% for author in author_list.all %}
           <li><label>
-            <input type="checkbox" name="choices" value=""> {{ author }}
+            <input type="checkbox" name="book__author" value={{ author.id }}> {{ author }}
           </label></li>
         {% endfor %}
       </ul>
       <ul> Жанр:
         {% for genre in genre_list.all %}
           <li><label>
-            <input type="checkbox" name="choices" value=""> {{ genre }}
+            <input type="checkbox" name="book__genre" value={{ genre.id }}> {{ genre }}
           </label></li>
         {% endfor %}
       </ul>

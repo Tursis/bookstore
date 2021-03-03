@@ -23,43 +23,46 @@ from comments.views import ReviewCommentView
 from .serializers import ProductSerializer
 
 
+# class JsonFilterMoviesView(ListView):
+#     """Фильтр фильмов в json"""
+#
+#     def get_queryset(self):
+#         queryset = Product.objects.filter(
+#             Q(category__in=self.request.GET.getlist("category"))
+#         ).distinct().values("name", "price")
+#
+#         return queryset
+#
+#     def get(self, request, *args, **kwargs):
+#         print('hello3')
+#         queryset = list(self.get_queryset())
+#         print(queryset)
+#         print(request.GET)
+#         return JsonResponse({"filter": queryset}, safe=False)
+#
+#     def get_context_data(self, *args, **kwargs):
+#         print('context')
+#         context = super().get_context_data(*args, **kwargs)
+#         context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
+#         return context
 
-class JsonFilterMoviesView(ListView):
-    """Фильтр фильмов в json"""
-
-    def get_queryset(self):
-        queryset = Product.objects.filter(
-            Q(category__in=self.request.GET.getlist("category"))
-        ).distinct().values("name", "price")
-
-        return queryset
-
-    def get(self, request, *args, **kwargs):
-        print('hello3')
-        queryset = list(self.get_queryset())
-        print(queryset)
-        print(request.GET)
-        return JsonResponse({"filter": queryset}, safe=False)
-
-    def get_context_data(self, *args, **kwargs):
-        print('context')
-        context = super().get_context_data(*args, **kwargs)
-        context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
-        return context
-class ProductListView(ListAPIView):
+class ProductFilterView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category', 'book__author']
 
+
+class ProductListView(ListAPIView):
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
         category = Category.objects.all()
-        d = {}
-        for item in category:
-            d[item] = item.len()
+        # d = {}
+        # for item in category:
+        #     d[item] = item.len()
         return render(request, 'index.html',
-                      context={'filter': Product.objects.all(), 'category_list': Category.objects.all(), 'd': d})
+                      context={'filter': f, 'category_list': Category.objects.all(),
+                               'author_list': BookAuthor.objects.all(), 'genre_list': BookGenre.objects.all()})
 
 
 def product_manage(request):
