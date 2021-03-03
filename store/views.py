@@ -1,8 +1,14 @@
+from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic, View
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.generics import ListAPIView
+
 from bookstore.settings import PERMISSION_ON_SITE
 from .filter_counter import test
 from .filters import ProductFilter
@@ -13,10 +19,38 @@ from comments.comments import quantity_reviews
 from comments.forms import ReviewCommentForm
 from comments.views import ReviewCommentView
 
-
 # Create your views here.
+from .serializers import ProductSerializer
 
-class ProductListView(View):
+
+
+class JsonFilterMoviesView(ListView):
+    """Фильтр фильмов в json"""
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(
+            Q(category__in=self.request.GET.getlist("category"))
+        ).distinct().values("name", "price")
+
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        print('hello3')
+        queryset = list(self.get_queryset())
+        print(queryset)
+        print(request.GET)
+        return JsonResponse({"filter": queryset}, safe=False)
+
+    def get_context_data(self, *args, **kwargs):
+        print('context')
+        context = super().get_context_data(*args, **kwargs)
+        context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
+        return context
+class ProductListView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'book__author']
 
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
@@ -24,8 +58,8 @@ class ProductListView(View):
         d = {}
         for item in category:
             d[item] = item.len()
-        print(d)
-        return render(request, 'index.html', context={'filter': f, 'category': Category.objects.all(), 'd': d})
+        return render(request, 'index.html',
+                      context={'filter': Product.objects.all(), 'category_list': Category.objects.all(), 'd': d})
 
 
 def product_manage(request):

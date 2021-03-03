@@ -73,6 +73,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images/books/', verbose_name='Изображение', blank=True, null=True)
     slug = models.SlugField(max_length=100)
 
+
     def __str__(self):
         return self.name
 

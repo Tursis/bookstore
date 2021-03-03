@@ -49,24 +49,31 @@
       {% endfor %}
     </form>
 
-{#  <form method="get">#}
-{#  {% csrf_token %}#}
-{#      <ul> Автор:#}
-{#        {% for author in author_list.all %}#}
-{#          <li><label>#}
-{#            <input type="checkbox" name="choices" value=""> {{ author }}#}
-{#          </label></li>#}
-{#        {% endfor %}#}
-{#      </ul>#}
-{#      <ul> Жанр:#}
-{#        {% for genre in genre_list.all %}#}
-{#          <li><label>#}
-{#            <input type="checkbox" name="choices" value=""> {{ genre }}#}
-{#          </label></li>#}
-{#        {% endfor %}#}
-{#      </ul>#}
-{#    <button class="info-box__button" type="submit" value="apply">Применить</button>#}
-{#    </form>#}
+  <form action="{% url 'store:json_filter' %}" method="get"  name="filter">
+
+        <ul> Категория:
+        {% for category in category_list %}
+          <li><label>
+            <input type="checkbox" name="category" value={{ category.id }}> {{ category }}
+          </label></li>
+        {% endfor %}
+      </ul>
+      <ul> Автор:
+        {% for author in author_list.all %}
+          <li><label>
+            <input type="checkbox" name="choices" value=""> {{ author }}
+          </label></li>
+        {% endfor %}
+      </ul>
+      <ul> Жанр:
+        {% for genre in genre_list.all %}
+          <li><label>
+            <input type="checkbox" name="choices" value=""> {{ genre }}
+          </label></li>
+        {% endfor %}
+      </ul>
+    <button class="info-box__button" type="submit" value="apply">Применить</button>
+    </form>
   </div>
 </nav>
 
