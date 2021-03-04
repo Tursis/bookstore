@@ -54,21 +54,28 @@
         <ul> Категория:
         {% for category in category_list %}
           <li><label>
-            <input type="checkbox" name="category" value={{ category.id }}> {{ category }}
+            <input type="checkbox" name="category" value={{ category.id }} {% if category.id|stringformat:"s" in url_list.category %} checked {% endif %}> {{ category }}  ({{ category.len }})
           </label></li>
         {% endfor %}
       </ul>
       <ul> Автор:
         {% for author in author_list.all %}
           <li><label>
-            <input type="checkbox" name="book__author" value={{ author.id }}> {{ author }}
+            <input type="checkbox" name="book__author" value={{ author.id }}{% if author.id|stringformat:"s" in url_list.book__author %} checked {% endif %}> {{ author }}  ({{ author.len }})
           </label></li>
         {% endfor %}
       </ul>
       <ul> Жанр:
         {% for genre in genre_list.all %}
           <li><label>
-            <input type="checkbox" name="book__genre" value={{ genre.id }}> {{ genre }}
+            <input type="checkbox" name="book__genre" value={{ genre.id }} {% if genre.id|stringformat:"s" in url_list.book__genre %} checked {% endif %}> {{ genre }}  ({{ genre.len }})
+          </label></li>
+        {% endfor %}
+      </ul>
+        <ul> Издательство:
+        {% for publisher in publisher_list.all %}
+          <li><label>
+            <input type="checkbox" name="book__publisher" value={{ publisher.id }}{% if publisher.id|stringformat:"s" in url_list.book__publisher %} checked {% endif %}> {{ publisher }}  ({{ publisher.len }})
           </label></li>
         {% endfor %}
       </ul>

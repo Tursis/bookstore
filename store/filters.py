@@ -9,22 +9,13 @@ from django.forms import ModelChoiceField
 from .models import Product, Book, Magazine, Category, BookGenre, BookAuthor, Publisher
 
 
-class CategoryMultipleChoceFilter(django_filters.ModelMultipleChoiceFilter):
-
-    def filter(self, qs, value):
-
-        return super().filter(qs, value)
-
-
-class MyPropertyFilter(django_filters.ModelMultipleChoiceFilter):
-    def filter(self, qs, value):
-        return super().filter(qs, value)
-
 
 class ProductFilter(django_filters.FilterSet):
-    category = django_filters.ModelMultipleChoiceFilter(required=False, queryset=Category.objects.all(),)
+    category = django_filters.ModelMultipleChoiceFilter(required=False, queryset=Category.objects.all(),
+                                                        widget=forms.CheckboxSelectMultiple)
 
-    book__genre = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__genre', queryset=BookGenre.objects.all(),
+    book__genre = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__genre',
+                                                           queryset=BookGenre.objects.all(),
                                                            widget=forms.CheckboxSelectMultiple)
 
     book__author = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__author',
@@ -46,17 +37,3 @@ class ProductFilter(django_filters.FilterSet):
             'price',
         ]
 
-    # def category_counter(self):
-    #     print(self.data)
-    #     counter = []
-    #     for item in self.form.fields['category'].queryset:
-    #         counter.append(item.len())
-    #     return counter
-    #
-    # def genre_counter(self):
-    #     counter = []
-    #     print(self.form.fields)
-    #
-    #     for item in self.form.fields['category'].queryset:
-    #         counter.append(item.len())
-    #     return counter

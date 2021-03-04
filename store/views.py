@@ -13,7 +13,7 @@ from bookstore.settings import PERMISSION_ON_SITE
 from .filter_counter import test
 from .filters import ProductFilter
 from .forms import BookForm
-from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category
+from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category, Publisher
 from comments.models import ProductReviews
 from comments.comments import quantity_reviews
 from comments.forms import ReviewCommentForm
@@ -56,13 +56,11 @@ class ProductFilterView(ListAPIView):
 class ProductListView(ListAPIView):
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
-        category = Category.objects.all()
-        # d = {}
-        # for item in category:
-        #     d[item] = item.len()
+        url_list = dict(request.GET)
         return render(request, 'index.html',
                       context={'filter': f, 'category_list': Category.objects.all(),
-                               'author_list': BookAuthor.objects.all(), 'genre_list': BookGenre.objects.all()})
+                               'author_list': BookAuthor.objects.all(), 'genre_list': BookGenre.objects.all(),
+                               'publisher_list': Publisher.objects.all(), 'url_list': url_list})
 
 
 def product_manage(request):
