@@ -57,10 +57,28 @@ class ProductListView(ListAPIView):
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
         url_list = dict(request.GET)
+        filter_counter(url_list, f, request)
         return render(request, 'index.html',
                       context={'filter': f, 'category_list': Category.objects.all(),
                                'author_list': BookAuthor.objects.all(), 'genre_list': BookGenre.objects.all(),
                                'publisher_list': Publisher.objects.all(), 'url_list': url_list})
+
+
+def filter_counter(url_list, f, request):
+    # print(url_list)
+    # print(f.qs)
+    print('Тест')
+    # print(Product.objects.filter(category=1).filter(book__author=1))
+    queryset = Product.objects.all()
+    for item in request.GET:
+        print(item)
+        print(request.GET.getlist(item))
+        item2 = item + '_in'
+        print(item)
+        print(request.GET.getlist('book__author'))
+        queryset = queryset.filter(Q(category__in=request.GET.getlist('book__author')) |
+                                   Q(book__author__in=request.GET.getlist('book__author')))
+        print(queryset)
 
 
 def product_manage(request):
