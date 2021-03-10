@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -70,15 +70,17 @@ def filter_counter(url_list, f, request):
     print('Тест')
     # print(Product.objects.filter(category=1).filter(book__author=1))
     queryset = Product.objects.all()
+
     for item in request.GET:
-        print(item)
         print(request.GET.getlist(item))
-        item2 = item + '_in'
         print(item)
-        print(request.GET.getlist('book__author'))
-        queryset = queryset.filter(Q(category__in=request.GET.getlist('book__author')) |
-                                   Q(book__author__in=request.GET.getlist('book__author')))
-        print(queryset)
+        if item == 'category':
+            queryset = queryset.filter(Q(category__in=request.GET.getlist('category'))).distinct()
+        if item == 'book__author':
+            queryset = queryset.filter(Q(book__author__in=request.GET.getlist('book__author'))).distinct()
+        if item == 'book__genre':
+            queryset = queryset.filter(Q(book__genre__in=request.GET.getlist('book__genre'))).distinct()
+        print(queryset.count())
 
 
 def product_manage(request):
