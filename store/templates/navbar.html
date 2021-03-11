@@ -52,30 +52,30 @@
   <form  method="get" >
 
         <ul> Категория:
-        {% for category in category_list %}
+        {% for category_key, category_item in category_list.items %}
           <li><label>
-            <input type="checkbox" name="category" value={{ category.id }} {% if category.id|stringformat:"s" in url_list.category %} checked {% endif %}> {{ category }}  ({{ category.len }})
+            <input type="checkbox" name="category" value={{ category_key.id }} {% if category_key.id|stringformat:"s" in url_list.category %} checked {% endif %}> {{ category_key }}  ({{ category_item }})
           </label></li>
         {% endfor %}
       </ul>
       <ul> Автор:
-        {% for author in author_list.all %}
+        {% for author_key, author_item in author_list.items %}
           <li><label>
-            <input type="checkbox" name="book__author" value={{ author.id }}{% if author.id|stringformat:"s" in url_list.book__author %} checked {% endif %}> {{ author }}  ({{ author.len }})
+            <input type="checkbox" name="book__author" value={{ author_key.id }}{% if author_key.id|stringformat:"s" in url_list.book__author %} checked {% endif %}> {{ author_key }}  ({{ author_item }})
           </label></li>
         {% endfor %}
       </ul>
       <ul> Жанр:
-        {% for genre in genre_list.all %}
+        {% for genre_key, genre_item in genre_list.items %}
           <li><label>
-            <input type="checkbox" name="book__genre" value={{ genre.id }} {% if genre.id|stringformat:"s" in url_list.book__genre %} checked {% endif %}> {{ genre }}  ({{ genre.len }})
+            <input type="checkbox" name="book__genre" value={{ genre_key.id }} {% if genre_key.id|stringformat:"s" in url_list.book__genre %} checked {% endif %}> {{ genre_key }}  ({{ genre_item }})
           </label></li>
         {% endfor %}
       </ul>
         <ul> Издательство:
-        {% for publisher in publisher_list.all %}
+        {% for publisher_key, publisher_item in publisher_list.items %}
           <li><label>
-            <input type="checkbox" name="book__publisher" value={{ publisher.id }}{% if publisher.id|stringformat:"s" in url_list.book__publisher %} checked {% endif %}> {{ publisher }}  ({{ publisher.len }})
+            <input type="checkbox" name="book__publisher" value={{ publisher_key.id }}{% if publisher_key.id|stringformat:"s" in url_list.book__publisher%} checked {% endif %}> {{ publisher_key }}  ({{ publisher_item }})
           </label></li>
         {% endfor %}
       </ul>

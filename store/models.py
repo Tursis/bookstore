@@ -1,7 +1,7 @@
 from itertools import count
 
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
@@ -18,8 +18,16 @@ class BookAuthor(models.Model):
     def __str__(self):
         return self.name + ';'
 
-    def len(self):
-        return Book.objects.filter(author=self.id).count()
+    def counter(self, data):
+        queryset = Book.objects.filter(author=self.id)
+        for item in data:
+            if item == 'category':
+                queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
+            if item == 'book__author':
+                queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
+            if item == 'book__genre':
+                queryset = queryset.filter(Q(genre__in=data.getlist('book__genre'))).distinct()
+        return queryset.count()
 
 
 class BookGenre(models.Model):
@@ -32,9 +40,16 @@ class BookGenre(models.Model):
     def get_absolute_url(self):
         return reverse('store:book_genres', kwargs={'slug': self.slug})
 
-    def len(self):
-
-        return Book.objects.filter(genre=self.id).count()
+    def counter(self, data):
+        queryset = Book.objects.filter(genre=self.id)
+        for item in data:
+            if item == 'category':
+                queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
+            if item == 'book__author':
+                queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
+            if item == 'book__genre':
+                queryset = queryset.filter(Q(genre__in=data.getlist('book__genre'))).distinct()
+        return queryset.count()
 
 
 class Category(models.Model):
@@ -45,8 +60,16 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def len(self):
-        return Product.objects.filter(category=self.id).count()
+    def counter(self, data):
+        queryset = Product.objects.filter(category=self.id)
+        for item in data:
+            if item == 'category':
+                queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
+            if item == 'book__author':
+                queryset = queryset.filter(Q(book__author__in=data.getlist('book__author'))).distinct()
+            if item == 'book__genre':
+                queryset = queryset.filter(Q(book__genre__in=data.getlist('book__genre'))).distinct()
+        return queryset.count()
 
 
 class Publisher(models.Model):
@@ -56,8 +79,16 @@ class Publisher(models.Model):
     def __str__(self):
         return self.name
 
-    def len(self):
-        return Book.objects.filter(publisher=self.id).count()
+    def counter(self, data):
+        queryset = Book.objects.filter(publisher=self.id)
+        for item in data:
+            if item == 'category':
+                queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
+            if item == 'book__author':
+                queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
+            if item == 'book__genre':
+                queryset = queryset.filter(Q(genre__in=data.getlist('book__genre'))).distinct()
+        return queryset.count()
 
 
 class Product(models.Model):
@@ -72,7 +103,6 @@ class Product(models.Model):
                                     blank=True)
     image = models.ImageField(upload_to='images/books/', verbose_name='Изображение', blank=True, null=True)
     slug = models.SlugField(max_length=100)
-
 
     def __str__(self):
         return self.name

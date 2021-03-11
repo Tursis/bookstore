@@ -10,7 +10,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
 
 from bookstore.settings import PERMISSION_ON_SITE
-from .filter_counter import test
+from .filter_counter import counter, update_model_counter
 from .filters import ProductFilter
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category, Publisher
@@ -54,33 +54,20 @@ class ProductFilterView(ListAPIView):
 
 
 class ProductListView(ListAPIView):
+    # d = {}
+    # for item in category:
+    #     d[item] = item.len()
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
         url_list = dict(request.GET)
-        filter_counter(url_list, f, request)
+        counter(request)
         return render(request, 'index.html',
-                      context={'filter': f, 'category_list': Category.objects.all(),
-                               'author_list': BookAuthor.objects.all(), 'genre_list': BookGenre.objects.all(),
-                               'publisher_list': Publisher.objects.all(), 'url_list': url_list})
-
-
-def filter_counter(url_list, f, request):
-    # print(url_list)
-    # print(f.qs)
-    print('Тест')
-    # print(Product.objects.filter(category=1).filter(book__author=1))
-    queryset = Product.objects.all()
-
-    for item in request.GET:
-        print(request.GET.getlist(item))
-        print(item)
-        if item == 'category':
-            queryset = queryset.filter(Q(category__in=request.GET.getlist('category'))).distinct()
-        if item == 'book__author':
-            queryset = queryset.filter(Q(book__author__in=request.GET.getlist('book__author'))).distinct()
-        if item == 'book__genre':
-            queryset = queryset.filter(Q(book__genre__in=request.GET.getlist('book__genre'))).distinct()
-        print(queryset.count())
+                      context={'filter': f,
+                               'category_list': update_model_counter(request, Category.objects.all()),
+                               'author_list': update_model_counter(request, BookAuthor.objects.all()),
+                               'genre_list': update_model_counter(request, BookGenre.objects.all()),
+                               'publisher_list': update_model_counter(request, Publisher.objects.all()),
+                               'url_list': url_list})
 
 
 def product_manage(request):
