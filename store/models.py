@@ -1,5 +1,3 @@
-from itertools import count
-
 from django.db import models
 from django.db.models import Avg, Q
 from django.urls import reverse
@@ -22,11 +20,11 @@ class BookAuthor(models.Model):
         queryset = Book.objects.filter(author=self.id)
         for item in data:
             if item == 'category':
-                queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
-            if item == 'book__author':
-                queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
+                queryset = queryset.filter(category__in=data.getlist('category')).distinct()
             if item == 'book__genre':
-                queryset = queryset.filter(Q(genre__in=data.getlist('book__genre'))).distinct()
+                queryset = queryset.filter(genre__in=data.getlist('book__genre')).distinct()
+            if item == 'book_publisher':
+                queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
         return queryset.count()
 
 
@@ -47,8 +45,8 @@ class BookGenre(models.Model):
                 queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
             if item == 'book__author':
                 queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
-            if item == 'book__genre':
-                queryset = queryset.filter(Q(genre__in=data.getlist('book__genre'))).distinct()
+            if item == 'book_publisher':
+                queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
         return queryset.count()
 
 
@@ -63,12 +61,12 @@ class Category(models.Model):
     def counter(self, data):
         queryset = Product.objects.filter(category=self.id)
         for item in data:
-            if item == 'category':
-                queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
             if item == 'book__author':
-                queryset = queryset.filter(Q(book__author__in=data.getlist('book__author'))).distinct()
+                queryset = queryset.filter(book__author__in=data.getlist('book__author')).distinct()
             if item == 'book__genre':
-                queryset = queryset.filter(Q(book__genre__in=data.getlist('book__genre'))).distinct()
+                queryset = queryset.filter(book__genre__in=data.getlist('book__genre')).distinct()
+            if item == 'book_publisher':
+                queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
         return queryset.count()
 
 

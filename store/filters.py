@@ -1,13 +1,7 @@
-from itertools import count
-
 import django_filters
 from django import forms
-from django.db import models
-from django.db.models import Q
-from django.forms import ModelChoiceField
 
 from .models import Product, Book, Magazine, Category, BookGenre, BookAuthor, Publisher
-
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -36,4 +30,3 @@ class ProductFilter(django_filters.FilterSet):
             'book__publisher',
             'price',
         ]
-

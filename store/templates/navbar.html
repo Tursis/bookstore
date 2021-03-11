@@ -14,41 +14,6 @@
       </li>
       <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
     </ul>
-    <form method="get">
-{#      <hr>#}
-{#      <p>Категории</p>#}
-{#      {{ filter.form.category }}#}
-{#      {% for item in filter.category_counter %}#}
-{#        {{ item}}#}
-{#      {% endfor %}#}
-{#      <hr>#}
-{#      <p>Жанры</p>#}
-{#      {{ filter.form.book__genre }}#}
-{#      {% for item in filter.form.fields.book__genre.queryset %}#}
-{#      {{ item.len}}#}
-{#      {% endfor %}#}
-{#      <hr>#}
-{#      <p>Авторы</p>#}
-{#      {{ filter.form.book__author }}#}
-{#      {% for item in filter.form.fields.book__author.queryset %}#}
-{#      {{ item.len}}#}
-{#      {% endfor %}#}
-{#      <hr>#}
-{#      <p>Издатели</p>#}
-{#      {{ filter.form.book__publisher }}#}
-{#      {% for item in filter.form.fields.book__publisher.queryset %}#}
-{#      {{ item.len}}#}
-{#      {% endfor %}#}
-{#      <hr>#}
-{#      <p>Цена</p>#}
-{#      {{ filter.form.price__gt }}#}
-{#      {{ filter.form.price__lt }}#}
-{#      <input type="submit"/>#}
-        {% for key, item in d.items %}
-          {{key.id}} {{ item }}
-      {% endfor %}
-    </form>
-
   <form  method="get" >
 
         <ul> Категория:
