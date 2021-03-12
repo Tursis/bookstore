@@ -25,7 +25,7 @@
         <ul> Издательство:
         {% for publisher_key, publisher_item in publisher_list.items %}
           <li><label>
-            <input type="checkbox" name="book__publisher" value={{ publisher_key.id }}{% if publisher_key.id|stringformat:"s" in url_list.book__publisher%} checked {% endif %}> {{ publisher_key }}  ({{ publisher_item }})
+            <input type="checkbox" name="publisher" value={{ publisher_key.id }}{% if publisher_key.id|stringformat:"s" in url_list.book__publisher%} checked {% endif %}> {{ publisher_key }}  ({{ publisher_item }})
           </label></li>
         {% endfor %}
       </ul>

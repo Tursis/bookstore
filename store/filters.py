@@ -15,9 +15,9 @@ class ProductFilter(django_filters.FilterSet):
     book__author = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__author',
                                                             queryset=BookAuthor.objects.all(),
                                                             widget=forms.CheckboxSelectMultiple)
-    book__publisher = django_filters.ModelMultipleChoiceFilter(required=False, field_name='book__publisher',
-                                                               queryset=Publisher.objects.all(),
-                                                               widget=forms.CheckboxSelectMultiple)
+    publisher = django_filters.ModelMultipleChoiceFilter(required=False,
+                                                         queryset=Publisher.objects.all(),
+                                                         widget=forms.CheckboxSelectMultiple)
     price__gt = django_filters.NumberFilter(field_name='price', lookup_expr='gt')
     price__lt = django_filters.NumberFilter(field_name='price', lookup_expr='lt')
 
@@ -27,6 +27,6 @@ class ProductFilter(django_filters.FilterSet):
             'category',
             'book__genre',
             'book__author',
-            'book__publisher',
+            'publisher',
             'price',
         ]

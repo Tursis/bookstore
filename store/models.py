@@ -23,8 +23,8 @@ class BookAuthor(models.Model):
                 queryset = queryset.filter(category__in=data.getlist('category')).distinct()
             if item == 'book__genre':
                 queryset = queryset.filter(genre__in=data.getlist('book__genre')).distinct()
-            if item == 'book__publisher':
-                queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
+            if item == 'publisher':
+                queryset = queryset.filter(publisher__in=data.getlist('publisher')).distinct()
         return queryset.count()
 
 
@@ -45,8 +45,8 @@ class BookGenre(models.Model):
                 queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
             if item == 'book__author':
                 queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
-            if item == 'book__publisher':
-                queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
+            if item == 'publisher':
+                queryset = queryset.filter(publisher__in=data.getlist('publisher')).distinct()
         return queryset.count()
 
 
@@ -65,8 +65,8 @@ class Category(models.Model):
                 queryset = queryset.filter(book__author__in=data.getlist('book__author')).distinct()
             if item == 'book__genre':
                 queryset = queryset.filter(book__genre__in=data.getlist('book__genre')).distinct()
-            if item == 'book__publisher':
-                queryset = queryset.filter(book__publisher__in=data.getlist('book__publisher')).distinct()
+            if item == 'publisher':
+                queryset = queryset.filter(publisher__in=data.getlist('publisher')).distinct()
         return queryset.count()
 
 
@@ -78,20 +78,21 @@ class Publisher(models.Model):
         return self.name
 
     def counter(self, data):
-        queryset = Book.objects.filter(publisher=self.id)
+        queryset = Product.objects.filter(publisher=self.id)
         for item in data:
             if item == 'category':
                 queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
             if item == 'book__author':
-                queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
+                queryset = queryset.filter(Q(book__author__in=data.getlist('book__author'))).distinct()
             if item == 'book__genre':
-                queryset = queryset.filter(Q(genre__in=data.getlist('book__genre'))).distinct()
+                queryset = queryset.filter(Q(book__genre__in=data.getlist('book__genre'))).distinct()
         return queryset.count()
 
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=100, verbose_name='Название', help_text="Enter book name.", blank=True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
 
     price = models.DecimalField(max_digits=10, verbose_name='Цена', decimal_places=2, help_text="Enter price book",
                                 validators=[MinValueValidator(1)],
@@ -167,7 +168,6 @@ class Book(Product):
                              blank=True)
     pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
                                    null=True)
-    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
     size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
 
 
@@ -180,7 +180,6 @@ class Magazine(Product):
                                      null=True)
     pages = models.CharField(max_length=5, verbose_name='Количество страниц', help_text="Enter number of pages",
                              blank=True)
-    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True)
     pub_year = models.IntegerField(verbose_name='Год издания', help_text="Enter year of publication", blank=True,
                                    null=True)
     size = models.CharField(max_length=10, verbose_name='Размеры', help_text="Enter size book", blank=True)
