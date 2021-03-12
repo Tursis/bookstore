@@ -1,35 +1,43 @@
 <nav class="col-12 col-md-3 col-xl-2 sidebar">
   <div id='side-nav' class="block_white block_shadow {% if is_shown_by_default %} side-nav-hide {% endif %}">
-  <form  method="get" >
-        <ul> Категория:
+    <form method="get">
+      <ul> Категория:
         {% for category_key, category_item in category_list.items %}
           <li><label>
-            <input type="checkbox" name="category" value={{ category_key.id }} {% if category_key.id|stringformat:"s" in url_list.category %} checked {% endif %}> {{ category_key }}  ({{ category_item }})
+            <input type="checkbox" name="category"
+                   value={{ category_key.id }} {% if category_key.id|stringformat:"s" in url_list.category %} checked {% endif %}
+                    {% if category_item == 0 %} disabled {% endif %}> {{ category_key }} ({{ category_item }})
           </label></li>
         {% endfor %}
       </ul>
       <ul> Автор:
         {% for author_key, author_item in author_list.items %}
           <li><label>
-            <input type="checkbox" name="book__author" value={{ author_key.id }}{% if author_key.id|stringformat:"s" in url_list.book__author %} checked {% endif %}> {{ author_key }}  ({{ author_item }})
+            <input type="checkbox" name="book__author" value=
+                    {{ author_key.id }}{% if author_key.id|stringformat:"s" in url_list.book__author %} checked {% endif %}
+                    {% if author_item == 0 %} disabled {% endif %}> {{ author_key }} ({{ author_item }})
           </label></li>
         {% endfor %}
       </ul>
       <ul> Жанр:
         {% for genre_key, genre_item in genre_list.items %}
           <li><label>
-            <input type="checkbox" name="book__genre" value={{ genre_key.id }} {% if genre_key.id|stringformat:"s" in url_list.book__genre %} checked {% endif %}> {{ genre_key }}  ({{ genre_item }})
+            <input type="checkbox" name="book__genre"
+                   value={{ genre_key.id }} {% if genre_key.id|stringformat:"s" in url_list.book__genre %} checked {% endif %}
+                    {% if genre_item == 0 %} disabled {% endif %}> {{ genre_key }} ({{ genre_item }})
           </label></li>
         {% endfor %}
       </ul>
-        <ul> Издательство:
+      <ul> Издательство:
         {% for publisher_key, publisher_item in publisher_list.items %}
           <li><label>
-            <input type="checkbox" name="publisher" value={{ publisher_key.id }}{% if publisher_key.id|stringformat:"s" in url_list.book__publisher%} checked {% endif %}> {{ publisher_key }}  ({{ publisher_item }})
+            <input type="checkbox" name="publisher" value=
+                    {{ publisher_key.id }}{% if publisher_key.id|stringformat:"s" in url_list.publisher %} checked {% endif %}
+                    {% if publisher_item == 0 %} disabled {% endif %}> {{ publisher_key }} ({{ publisher_item }})
           </label></li>
         {% endfor %}
       </ul>
-    <button class="info-box__button" type="submit" value="apply">Применить</button>
+      <button class="info-box__button" type="submit" value="apply">Применить</button>
     </form>
   </div>
 </nav>
