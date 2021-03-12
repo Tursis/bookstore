@@ -23,7 +23,7 @@ class BookAuthor(models.Model):
                 queryset = queryset.filter(category__in=data.getlist('category')).distinct()
             if item == 'book__genre':
                 queryset = queryset.filter(genre__in=data.getlist('book__genre')).distinct()
-            if item == 'book_publisher':
+            if item == 'book__publisher':
                 queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
         return queryset.count()
 
@@ -45,7 +45,7 @@ class BookGenre(models.Model):
                 queryset = queryset.filter(Q(category__in=data.getlist('category'))).distinct()
             if item == 'book__author':
                 queryset = queryset.filter(Q(author__in=data.getlist('book__author'))).distinct()
-            if item == 'book_publisher':
+            if item == 'book__publisher':
                 queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
         return queryset.count()
 
@@ -65,8 +65,8 @@ class Category(models.Model):
                 queryset = queryset.filter(book__author__in=data.getlist('book__author')).distinct()
             if item == 'book__genre':
                 queryset = queryset.filter(book__genre__in=data.getlist('book__genre')).distinct()
-            if item == 'book_publisher':
-                queryset = queryset.filter(publisher__in=data.getlist('book__publisher')).distinct()
+            if item == 'book__publisher':
+                queryset = queryset.filter(book__publisher__in=data.getlist('book__publisher')).distinct()
         return queryset.count()
 
 
@@ -153,7 +153,7 @@ class Product(models.Model):
         discount = self.get_discount()
         if discount > 0:
             price = self.price - (self.price * (discount / 100))
-            return price
+            return round(price, 2)
         if discount == 0:
             return self.price
 

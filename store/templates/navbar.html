@@ -1,21 +1,6 @@
 <nav class="col-12 col-md-3 col-xl-2 sidebar">
   <div id='side-nav' class="block_white block_shadow {% if is_shown_by_default %} side-nav-hide {% endif %}">
-    <ul class="side-nav__list">
-      <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:books' %}">Книги</a>
-        <ul class="sub-side-nav">
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Детектив</a></li>
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Мистика</a></li>
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Программирование</a></li>
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Триллер</a></li>
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Ужасы</a></li>
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фантастика</a></li>
-          <li class="sub-side-nav__item"><a class="sub-side-nav__link" href="">Фентази</a></li>
-        </ul>
-      </li>
-      <li class="side-nav__item"><a class="side-nav__link" href="{% url 'store:magazine' %}">Журналы</a></li>
-    </ul>
   <form  method="get" >
-
         <ul> Категория:
         {% for category_key, category_item in category_list.items %}
           <li><label>

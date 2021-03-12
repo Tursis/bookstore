@@ -35,21 +35,6 @@ def product_manage(request):
     return render(request, 'store/product_manage.html')
 
 
-class BookGenresListView(generic.ListView):
-    template_name = 'store/book/book_genres.html'
-    model = BookGenre
-
-
-class BooksListView(generic.ListView):
-    model = Book
-    paginate_by = 4
-    template_name = 'store/book/book_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
 class BooksDetailView(generic.DetailView):
     model = Book
     template_name = 'store/book/book_detail.html'
@@ -60,7 +45,6 @@ class BooksDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(BooksDetailView, self).get_context_data(**kwargs)
-        context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
         context['comment_form'] = ReviewCommentForm
@@ -105,16 +89,6 @@ class BooksDelete(PermissionRequiredMixin, DeleteView):
         return reverse('store:book_manage')
 
 
-class MagazineListView(generic.ListView):
-    model = Magazine
-    paginate_by = 4
-    template_name = 'store/magazine/magazine_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
 class MagazineDetailView(generic.DetailView):
     template_name = 'store/magazine/magazine_detail.html'
     model = Magazine
@@ -125,7 +99,6 @@ class MagazineDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_shown_by_default'] = True
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
         context['comment_form'] = ReviewCommentForm
