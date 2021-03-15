@@ -11,7 +11,7 @@
       <td>{{ item.paid }}</td>
       <td>
       {% for item_purchase in item.purchase_set.select_related %}
-          {{item_purchase.product}}<br>
+        <a href={{ item_purchase.product.get_absolute_url }}>{{item_purchase.product}}</a><br>
       {% endfor %}
       </td>
       <td>{{ item.created}}</td>

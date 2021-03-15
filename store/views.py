@@ -48,6 +48,7 @@ class BooksDetailView(generic.DetailView):
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
         context['comment_form'] = ReviewCommentForm
+        print(ReviewCommentForm.field_order)
         return context
 
 

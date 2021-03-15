@@ -18,7 +18,7 @@
       <tr>
         <td>1</td>
         <td>{{ item.product.id }}</td>
-        <td>{{ item.product.name }}</td>
+        <td><a href={{ item.product.get_absolute_url }}>{{ item.product.name }}</a></td>
         <td>{{ item.product.price }}</td>
         <td>{{ item.quantity }}</td>
         <td class="num">{% widthratio item.quantity 1 item.product.price %} UAH</td>
