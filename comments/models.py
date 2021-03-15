@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Sum
 
 from store.models import Product
 
@@ -34,6 +35,12 @@ class ProductReviews(models.Model):
             titlestring = self.description
         return titlestring
 
+    def get_comments_counter(self):
+        counter = self.reviewcomment_set.all().count()
+        if counter:
+            return counter
+        else:
+            return 0
 
 class ReviewComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -44,6 +51,8 @@ class ReviewComment(models.Model):
 
     class Meta:
         ordering = ['pub_date']
+
+
 
 
 

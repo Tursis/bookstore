@@ -1,7 +1,7 @@
 from django.db.models import Sum, Count
 from django.shortcuts import get_object_or_404
 from store.models import Product
-from .models import ProductReviews
+from .models import ProductReviews, ReviewComment
 from .forms import ProductReviewsForm
 
 
@@ -38,3 +38,6 @@ def quantity_reviews(slug):
         return products_reviews['product__count']
     else:
         return 0
+
+
+

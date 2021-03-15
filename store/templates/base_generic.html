@@ -39,6 +39,7 @@
                   {{ user.get_username|first|upper }}
                 </div>
                 {{ user.get_username }}
+                {{ user__profiles.name}}
               </a>
             </div>
             <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
