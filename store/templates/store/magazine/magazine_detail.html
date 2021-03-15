@@ -49,36 +49,90 @@
         </div>
       </div>
     </div>
-    <form action="{% url "reviews:product_reviews" magazine.slug %}?next={{ request.path|urlencode }}" method="post">
-      {% csrf_token %}
-      <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
-    </form>
-    Отзывы({{ quantity_reviews }})
-    {% for review in reviews_list %}
-      <br>
-      {{ review.user.first_name }}
-      {{ review.user.last_name }}
-      <br>
-      {{ review.description }}
-      <p>Коментарии()</p>
-      {% for item in review.reviewcomment_set.values %}
-        <p>{{ item.comment }}</p>
-      {% endfor %}
-      {% if user.is_authenticated %}
-        <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
+    <div class="row">
+    <div class="col-12">
+      <div class="product-comments">
+        <form action="{% url "reviews:product_reviews" magazine.slug %}?next={{ request.path|urlencode }}"
+              method="post">
           {% csrf_token %}
-          <button class="" type="submit" name="reviews" value="{{ review.id }}">Оставить коментарий</button>
-          {{ comment_form }}
+          <div class="create-buttons">
+            <button class="" type="submit" value="Add reviews">Оставить отзыв</button>
+          </div>
         </form>
-      {% endif %}
-    {% endfor %}
+        <div>
+          Отзывы({{ quantity_reviews }})
+        </div>
+        <ul class="product-comments__list">
+          {% for review in reviews_list %}
+            <li class="product-comments__list-item">
+              <div class="comment">
+                <div class="comment__inner">
+                  <div class="comment__header">
+                    <div class="comment__author">
+                      {{ review.user.first_name }}
+                      {{ review.user.last_name }}
+                    </div>
+                    <div class="comment__data">
+                      {{ review.pub_date }}
+                    </div>
+                  </div>
+                  <div class="comment__body">
+                    <div class="class_rating">
+                      Оценка: {{ review.rating }}
+                    </div>
+                    <div class="comment__text">
+                      {{ review.description }}
+                    </div>
+                  </div>
+                  <div class="comment__counter">
+                    Коментарии({{ review.get_comments_counter }})
+                  </div>
+                  <ul class="comments__list">
+                    {% for comment_item in review.reviewcomment_set.all %}
+                      <li class="comment">
+                        <div class="comment__inner">
+                          <div class="comment__header">
+                            <div class="comment__author">
+                              {{ comment_item.user.first_name }}
+                              {{ comment_item.user.last_name }}
+                            </div>
+                            <div class="comment__data">
+                              {{ comment_item.pub_date }}
+                            </div>
+                          </div>
+                          <div class="comment__body">
+                            <div class="comment__text">
+                              {{ comment_item.comment }}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <div class="comment__footer">
+                    {% if user.is_authenticated %}
+                      <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
+                        {% csrf_token %}
+                        {{ comment_form }}
+                        <button class="" type="submit" name="reviews" value="{{ review.id }}">
+                          Оставить коментарий
+                        </button>
+                      </form>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   {% endif %}
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script type="text/javascript">
-      $("#dropdown-menu").on("click", () => {
-          $("#side-nav").slideToggle(200);
-          //     $('body').toggleClass('overlay');
-      });
-  </script>
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#dropdown-menu").on("click", () => {
+        $("#side-nav").slideToggle(200);
+        //     $('body').toggleClass('overlay');
+    });
+</script>
 {% endblock %}

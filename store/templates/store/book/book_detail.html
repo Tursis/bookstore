@@ -84,6 +84,9 @@
                     </div>
                   </div>
                   <div class="comment__body">
+                    <div class="class_rating">
+                    Оценка: {{ review.rating }}
+                    </div>
                     <div class="comment__text">
                       {{ review.description }}
                     </div>
@@ -131,10 +134,7 @@
         </ul>
       </div>
     </div>
-
-
   {% endif %}
-
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type="text/javascript">
     $("#dropdown-menu").on("click", () => {
