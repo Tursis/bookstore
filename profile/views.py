@@ -9,7 +9,7 @@ from django.shortcuts import render
 from profile.forms import SignUpForm
 from .token import AccountToken
 from .models import Token
-from shared.send_message import EmailCommunication, send_simple_message
+from shared.send_message import EmailCommunication
 from shared.mixins import AuthCheckerMixin
 
 
@@ -34,7 +34,6 @@ class SignUpView(AuthCheckerMixin, CreateView):
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
             ActivateAccountMessageView(user_token.token)
-            send_simple_message()
         return super(SignUpView, self).form_valid(form)
 
 
