@@ -113,7 +113,8 @@
                     {% if user.is_authenticated %}
                       <form action="{% url "store:magazine_detail" magazine.slug %}" method="post">
                         {% csrf_token %}
-                        {{ comment_form }}
+                        <label for="id_comment"><textarea name="comment" cols="40" rows="10" maxlength="400" required=""
+                                                          id="id_comment"></textarea> </label>
                         <button class="" type="submit" name="reviews" value="{{ review.id }}">
                           Оставить коментарий
                         </button>
