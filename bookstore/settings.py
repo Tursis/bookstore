@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'profile.apps.ProfileConfig',
     'comments.apps.CommentsConfig',
+    'dashboard.apps.DashboardConfig'
 ]
 
 MIDDLEWARE = [

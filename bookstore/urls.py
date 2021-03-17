@@ -28,7 +28,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='order')),
     path('sign_up/', include('profile.urls', namespace='profile')),
     path('reviews/', include('comments.urls', namespace='reviews')),
-    path('dashboard/', include('comments.urls', namespace='dashboard')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
 
 ]
 if settings.DEBUG:
