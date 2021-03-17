@@ -34,7 +34,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
             ActivateAccountMessageView(user_token.token)
-            send_simple_message()
+            send_simple_message(user.email)
         return super(SignUpView, self).form_valid(form)
 
 
