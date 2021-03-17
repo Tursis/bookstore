@@ -21,7 +21,7 @@ class EmailCommunication:
         msg.send()
 
 
-def send_simple_message(emeil):
+def send_simple_message(email):
     """
     Отправка писем
     """
@@ -29,6 +29,6 @@ def send_simple_message(emeil):
         "https://api.mailgun.net/v3/sandbox179b6ebaa0594a0f951760f80e877e4d.mailgun.org/messages",
         auth=("api", mailgun),
         data={"from": "mailgun@sandbox179b6ebaa0594a0f951760f80e877e4d.mailgun.org",
-              "to": [emeil],
+              "to": [email],
               "subject": "Hello",
               "text": "Testing some Mailgun awesomness!"})

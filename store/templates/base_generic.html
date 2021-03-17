@@ -31,7 +31,7 @@
           </div>
           {% if user.is_authenticated %}
             {% if perms.admin %}
-              <a href="{% url 'store:product_manage' %}" class="">Управление товаром</a>
+              <a href="{% url 'store:product_manage' %}" class="">Панель управление</a>
             {% endif %}
             <div class="avatar">
               <a href="{% url 'order:orders_list' %}">
