@@ -1,4 +1,22 @@
 {% extends 'base_generic.html' %}
 {% block content%}
- statistics
+    <h1>Количество проданого товара</h1>
+    <table class="table">
+     <thead class="thead-dark">
+        <tr>
+          <th scope="col">Название</th>
+          <th scope="col">Количество</th>
+        </tr>
+        </thead>
+    <tbody>
+     {% for product, quantity in get_quantity_of_product_sold.items %}
+      <tr>
+      <td><a href="{{ product.get_absolute_url }}">{{ product }}</a></td>
+      <td>{{ quantity }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
 {% endblock %}

@@ -14,6 +14,7 @@ from comments.models import ProductReviews
 from comments.comments import quantity_reviews
 from comments.forms import ReviewCommentForm
 from comments.views import ReviewCommentView
+from dashboard.decorator import counter
 
 
 class ProductListView(ListAPIView):
@@ -48,7 +49,6 @@ class BooksDetailView(generic.DetailView):
         context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
         context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
         context['comment_form'] = ReviewCommentForm
-        print(ReviewCommentForm.field_order)
         return context
 
 
