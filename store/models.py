@@ -100,7 +100,7 @@ class Product(models.Model):
     Discounts = models.DecimalField(max_digits=10, verbose_name='Скидка', decimal_places=2, help_text="Enter discounts",
                                     validators=[MinValueValidator(0)],
                                     blank=True)
-    image = models.ImageField(upload_to='images/books/', verbose_name='Изображение', blank=True, null=True)
+    image = models.ImageField(upload_to='images/products/', verbose_name='Изображение', blank=True, null=True)
     slug = models.SlugField(max_length=100)
 
     def __str__(self):

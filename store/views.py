@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from rest_framework.generics import ListAPIView
@@ -17,7 +17,7 @@ from comments.views import ReviewCommentView
 from dashboard.decorator import counter
 
 
-class ProductListView(ListAPIView):
+class ProductListView(View):
 
     def get(self, request):
         f = ProductFilter(request.GET, queryset=Product.objects.all())
@@ -36,20 +36,21 @@ def product_manage(request):
     return render(request, 'store/product_manage.html')
 
 
-class BooksDetailView(generic.DetailView):
-    model = Book
-    template_name = 'store/book/book_detail.html'
+class BooksDetailView(View):
+    @counter
+    def get(self, requset, slug, **kwargs):
+        book = Book.objects.get(slug=slug)
+        return render(requset, 'store/book/book_detail.html', context={'book': book,
+                                                                       'quantity_reviews': quantity_reviews(
+                                                                           self.kwargs['slug']),
+                                                                       'reviews_list': ProductReviews.objects.filter(
+                                                                           product__slug=self.kwargs['slug']),
+                                                                       'comment_form': ReviewCommentForm
+                                                                       })
 
     def post(self, request, slug, **kwargs):
         ReviewCommentView.post(self, request, slug)
         return redirect('store:book_detail', slug=slug)
-
-    def get_context_data(self, **kwargs):
-        context = super(BooksDetailView, self).get_context_data(**kwargs)
-        context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
-        context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
-        context['comment_form'] = ReviewCommentForm
-        return context
 
 
 class BooksManageView(PermissionRequiredMixin, generic.ListView):
@@ -90,20 +91,21 @@ class BooksDelete(PermissionRequiredMixin, DeleteView):
         return reverse('store:book_manage')
 
 
-class MagazineDetailView(generic.DetailView):
-    template_name = 'store/magazine/magazine_detail.html'
-    model = Magazine
+class MagazineDetailView(View):
+    @counter
+    def get(self, requset, slug, **kwargs):
+        magazine = Magazine.objects.get(slug=slug)
+        return render(requset, 'store/magazine/magazine_detail.html', context={'magazine': magazine,
+                                                                               'quantity_reviews': quantity_reviews(
+                                                                                   self.kwargs['slug']),
+                                                                               'reviews_list': ProductReviews.objects.filter(
+                                                                                   product__slug=self.kwargs['slug']),
+                                                                               'comment_form': ReviewCommentForm
+                                                                               })
 
     def post(self, request, slug, **kwargs):
         ReviewCommentView.post(self, request, slug)
         return redirect('store:magazine_detail', slug=slug)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['quantity_reviews'] = quantity_reviews(self.kwargs['slug'])
-        context['reviews_list'] = ProductReviews.objects.filter(product__slug=self.kwargs['slug'])
-        context['comment_form'] = ReviewCommentForm
-        return context
 
 
 class MagazineManageView(PermissionRequiredMixin, generic.ListView):

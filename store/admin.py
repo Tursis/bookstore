@@ -4,6 +4,7 @@ from comments.models import ProductReviews, ReviewComment
 from profile.models import Profile, Token
 from orders.models import Order, Purchase
 from cart.models import Cart
+from dashboard.models import ViewStatistics
 
 
 # Register your models here.
@@ -73,6 +74,10 @@ class CategoryDiscountAdmin(admin.ModelAdmin):
     list_display = ('category', 'discount', 'active')
 
 
+class ViewStatisticsAdmin(admin.ModelAdmin):
+    list_display = ('product', 'quantity')
+
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Book, BookAdmin)
@@ -88,3 +93,4 @@ admin.site.register(ProductReviews, ProductReviewsAdmin)
 admin.site.register(ReviewComment, ReviewCommentAdmin)
 admin.site.register(Token)
 admin.site.register(CategoryDiscount, CategoryDiscountAdmin)
+admin.site.register(ViewStatistics, ViewStatisticsAdmin)
