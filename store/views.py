@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from rest_framework.generics import ListAPIView
 
 from bookstore.settings import PERMISSION_ON_SITE
 from .filter_counter import product_filter_counter, update_model_counter
@@ -39,7 +38,9 @@ def product_manage(request):
 class BooksDetailView(View):
     @counter
     def get(self, requset, slug, **kwargs):
+        print('hello')
         book = Book.objects.get(slug=slug)
+
         return render(requset, 'store/book/book_detail.html', context={'book': book,
                                                                        'quantity_reviews': quantity_reviews(
                                                                            self.kwargs['slug']),
@@ -144,3 +145,12 @@ class MagazineDelete(PermissionRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('store:magazine_manage')
+
+
+def handler404(request, exception):
+    data = {}
+    return render(request, '404.html', data)
+
+
+def handler500(request):
+    return render(request, '500.html')

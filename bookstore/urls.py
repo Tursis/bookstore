@@ -19,7 +19,6 @@ from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
@@ -34,3 +33,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+handler404 = 'store.views.handler404'
+handler500 = 'store.views.handler500'
