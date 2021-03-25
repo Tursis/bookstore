@@ -1,4 +1,6 @@
 from django.core.mail import EmailMultiAlternatives
+from django.shortcuts import render
+from django.template.loader import get_template
 from pip._vendor import requests
 from .env_variables import mailgun
 
@@ -22,13 +24,24 @@ class EmailCommunication:
 
 
 def send_simple_message(email):
+    cont = 'oleh'
     """
     Отправка писем
     """
     return requests.post(
         "https://api.mailgun.net/v3/sandbox179b6ebaa0594a0f951760f80e877e4d.mailgun.org/messages",
         auth=("api", mailgun),
+        # files=[
+        #        ("attachment", ("test.txt", open("d://test.mime", "rb").read()))],
         data={"from": "mailgun@sandbox179b6ebaa0594a0f951760f80e877e4d.mailgun.org",
               "to": [email],
               "subject": "Hello",
-              "text": "Testing some Mailgun awesomness!"})
+              # "tracking-opens": False,
+              # "tracking-clicks": False,
+              # "tracking": False,
+              "template": "test",
+              },
+        )
+
+
+# ("attachment", ("test.jpg", open("files/test.jpg", "rb").read())),
