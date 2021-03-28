@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.template.loader import get_template
 from django.views import generic
 from django.shortcuts import render
+
+from bookstore.settings import SITE_DOMAIN
 from profile.forms import SignUpForm
 from .token import AccountToken
 from .models import Token
@@ -33,31 +35,22 @@ class SignUpView(AuthCheckerMixin, CreateView):
             user_token.user = user
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
-            ActivateAccountMessageView(user_token.token)
-            send_simple_message(user.email)
+            message_date = {
+                "template": 'activate_account_message',
+                "v:username": user,
+                "v:token": user_token.token,
+                "v:domain": SITE_DOMAIN
+
+            }
+            send_simple_message(user.email, 'Activate Account', message_date)
         return super(SignUpView, self).form_valid(form)
-
-
-class ActivateAccountMessageView:
-    """Отправка письма активации пользовалетя"""
-    def __init__(self, token):
-        self.send_message = EmailCommunication
-        ActivateAccountMessageView.send(self, token)
-
-    def send(self, token):
-        user_token = Token.objects.get(token=token)
-        user = User.objects.get(id=user_token.user.id)
-        plaintext = get_template('registration/email.txt')
-        html = get_template('registration/email.html')
-        context = {'id': user.id,
-                   'token': user.token.token}
-        return self.send_message.send(self, plaintext, html, user.email, context)
 
 
 class ActivateAccountView(generic.View):
     """"
     Активация пользователя
     """
+
     def get(self, request, token):
         try:
             token = Token.objects.get(token=token)
