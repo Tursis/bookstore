@@ -11,7 +11,7 @@ from bookstore.settings import SITE_DOMAIN
 from profile.forms import SignUpForm
 from .token import AccountToken
 from .models import Token
-from shared.send_message import EmailCommunication, send_simple_message
+from shared.send_message import send_simple_message
 from shared.mixins import AuthCheckerMixin
 
 
