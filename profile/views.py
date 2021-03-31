@@ -35,14 +35,13 @@ class SignUpView(AuthCheckerMixin, CreateView):
             user_token.user = user
             user_token.token = AccountToken.create_token(self, user_form['username'])
             user_token.save()
-            message_date = {
-                "template": 'activate_account_message',
-                "v:username": user,
-                "v:token": user_token.token,
-                "v:domain": SITE_DOMAIN
 
-            }
-            send_simple_message(user.email, 'Activate Account', message_date)
+            html = get_template('registration/email.html')
+            context = {'username': user,
+                       'token': user_token.token,
+                       "domain": SITE_DOMAIN
+                       }
+            send_simple_message(user.email, 'Activate Account', html, context)
         return super(SignUpView, self).form_valid(form)
 
 

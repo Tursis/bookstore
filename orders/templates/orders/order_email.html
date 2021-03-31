@@ -1,0 +1,22 @@
+ <table class="table">
+   {{ order }}
+hello
+    <tbody>
+    {% for order_item in order.purchase_set.all %}
+      <tr>
+      <td> <a href={{ order_item.product.get_absolute_url }}>{{order_item.product}}</a><br>
+      <td> <a href="{{ order_item.product.get_absolute_url }}"><img class="item__img" src="{{ order_item.product.image.url }}" alt=""></a></td>
+      <td>{{ order_item.price }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+
+{#      <td>#}
+{#      {% for item_purchase in item.purchase_set.select_related %}#}
+{#        <a href={{ item_purchase.product.get_absolute_url }}>{{item_purchase.product}}</a><br>#}
+{#      {% endfor %}#}
+{#      </td>#}
+{#      <td>{{ item.created}}</td>#}

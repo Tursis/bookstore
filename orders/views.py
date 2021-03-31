@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.template.loader import get_template
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from shared.send_message import send_simple_message
 from .models import Order, Purchase
 from .forms import OrderCreateForm
 from .orders import OrdersCreate, get_total_price
@@ -20,6 +23,12 @@ class OrderView(View):
             if form.is_valid():
                 order = form.save()
                 order_create.add_to_order(request, order)
+                html = get_template('orders/order_email.html')
+
+                for item in order.purchase_set.all():
+                    print(item.product.image)
+                send_simple_message(order.email, 'Заказ #%d передан в службу доставки!' % order.id, html,
+                                    context={'order': order})
                 return render(request, 'orders/created.html', {'order': order})
         if request.user.is_authenticated:
             user = User.objects.get(username=request.user)
@@ -40,6 +49,7 @@ class OrdersListView(LoginRequiredMixin, View):
         user = User.objects.get(username=request.user)
         if request.user.is_authenticated:
             order = Order.objects.filter(email=user.email)
+
             return render(request, 'orders/orders_list.html', {'orders_list': order})
 
 
