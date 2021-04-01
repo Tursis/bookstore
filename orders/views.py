@@ -23,10 +23,11 @@ class OrderView(View):
             if form.is_valid():
                 order = form.save()
                 order_create.add_to_order(request, order)
-
+                purchase = Purchase.objects.filter(order=order)
+                total_price = get_total_price(purchase)
                 html = get_template('orders/order_email.html')
                 send_simple_message(order.email, 'Заказ #%d передан в службу доставки!' % order.id, html,
-                                    context={'order': order})
+                                    context={'order': order, 'total_price': total_price})
                 return render(request, 'orders/created.html', {'order': order})
         if request.user.is_authenticated:
             user = User.objects.get(username=request.user)
