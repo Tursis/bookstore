@@ -23,10 +23,8 @@ class OrderView(View):
             if form.is_valid():
                 order = form.save()
                 order_create.add_to_order(request, order)
-                html = get_template('orders/order_email.html')
 
-                for item in order.purchase_set.all():
-                    print(item.product.image)
+                html = get_template('orders/order_email.html')
                 send_simple_message(order.email, 'Заказ #%d передан в службу доставки!' % order.id, html,
                                     context={'order': order})
                 return render(request, 'orders/created.html', {'order': order})
