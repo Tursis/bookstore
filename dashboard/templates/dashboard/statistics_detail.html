@@ -18,5 +18,23 @@
     </tbody>
   </table>
 
+      <h1>Количество просмотра товара</h1>
+    <table class="table">
+     <thead class="thead-dark">
+        <tr>
+          <th scope="col">Название</th>
+          <th scope="col">Количество</th>
+        </tr>
+        </thead>
+    <tbody>
+     {% for item in get_views_product_statistics %}
+      <tr>
+      <td><a href="{{ item.product.get_absolute_url }}">{{ item.product }}</a></td>
+      <td>{{ item.quantity }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
 
 {% endblock %}
