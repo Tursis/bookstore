@@ -6,6 +6,7 @@ app_name = 'store'
 urlpatterns = [
     path('', views.ProductListView.as_view(), name='index'),
     url(r'^store$', views.ProductListView.as_view(), name='index', ),
+    url(r'^search/$', views.SearchView.as_view(), name='search', ),
     path('store/manage/', views.product_manage, name='product_manage'),
     path('store/manage/book/', views.BooksManageView.as_view(), name='book_manage'),
     path('store/manage/magizne/', views.MagazineManageView.as_view(), name='magazine_manage'),

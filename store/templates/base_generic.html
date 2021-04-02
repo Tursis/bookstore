@@ -56,11 +56,11 @@
           <span id="dropdown-menu">Фильтр</span>
         </div>
         <div class="col-12 col-md-7 col-xl-10 search-line">
-          <form action="" class="search-form">
+          <form action="{% url "store:search" %}" method="get" class="search-form">
             <label class="">
-              <input class="search-form__input" type="search" placeholder="Поиск">
+              <input class="search-form__input" type="search"  name="q" placeholder="Поиск">
             </label>
-            <button class="search-form__button">Поиск</button>
+             <button class="search-form__button" type="submit" value="apply">Применить</button>
           </form>
         </div>
       </div>

@@ -30,3 +30,6 @@ class ProductFilter(django_filters.FilterSet):
             'publisher',
             'price',
         ]
+
+def search_filter(data, queryset):
+    pass
