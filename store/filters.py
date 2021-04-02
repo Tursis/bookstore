@@ -31,5 +31,7 @@ class ProductFilter(django_filters.FilterSet):
             'price',
         ]
 
+
 def search_filter(data, queryset):
-    pass
+    result = Product.objects.filter(name=data['q'])
+    return result
