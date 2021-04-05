@@ -1,7 +1,10 @@
 import django_filters
+import transliterate
 from django import forms
 
 from .models import Product, Book, Magazine, Category, BookGenre, BookAuthor, Publisher
+
+
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -32,6 +35,14 @@ class ProductFilter(django_filters.FilterSet):
         ]
 
 
-def search_filter(data, queryset):
-    result = Product.objects.filter(name=data['q'])
-    return result
+class SearchFilter:
+    def __init__(self, data):
+        self.data = data
+
+    def qs(self):
+
+        request_data = transliterate.translit(self.data['q'], reversed=True)
+        return Product.objects.filter(slug__icontains=request_data)
+
+
+

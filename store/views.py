@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from bookstore.settings import PERMISSION_ON_SITE
 from .filter_counter import product_filter_counter, update_model_counter
-from .filters import ProductFilter, search_filter
+from .filters import ProductFilter, SearchFilter
 from .forms import BookForm
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category, Publisher
 from comments.models import ProductReviews
@@ -149,7 +149,8 @@ class MagazineDelete(PermissionRequiredMixin, DeleteView):
 
 class SearchView(View):
     def get(self, request):
-        f = search_filter(request.GET, queryset=Product.objects.all())
+        # f = search_filter(request.GET, queryset=Product.objects.all())
+        f = SearchFilter(request.GET)
         return render(request, 'index.html',
                       context={'filter': f})
 
