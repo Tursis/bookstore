@@ -1,10 +1,7 @@
 import django_filters
-import transliterate
 from django import forms
 
 from .models import Product, Book, Magazine, Category, BookGenre, BookAuthor, Publisher
-
-
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -40,9 +37,8 @@ class SearchFilter:
         self.data = data
 
     def qs(self):
-
-        request_data = transliterate.translit(self.data['q'], reversed=True)
-        return Product.objects.filter(slug__icontains=request_data)
-
-
-
+        query_filter_list = []
+        for item in Product.objects.all():
+            if item.name.lower().find(self.data['q'].lower()) >= 0:
+                query_filter_list.append(item)
+        return query_filter_list
