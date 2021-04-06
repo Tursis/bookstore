@@ -22,7 +22,7 @@
                 Ваша корзина:
                 <a href="{% url "cart:cart_detail" %}">
                   <span id="cart_quantity">{{ total_items }} </span>;
-                 <span class="cart_total_price"> {{ cart_info.get_total_price }} </span> UAH
+                  <span class="cart_total_price"> {{ cart_info.get_total_price }} </span> UAH
                 </a>
               {% else %}
                 Ваша корзина пуста.
@@ -30,19 +30,25 @@
             {% endwith %}
           </div>
           {% if user.is_authenticated %}
-            {% if perms.admin %}
-              <a href="{% url 'store:product_manage' %}" class="">Панель управление</a>
-            {% endif %}
-            <div class="avatar">
-              <a href="{% url 'order:orders_list' %}">
-                <div class="avatar__image">
-                  {{ user.get_username|first|upper }}
-                </div>
-                {{ user.get_username }}
-                {{ user__profiles.name}}
-              </a>
+            <div id="dropdown-menu" class="avatar">
+              <div class="avatar__image">
+                {{ user.get_username|first|upper }}
+              </div>
+              {{ user.get_username }}
+              {{ user__profiles.name }}
             </div>
-            <div><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></div>
+            <div>
+              <ul id="side-nav" class="side-nav-hide block_white block_shadow">
+                <li>
+                  {% if perms.admin %}
+                    <a href="{% url 'store:product_manage' %}" class="">Панель управление</a>
+                  {% endif %}
+                </li>
+                <li><a href="{% url 'order:orders_list' %}">Ваши заказы</a></li>
+                <li><a href="">Профиль</a></li>
+                <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
+              </ul>
+            </div>
           {% else %}
             <div><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></div>
             <div><a href="{% url 'profile:sign_up' %}?next={{ request.path }}">Регистрация</a></div>
@@ -53,14 +59,14 @@
     <div class="header-bottom-line">
       <div class="row">
         <div class="col-12 col-md-3 col-xl-2 header-dropdown-menu">
-          <span id="dropdown-menu">Фильтр</span>
+          <span>Фильтр</span>
         </div>
         <div class="col-12 col-md-7 col-xl-10 search-line">
           <form action="{% url "store:search" %}" method="get" class="search-form">
             <label class="">
-              <input class="search-form__input" type="search"  name="q" placeholder="Поиск">
+              <input class="search-form__input" type="search" name="q" placeholder="Поиск">
             </label>
-             <button class="search-form__button" type="submit" value="apply">Применить</button>
+            <button class="search-form__button" type="submit" value="apply">Применить</button>
           </form>
         </div>
       </div>
@@ -97,6 +103,12 @@
 </div>
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#dropdown-menu").on("click", () => {
+        $("#side-nav").slideToggle(200);
+        //     $('body').toggleClass('overlay');
+    });
+</script>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $('#side-nav  ul li').hover(

@@ -38,9 +38,7 @@ def product_manage(request):
 class BooksDetailView(View):
     @counter
     def get(self, requset, slug, **kwargs):
-        print('hello')
         book = Book.objects.get(slug=slug)
-
         return render(requset, 'store/book/book_detail.html', context={'book': book,
                                                                        'quantity_reviews': quantity_reviews(
                                                                            self.kwargs['slug']),
