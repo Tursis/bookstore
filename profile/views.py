@@ -1,10 +1,11 @@
 from datetime import timedelta
+
+from django.views import View
 from django.views.generic import CreateView
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.template.loader import get_template
-from django.views import generic
 from django.shortcuts import render
 
 from bookstore.settings import SITE_DOMAIN
@@ -45,7 +46,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
         return super(SignUpView, self).form_valid(form)
 
 
-class ActivateAccountView(generic.View):
+class ActivateAccountView(View):
     """"
     Активация пользователя
     """
@@ -72,3 +73,9 @@ class ActivateAccountView(generic.View):
         else:
             context = {'error': 'Пользователя не существует'}
             return render(request, 'registration/error.html', context=context)
+
+
+class ProfileDetailView(View):
+    def get(self, request):
+
+        return render(request, 'profile_detail.html', context={'user': request.user})

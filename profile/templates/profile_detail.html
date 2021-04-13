@@ -1,0 +1,65 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+  <div>
+    <div>
+      <h1>Личные данные</h1>
+    </div>
+    <div>
+      <label>
+        Фамилия
+        <input
+                name="{{ user.id }}"
+                value="{{ user.last_name }}"
+        />
+      </label>
+      <label>
+        Имя
+        <input
+                name="{{ user.id }}"
+                value="{{ user.first_name }}"
+        />
+      </label>
+
+      <label>
+        Отчество
+        <input
+                name="{{ user.id }}"
+                value="{{ user.profile.surname }}"
+        />
+      </label>
+      <label>
+        Пол
+        <input
+                name="{{ user.id }}"
+                value="{{ user.profile.gender }}"
+        />
+      </label>
+      <label>
+        День рождения
+        <input
+                name="{{ user.id }}"
+                value="{{ user.profile.gender }}"
+        />
+      </label>
+    </div>
+  <div>
+      <h1>Контакты</h1>
+    </div>
+    <div>
+      <label>
+        Номер телефона
+        <input
+                name="{{ user.id }}"
+                value="{{ user.profile.phone }}"
+        />
+      </label>
+      <label>
+        Электронная почта
+        <input
+                name="{{ user.id }}"
+                value="{{ user.email }}"
+        />
+      </label>
+  </div>
+  </div>
+{% endblock %}

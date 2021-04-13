@@ -45,7 +45,7 @@
                   {% endif %}
                 </li>
                 <li><a href="{% url 'order:orders_list' %}">Ваши заказы</a></li>
-                <li><a href="">Профиль</a></li>
+                <li><a href="{% url 'profile:profile_detail' %}">Профиль</a></li>
                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
               </ul>
             </div>

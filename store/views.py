@@ -120,6 +120,9 @@ class MagazineManageView(PermissionRequiredMixin, generic.ListView):
 
 
 class MagazineCreate(PermissionRequiredMixin, CreateView):
+    """
+    Создание журналов
+    """
     permission_required = PERMISSION_ON_SITE['moderator']
     model = Magazine
     form = BookForm
