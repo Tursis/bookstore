@@ -1,65 +1,96 @@
 {% extends 'base_generic.html' %}
 {% block content %}
-  <div>
+  <form method="post">
+  {% csrf_token %}
     <div>
-      <h1>Личные данные</h1>
-    </div>
-    <div>
-      <label>
-        Фамилия
-        <input
-                name="{{ user.id }}"
-                value="{{ user.last_name }}"
-        />
-      </label>
-      <label>
-        Имя
-        <input
-                name="{{ user.id }}"
-                value="{{ user.first_name }}"
-        />
-      </label>
+      <div>
+        <h1>Личные данные</h1>
+      </div>
+      <div>
+        <label>
+          Фамилия
+          <input
+                  name="last_name"
+                  value="{{ user.last_name }}"
+          />
+        </label>
+        <label>
+          Имя
+          <input
+                  name="name"
+                  value="{{ user.first_name }}"
+          />
+        </label>
 
-      <label>
-        Отчество
-        <input
-                name="{{ user.id }}"
-                value="{{ user.profile.surname }}"
-        />
-      </label>
-      <label>
-        Пол
-        <input
-                name="{{ user.id }}"
-                value="{{ user.profile.gender }}"
-        />
-      </label>
-      <label>
-        День рождения
-        <input
-                name="{{ user.id }}"
-                value="{{ user.profile.gender }}"
-        />
-      </label>
+        <label>
+          Отчество
+          <input
+                  name="middle_name"
+                  value="{{ user.profile.surname }}"
+          />
+        </label>
+        <label>
+          Пол
+          <input
+                  name="gender"
+                  value="{{ user.profile.gender }}"
+          />
+        </label>
+        <label>
+          День рождения
+          <input
+                  name="birthday"
+                  value="{{ user.profile.gender }}"
+          />
+        </label>
+      </div>
+      <div>
+        <h1>Контакты</h1>
+      </div>
+      <div>
+        <label>
+          Номер телефона
+          <input
+                  name="phone_number"
+                  value="{{ user.profile.phone }}"
+          />
+        </label>
+        <label>
+          Электронная почта
+          <input
+                  name="email"
+                  value="{{ user.email }}"
+          />
+        </label>
+      </div>
     </div>
-  <div>
-      <h1>Контакты</h1>
+    <div>
+      <h1>Смена пароля</h1>
     </div>
     <div>
       <label>
-        Номер телефона
+        старый пароль
         <input
-                name="{{ user.id }}"
-                value="{{ user.profile.phone }}"
+                name="old_password"
+                value=""
         />
       </label>
       <label>
-        Электронная почта
+        Новый пароль
         <input
-                name="{{ user.id }}"
-                value="{{ user.email }}"
+                name="new_password"
+                value=""
         />
       </label>
-  </div>
-  </div>
+      <label>
+        Повторить новый пароль
+        <input
+                name="repeat_new_password"
+                value=""
+        />
+      </label>
+    </div>
+
+    <button class="" type="submit" value="apply">Сохранить</button>
+  </form>
 {% endblock %}
