@@ -10,7 +10,7 @@ from dashboard.models import ViewStatistics
 # Register your models here.
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'last_name', 'surname', 'birth_date')
+    list_display = ('user', 'name', 'last_name', 'surname', 'birthday')
     list_filter = ['user']
     search_fields = ['user']
     radio_fields = {'gender': admin.VERTICAL}

@@ -12,7 +12,7 @@ from rest_framework.exceptions import ValidationError
 from django.core import exceptions
 from bookstore.settings import SITE_DOMAIN
 from profile.forms import SignUpForm
-from .profile import change_password
+from .profile import change_password, change_profile_data, change_profile_email
 from .token import AccountToken
 from .models import Token
 from shared.send_message import send_simple_message
@@ -83,11 +83,20 @@ class ProfileDetailView(View):
         return render(request, 'profile_detail.html', context={'user': request.user})
 
     def post(self, request, *args, **kwargs):
-        error_message = None
         errors = dict()
         try:
-            change_password(request)
+            change_profile_data(request)
         except exceptions.ValidationError as e:
-            errors['password'] = list(e.messages)
-            print(errors)
-        return render(request, 'profile_detail.html', context={'user': request.user, 'error_message': error_message})
+            errors['profile_data'] = list(e.messages)
+
+        try:
+            change_profile_email(request)
+        except exceptions.ValidationError as e:
+            errors['email'] = list(e.messages)
+
+        if request.POST.get("old_password") != '':
+            try:
+                change_password(request)
+            except exceptions.ValidationError as e:
+                errors['password'] = list(e.messages)
+        return render(request, 'profile_detail.html', context={'user': request.user, 'errors': errors})

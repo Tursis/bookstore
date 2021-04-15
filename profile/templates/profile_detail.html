@@ -1,12 +1,19 @@
 {% extends 'base_generic.html' %}
 {% block content %}
   <form method="post">
-  {% csrf_token %}
+    {% csrf_token %}
     <div>
       <div>
         <h1>Личные данные</h1>
       </div>
       <div>
+              {% if errors %}
+          {% for error in errors.profile_data %}
+            <p>
+              {{ error }}
+            </p>
+          {% endfor %}
+        {% endif %}
         <label>
           Фамилия
           <input
@@ -31,16 +38,16 @@
         </label>
         <label>
           Пол
-          <input
-                  name="gender"
-                  value="{{ user.profile.gender }}"
-          />
+          <input type="radio" name="gender" value="M" {% if user.profile.gender == "М" %}
+                 checked {% endif %}> М
+          <input type="radio" name="gender" value="Ж" {% if user.profile.gender == "Ж" %}
+                 checked {% endif %}> Ж<br>
         </label>
         <label>
           День рождения
           <input
                   name="birthday"
-                  value="{{ user.profile.gender }}"
+                  value="{{ user.profile.birthday }}"
           />
         </label>
       </div>
@@ -55,6 +62,13 @@
                   value="{{ user.profile.phone }}"
           />
         </label>
+        {% if errors %}
+          {% for error in errors.email %}
+            <p>
+              {{ error }}
+            </p>
+          {% endfor %}
+        {% endif %}
         <label>
           Электронная почта
           <input
@@ -68,29 +82,35 @@
       <h1>Смена пароля</h1>
     </div>
     <div>
+      {% if errors %}
+        {% for error in errors.password %}
+          <p>
+            {{ error }}
+          </p>
+        {% endfor %}
+      {% endif %}
       <label>
         старый пароль
-        <input
-                name="old_password"
-                value=""
+        <input type="password"
+               name="old_password"
+               value=""
         />
       </label>
       <label>
         Новый пароль
-        <input
-                name="new_password"
-                value=""
+        <input type="password"
+               name="new_password"
+               value=""
         />
       </label>
       <label>
         Повторить новый пароль
-        <input
-                name="repeat_new_password"
-                value=""
+        <input type="password"
+               name="repeat_new_password"
+               value=""
         />
       </label>
     </div>
-
     <button class="" type="submit" value="apply">Сохранить</button>
   </form>
 {% endblock %}
