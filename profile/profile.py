@@ -24,7 +24,7 @@ def change_profile_email(request):
     user = request.user
     new_email = request.POST.get("email")
     if User.objects.filter(email=new_email).exists() and user.email != new_email:
-        raise exceptions.ValidationError('email уже занят')
+        raise ValueError('email уже занят')
     else:
         user.email = new_email
     user.save()
@@ -44,3 +44,13 @@ def change_password(request):
             raise exceptions.ValidationError('Пароли не равны')
     else:
         raise exceptions.ValidationError('Не правильный пароль')
+
+
+def exceptions_profile(request, func):
+    errors = {}
+
+    try:
+        func(request)
+    except ValueError as e:
+        errors[func.__name__] = list(e.messages)
+    return errors

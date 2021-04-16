@@ -12,7 +12,7 @@ from rest_framework.exceptions import ValidationError
 from django.core import exceptions
 from bookstore.settings import SITE_DOMAIN
 from profile.forms import SignUpForm
-from .profile import change_password, change_profile_data, change_profile_email
+from .profile import change_password, change_profile_data, change_profile_email, exceptions_profile
 from .token import AccountToken
 from .models import Token
 from shared.send_message import send_simple_message
@@ -84,19 +84,27 @@ class ProfileDetailView(View):
 
     def post(self, request, *args, **kwargs):
         errors = dict()
-        try:
-            change_profile_data(request)
-        except exceptions.ValidationError as e:
-            errors['profile_data'] = list(e.messages)
 
-        try:
-            change_profile_email(request)
-        except exceptions.ValidationError as e:
-            errors['email'] = list(e.messages)
-
-        if request.POST.get("old_password") != '':
+        # errors = exceptions_profile(request, change_profile_email)
+        for func in (change_profile_data, change_profile_email, change_password):
             try:
-                change_password(request)
+                func(request)
             except exceptions.ValidationError as e:
-                errors['password'] = list(e.messages)
+                errors[func.__name__] = list(e.messages)
+        print(errors)
+        # try:
+        #     change_profile_data(request)
+        # except exceptions.ValidationError as e:
+        #     errors['profile_data'] = list(e.messages)
+        #
+        # try:
+        #     change_profile_email(request)
+        # except exceptions.ValidationError as e:
+        #     errors['email'] = list(e.messages)
+        #
+        # if request.POST.get("old_password") != '':
+        #     try:
+        #         change_password(request)
+        #     except exceptions.ValidationError as e:
+        #         errors['password'] = list(e.messages)
         return render(request, 'profile_detail.html', context={'user': request.user, 'errors': errors})

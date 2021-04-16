@@ -8,7 +8,7 @@
       </div>
       <div>
               {% if errors %}
-          {% for error in errors.profile_data %}
+          {% for error in errors.change_profile_data %}
             <p>
               {{ error }}
             </p>
@@ -63,7 +63,7 @@
           />
         </label>
         {% if errors %}
-          {% for error in errors.email %}
+          {% for error in errors.change_profile_email %}
             <p>
               {{ error }}
             </p>
@@ -83,7 +83,7 @@
     </div>
     <div>
       {% if errors %}
-        {% for error in errors.password %}
+        {% for error in errors.change_password %}
           <p>
             {{ error }}
           </p>
