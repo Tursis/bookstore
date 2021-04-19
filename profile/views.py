@@ -91,6 +91,7 @@ class ProfileDetailView(View):
                 func(request)
             except exceptions.ValidationError as e:
                 errors[func.__name__] = list(e.messages)
+                break
         print(errors)
         # try:
         #     change_profile_data(request)
