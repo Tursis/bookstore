@@ -1,3 +1,4 @@
+import extras as extras
 from django import forms
 from django.contrib.auth import password_validation
 
@@ -20,7 +21,6 @@ class ProfileForm(forms.ModelForm):
 
 # Sign Up Form
 class SignUpForm(UserCreationForm):
-
     class Meta:
         model = User
         fields = [
@@ -33,3 +33,15 @@ class SignUpForm(UserCreationForm):
         ]
 
 
+YEARS = [x for x in range(1940, 2022)]
+
+
+class SomeForm(forms.ModelForm):
+    birthday = forms.DateField(label='What is your birth date?', widget=forms.SelectDateWidget(years=YEARS))
+
+    class Meta:
+        model = Profile
+        fields = [
+            'birthday',
+
+        ]

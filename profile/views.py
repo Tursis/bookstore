@@ -11,7 +11,7 @@ from django.shortcuts import render
 from rest_framework.exceptions import ValidationError
 from django.core import exceptions
 from bookstore.settings import SITE_DOMAIN
-from profile.forms import SignUpForm
+from profile.forms import SignUpForm, SomeForm
 from .profile import change_password, change_profile_data, change_profile_email, exceptions_profile
 from .token import AccountToken
 from .models import Token
@@ -80,7 +80,8 @@ class ActivateAccountView(View):
 
 class ProfileDetailView(View):
     def get(self, request):
-        return render(request, 'profile_detail.html', context={'user': request.user})
+        form = SomeForm(initial={'birthday': request.user.profile.birthday})
+        return render(request, 'profile_detail.html', context={'user': request.user, 'form': form})
 
     def post(self, request, *args, **kwargs):
         errors = dict()
@@ -108,4 +109,5 @@ class ProfileDetailView(View):
         #         change_password(request)
         #     except exceptions.ValidationError as e:
         #         errors['password'] = list(e.messages)
-        return render(request, 'profile_detail.html', context={'user': request.user, 'errors': errors})
+        return render(request, 'profile_detail.html',
+                      context={'user': request.user, 'errors': errors, 'form': SomeForm})
