@@ -60,8 +60,8 @@
           </select>
           <select name="birth_month" id="">
             <option disabled>месяц</option>
-            {% for month in user.profile.BIRTH_MONTH_CHOICES %}
-              <option value="{{ month }}" {% if  user.profile.birthday|date:"E"  == month %} selected {% endif %}>{{ month|date }}</option>
+            {% for month_key, month_value in user.profile.BIRTH_MONTH_CHOICES.items %}
+              <option value="{{ month_key }}" {% if  user.profile.birthday.month  == month_key %} selected {% endif %}>{{ month_value }}</option>
             {% endfor %}
           </select>
          <select name="birth_year" id="">

@@ -14,9 +14,10 @@ class Profile(models.Model):
     Модель профиля
     """
     BIRTH_YEAR_CHOICES = [x for x in range(1922, 2022)]
-    # BIRTH_MONTH_CHOICES = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября',
-    #                        'октября', 'ноября', 'декабря']
-    BIRTH_MONTH_CHOICES = [x for x in range(1, 13)]
+    BIRTH_MONTH_CHOICES = {1: 'января', 2: 'февраля', 3: 'марта', 4: 'апреля', 5: 'мая', 6: 'июня', 7: 'июля',
+                           8: 'августа', 9: 'сентября',
+                           10: 'октября', 11: 'ноября', 12: 'декабря'}
+
     BIRTH_DAY_CHOICES = [x for x in range(1, 32)]
     GENDER_CHOICES = (
         ('М', 'Мужской'),
