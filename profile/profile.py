@@ -10,13 +10,16 @@ def change_profile_data(request):
     new_last_name = request.POST.get("last_name")
     new_surname = request.POST.get("middle_name")
     new_gender = request.POST.get("gender")
-    new_birthday = request.POST.get("birthday")
+    new_birth_day = request.POST.get("birth_day")
+    new_birth_month = request.POST.get("birth_month")
+    new_birth_year = request.POST.get("birth_year")
     new_phone_number = request.POST.get("phone_number")
+    print(int(new_birth_month))
     user.first_name = new_name
     user.last_name = new_last_name
     user.profile.surname = new_surname
     user.profile.gender = new_gender
-    user.profile.birthday = new_birthday
+    # user.profile.birthday = new_birth_year + '-' + new_birth_month + '-' + new_birth_day
     user.save()
 
 

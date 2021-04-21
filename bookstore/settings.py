@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'uk'
+LANGUAGE_CODE = 'ru'    # uk
 
 TIME_ZONE = 'Europe/Kiev'
 
@@ -186,14 +186,6 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-DATE_INPUT_FORMATS = [
-    '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y',  # '2006-10-25', '10/25/2006', '10/25/06'
-    '%b %d %Y', '%b %d, %Y',  # 'Oct 25 2006', 'Oct 25, 2006'
-    '%d %b %Y', '%d %b, %Y',  # '25 Oct 2006', '25 Oct, 2006'
-    '%B %d %Y', '%B %d, %Y',  # 'October 25 2006', 'October 25, 2006'
-    '%d %B %Y', '%d %B, %Y',  # '25 October 2006', '25 October, 2006'
-]
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -7,7 +7,7 @@
         <h1>Личные данные</h1>
       </div>
       <div>
-              {% if errors %}
+        {% if errors %}
           {% for error in errors.change_profile_data %}
             <p>
               {{ error }}
@@ -45,13 +45,32 @@
         </label>
         <label>
           День рождения
-          <input
-                  name="birthday"
-                  value="{{ user.profile.birthday }}"
-          />
+{#          <input#}
+{#                  name="birthday"#}
+{#                  value="{{ user.profile.birthday }}"#}
+{#          />#}
+{##}
+{##}
+
+          <select name="birth_day" id="">
+            <option disabled>день</option>
+            {% for day in user.profile.BIRTH_DAY_CHOICES %}
+              <option value="{{ day }}" {% if user.profile.birthday.day == day %} selected {% endif %}>{{ day }}</option>
+            {% endfor %}
+          </select>
+          <select name="birth_month" id="">
+            <option disabled>месяц</option>
+            {% for month in user.profile.BIRTH_MONTH_CHOICES %}
+              <option value="{{ month }}" {% if  user.profile.birthday|date:"E"  == month %} selected {% endif %}>{{ month|date }}</option>
+            {% endfor %}
+          </select>
+         <select name="birth_year" id="">
+            <option disabled>год</option>
+            {% for year in user.profile.BIRTH_YEAR_CHOICES %}
+              <option value="{{ year }}" {% if  user.profile.birthday.year  == year %} selected {% endif %}>{{ year }}</option>
+            {% endfor %}
+          </select>
         </label>
-      <label for="birthday">Birthday:</label>
-      {{ form.as_p }}
       </div>
       <div>
         <h1>Контакты</h1>
