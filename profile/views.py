@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.contrib.auth.password_validation import password_validators_help_texts
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views import View
 from django.views.generic import CreateView
 from django.utils import timezone
@@ -8,11 +8,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.template.loader import get_template
 from django.shortcuts import render
-from rest_framework.exceptions import ValidationError
 from django.core import exceptions
 from bookstore.settings import SITE_DOMAIN
-from profile.forms import SignUpForm, SomeForm
-from .profile import change_password, change_profile_data, change_profile_email, exceptions_profile
+from profile.forms import SignUpForm
+from .profile import change_password, change_profile_data, change_profile_email
 from .token import AccountToken
 from .models import Token
 from shared.send_message import send_simple_message
@@ -78,7 +77,7 @@ class ActivateAccountView(View):
             return render(request, 'registration/error.html', context=context)
 
 
-class ProfileDetailView(View):
+class ProfileDetailView(PermissionRequiredMixin, View):
     def get(self, request):
         return render(request, 'profile_detail.html', context={'user': request.user})
 
@@ -90,7 +89,6 @@ class ProfileDetailView(View):
                 func(request)
             except exceptions.ValidationError as e:
                 errors[func.__name__] = list(e.messages)
-                break
         print(errors)
         # try:
         #     change_profile_data(request)

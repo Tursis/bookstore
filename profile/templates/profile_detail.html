@@ -45,8 +45,6 @@
         </label>
         <label>
           День рождения
-      {{ user.profile.birthday.day }}
-        {{ user.profile.birthday.month }}
           <select name="birth_day" id="">
             <option disabled>день</option>
             {% for day in user.profile.BIRTH_DAY_CHOICES %}

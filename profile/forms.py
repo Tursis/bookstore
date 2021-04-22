@@ -31,17 +31,3 @@ class SignUpForm(UserCreationForm):
             'password1',
             'password2',
         ]
-
-
-YEARS = [x for x in range(1940, 2022)]
-
-
-class SomeForm(forms.ModelForm):
-    birthday = forms.DateField(label='What is your birth date?', widget=forms.SelectDateWidget(years=YEARS))
-
-    class Meta:
-        model = Profile
-        fields = [
-            'birthday',
-
-        ]

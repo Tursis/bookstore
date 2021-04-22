@@ -49,11 +49,3 @@ def change_password(request):
             raise exceptions.ValidationError('Не правильный пароль')
 
 
-def exceptions_profile(request, func):
-    errors = {}
-
-    try:
-        func(request)
-    except ValueError as e:
-        errors[func.__name__] = list(e.messages)
-    return errors
