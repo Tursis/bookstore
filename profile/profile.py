@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 
 def change_profile_data(request):
+    print(request.POST)
     user = request.user
     user.first_name = request.POST.get("name")
     user.last_name = request.POST.get("last_name")
