@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.generic import CreateView
 from django.utils import timezone
@@ -77,34 +77,17 @@ class ActivateAccountView(View):
             return render(request, 'registration/error.html', context=context)
 
 
-class ProfileDetailView(PermissionRequiredMixin, View):
+class ProfileDetailView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'profile_detail.html', context={'user': request.user})
 
     def post(self, request, *args, **kwargs):
         errors = dict()
-        # errors = exceptions_profile(request, change_profile_email)
+
         for func in (change_profile_data, change_profile_email, change_password):
             try:
                 func(request)
             except exceptions.ValidationError as e:
                 errors[func.__name__] = list(e.messages)
-        print(errors)
-        # try:
-        #     change_profile_data(request)
-        # except exceptions.ValidationError as e:
-        #     errors['profile_data'] = list(e.messages)
-        #
-        # try:
-        #     change_profile_email(request)
-        # except exceptions.ValidationError as e:
-        #     errors['email'] = list(e.messages)
-        #
-        # if request.POST.get("old_password") != '':
-        #     try:
-        #         change_password(request)
-        #     except exceptions.ValidationError as e:
-        #         errors['password'] = list(e.messages)
-
         return render(request, 'profile_detail.html',
                       context={'user': request.user, 'errors': errors})
