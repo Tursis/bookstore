@@ -80,12 +80,10 @@ class ActivateAccountView(View):
 
 class ProfileDetailView(View):
     def get(self, request):
-        form = SomeForm(initial={'birthday': request.user.profile.birthday})
-        return render(request, 'profile_detail.html', context={'user': request.user, 'form': form})
+        return render(request, 'profile_detail.html', context={'user': request.user})
 
     def post(self, request, *args, **kwargs):
         errors = dict()
-
         # errors = exceptions_profile(request, change_profile_email)
         for func in (change_profile_data, change_profile_email, change_password):
             try:
@@ -109,5 +107,6 @@ class ProfileDetailView(View):
         #         change_password(request)
         #     except exceptions.ValidationError as e:
         #         errors['password'] = list(e.messages)
+
         return render(request, 'profile_detail.html',
-                      context={'user': request.user, 'errors': errors, 'form': SomeForm})
+                      context={'user': request.user, 'errors': errors})

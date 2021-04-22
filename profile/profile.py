@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
@@ -6,21 +8,16 @@ from django.contrib.auth.models import User
 
 def change_profile_data(request):
     user = request.user
-    new_name = request.POST.get("name")
-    new_last_name = request.POST.get("last_name")
-    new_surname = request.POST.get("middle_name")
-    new_gender = request.POST.get("gender")
+    user.first_name = request.POST.get("name")
+    user.last_name = request.POST.get("last_name")
+    user.profile.surname = request.POST.get("middle_name")
+    user.profile.gender = request.POST.get("gender")
     new_birth_day = request.POST.get("birth_day")
     new_birth_month = request.POST.get("birth_month")
     new_birth_year = request.POST.get("birth_year")
     new_phone_number = request.POST.get("phone_number")
-
-    user.first_name = new_name
-    user.last_name = new_last_name
-    user.profile.surname = new_surname
-    user.profile.gender = new_gender
-    user.profile.birthday = new_birth_year + '-' + new_birth_month + '-' + new_birth_day
-    print(user.profile.birthday)
+    new_birth_date = new_birth_year + '-' + new_birth_month + '-' + new_birth_day
+    user.profile.birthday = datetime.strptime(new_birth_date, "%Y-%m-%d").date()
     user.save()
 
 
