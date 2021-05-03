@@ -161,6 +161,7 @@ class Product(models.Model):
     def lower_name(self):
         return self.name.lower()
 
+
 class Book(Product):
     author = models.ManyToManyField(BookAuthor, verbose_name='Автор')
     genre = models.ManyToManyField(BookGenre, verbose_name='Жанр')

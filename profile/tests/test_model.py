@@ -10,6 +10,11 @@ class UserModelTest(TestCase):
         # Set up non-modified objects used by all test methods
         User.objects.create(first_name='Oleh', last_name='Spytsiya')
 
+    def test_len_gender(self):
+        user = User.objects.get(id=1)
+        gender_len = len(user.profile.gender)
+        print('test')
+        self.assertEqual(gender_len, 1)
     # def test_first_name_label(self):
     #     user = User.objects.get(id=1)
     #     field_label = user._meta.get_field('first_name').verbose_name
