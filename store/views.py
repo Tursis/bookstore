@@ -31,8 +31,11 @@ class ProductListView(View):
                                'url_list': url_list})
 
 
-def product_manage(request):
-    return render(request, 'store/product_manage.html')
+class ProductManage(PermissionRequiredMixin, View):
+    permission_required = PERMISSION_ON_SITE['moderator']
+
+    def get(self, request):
+        return render(request, 'store/product_manage.html')
 
 
 class BooksDetailView(View):

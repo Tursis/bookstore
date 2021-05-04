@@ -1,5 +1,5 @@
 from django.test import TestCase
-from gunicorn.config import User
+from django.contrib.auth.models import User
 
 from store.models import Product, Book, Magazine
 from django.urls import reverse
@@ -34,11 +34,24 @@ class ProductListViewTest(TestCase):
 
 
 class AuthorizationСheckTest(TestCase):
+
     def setUp(self):
         # Создание двух пользователей
-        test_user = User.objects.create_user(username='user1', password='12345')
+        test_user = User.objects.create_user(username='admin')
+        test_user.set_password('admin')
+        test_user.is_superuser = True
         test_user.save()
 
     def test_redirect_if_not_logged_in(self):
         resp = self.client.get(reverse('store:product_manage'))
         self.assertRedirects(resp, '/accounts/login/?next=/store/manage/')
+
+    def test_logged_in_uses_correct_template(self):
+        login = self.client.login(username='admin', password='admin')
+        resp = self.client.get(reverse('store:product_manage'))
+
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+
+        # Проверка того, что мы используем правильный шаблон
+        self.assertTemplateUsed(resp, 'store/product_manage.html')
