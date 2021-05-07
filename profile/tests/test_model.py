@@ -15,13 +15,3 @@ class UserModelTest(TestCase):
         gender_len = len(user.profile.gender)
         print('test')
         self.assertEqual(gender_len, 1)
-    # def test_first_name_label(self):
-    #     user = User.objects.get(id=1)
-    #     field_label = user._meta.get_field('first_name').verbose_name
-    #     self.assertEquals(field_label, 'first_name')
-    #
-    # def test_object_name_is_last_name_comma_first_name(self):
-    #     user = User.objects.get(id=1)
-    #     expected_object_name = '%s, %s' % (user.last_name, user.first_name)
-    #     self.assertEquals(expected_object_name, str(user))
-
