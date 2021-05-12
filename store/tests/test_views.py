@@ -36,7 +36,6 @@ class ProductListViewTest(TestCase):
 class AuthorizationСheckTest(TestCase):
 
     def setUp(self):
-        # Создание двух пользователей
         test_user = User.objects.create_user(username='admin')
         test_user.set_password('admin')
         test_user.is_superuser = True
