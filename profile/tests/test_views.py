@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
 
-class SignUpViewTest(TestCase):
+class SignUpViewRedirectTest(TestCase):
     def setUp(self):
         # Создание двух пользователей
         test_user = User.objects.create_user(username='admin')
@@ -24,3 +24,21 @@ class SignUpViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         # Проверка того, что мы используем правильный шаблон
         self.assertTemplateUsed(resp, 'registration/sign_up.html')
+
+
+class SignUpViewTest(TestCase):
+    def test_create_user(self):
+        user_data = {
+            'username': 'tursis',
+            'first_name': 'Oleh',
+            'last_name': 'Spytsia',
+            'email': 'oleh94@inbox.ru',
+            'password1': 'Jktu199437',
+            'password2': 'Jktu199437'
+        }
+        resp = self.client.post(reverse('profile:sign_up'), user_data)
+        user = get_user_model().objects.get(username='tursis')
+        self.assertEqual(user.username, 'tursis')
+        self.assertTrue(user.check_password(user_data['password1']))
+        self.assertTrue(user.token)
+        self.assertFalse(user.is_active)
