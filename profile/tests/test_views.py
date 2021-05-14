@@ -1,11 +1,19 @@
+from django.template.loader import get_template
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.test.client import Client
 from django.urls import reverse
 from django.contrib.auth.models import User
+
+from mock import patch, Mock
+
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
+from bookstore.settings import SITE_DOMAIN
 from profile.models import Token
+from profile.views import SignUpView
+
+
 
 class SignUpViewRedirectTest(TestCase):
     def setUp(self):
@@ -43,11 +51,34 @@ class SignUpViewTest(TestCase):
             'password2': 'Jktu199437'
         }
         resp = self.client.post(reverse('profile:sign_up'), user_data)
+        print()
         user = get_user_model().objects.get(username='tursis')
         self.assertEqual(user.username, 'tursis')
         self.assertTrue(user.check_password(user_data['password1']))
         self.assertTrue(user.token)
         self.assertFalse(user.is_active)
+
+    @patch("shared.send_message.send_simple_message", autospec=True)
+    def test_called_function_send_simple_message(self, mock_test):
+        user_data = {
+            'username': 'tursis',
+            'first_name': 'Oleh',
+            'last_name': 'Spytsia',
+            'email': 'oleh94@inbox.ru',
+            'password1': 'Jktu199437',
+            'password2': 'Jktu199437'
+        }
+        resp = self.client.post(reverse('profile:sign_up'), user_data)
+        user = get_user_model().objects.get(username='tursis')
+        # context = {'username': user,
+        #            'token': user.token.token,
+        #            "domain": SITE_DOMAIN
+        #            }
+        # html = get_template('registration/email.html')
+        # a = send_simple_message(user.email, 'Activate Account', html, context)
+        # ma = mock.Mock(wraps=a)
+        # ma()
+        self.assertTrue(mock_test.called)
 
     def test_activate_account(self):
         user_data = {
@@ -64,4 +95,3 @@ class SignUpViewTest(TestCase):
         user = get_user_model().objects.get(pk=1)
         self.assertTemplateUsed(resp, 'registration/account_activation_email.html')
         self.assertTrue(user.is_active)
-
