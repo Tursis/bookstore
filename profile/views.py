@@ -60,7 +60,6 @@ class ActivateAccountView(View):
         except (TypeError, ValueError, OverflowError, User.DoesNotExist, Token.DoesNotExist):
             user = None
             token = None
-
         if user is not None and token is not None:
             final_date = token.user.date_joined + timedelta(days=14)
             if final_date >= timezone.now():

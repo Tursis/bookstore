@@ -1,9 +1,11 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test.client import Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
+from profile.models import Token
 
 class SignUpViewRedirectTest(TestCase):
     def setUp(self):
@@ -27,6 +29,10 @@ class SignUpViewRedirectTest(TestCase):
 
 
 class SignUpViewTest(TestCase):
+    def setUp(self):
+        # Every test needs a client.
+        self.client = Client()
+
     def test_create_user(self):
         user_data = {
             'username': 'tursis',
@@ -42,3 +48,20 @@ class SignUpViewTest(TestCase):
         self.assertTrue(user.check_password(user_data['password1']))
         self.assertTrue(user.token)
         self.assertFalse(user.is_active)
+
+    def test_activate_account(self):
+        user_data = {
+            'username': 'tursis',
+            'first_name': 'Oleh',
+            'last_name': 'Spytsia',
+            'email': 'oleh94@inbox.ru',
+            'password1': 'Jktu199437',
+            'password2': 'Jktu199437'
+        }
+        resp = self.client.post(reverse('profile:sign_up'), user_data, follow=True)
+        user = get_user_model().objects.get(pk=1)
+        resp = self.client.get(reverse('profile:activate_account', kwargs={'token': user.token.token}), follow=True)
+        user = get_user_model().objects.get(pk=1)
+        self.assertTemplateUsed(resp, 'registration/account_activation_email.html')
+        self.assertTrue(user.is_active)
+
