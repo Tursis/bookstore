@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.template.loader import get_template
 from django.test import TestCase
 from django.contrib.auth import get_user_model
@@ -12,7 +14,7 @@ from rest_framework.status import HTTP_400_BAD_REQUEST
 from bookstore.settings import SITE_DOMAIN
 from profile.models import Token
 from profile.views import SignUpView
-
+from shared.send_message import send_simple_message
 
 
 class SignUpViewRedirectTest(TestCase):
@@ -58,8 +60,8 @@ class SignUpViewTest(TestCase):
         self.assertTrue(user.token)
         self.assertFalse(user.is_active)
 
-    @patch("shared.send_message.send_simple_message", autospec=True)
-    def test_called_function_send_simple_message(self, mock_test):
+    @mock.patch('profile.views.send_simple_message')
+    def test_called_function_send_simple_message(self, mock_send_simple_message):
         user_data = {
             'username': 'tursis',
             'first_name': 'Oleh',
@@ -69,16 +71,7 @@ class SignUpViewTest(TestCase):
             'password2': 'Jktu199437'
         }
         resp = self.client.post(reverse('profile:sign_up'), user_data)
-        user = get_user_model().objects.get(username='tursis')
-        # context = {'username': user,
-        #            'token': user.token.token,
-        #            "domain": SITE_DOMAIN
-        #            }
-        # html = get_template('registration/email.html')
-        # a = send_simple_message(user.email, 'Activate Account', html, context)
-        # ma = mock.Mock(wraps=a)
-        # ma()
-        self.assertTrue(mock_test.called)
+        mock_send_simple_message.assert_called()
 
     def test_activate_account(self):
         user_data = {

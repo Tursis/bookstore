@@ -30,7 +30,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         user = form.save(commit=False)
-        user.is_active = False  # Deactivate account till it is confirmed
+        user.is_active = False
         user.save()
         if form.is_valid():
             user_form = form.cleaned_data
@@ -45,6 +45,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
                        "domain": SITE_DOMAIN
                        }
             send_simple_message(user.email, 'Activate Account', html, context)
+
         return super(SignUpView, self).form_valid(form)
 
 
