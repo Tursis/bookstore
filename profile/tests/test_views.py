@@ -1,20 +1,12 @@
 from unittest import mock
 
-from django.template.loader import get_template
 from django.test import TestCase
+
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.test.client import Client
 from django.urls import reverse
-from django.contrib.auth.models import User
-
-from mock import patch, Mock
-
-from rest_framework.status import HTTP_400_BAD_REQUEST
-
-from bookstore.settings import SITE_DOMAIN
-from profile.models import Token
-from profile.views import SignUpView
-from shared.send_message import send_simple_message
+from django.core import exceptions
 
 
 class SignUpViewRedirectTest(TestCase):
@@ -88,3 +80,44 @@ class SignUpViewTest(TestCase):
         user = get_user_model().objects.get(pk=1)
         self.assertTemplateUsed(resp, 'registration/account_activation_email.html')
         self.assertTrue(user.is_active)
+
+
+class ProfileDetailTest(TestCase):
+    def setUp(self):
+        # Создание двух пользователей
+        test_user = User.objects.create_user(username='admin')
+        test_user.set_password('admin')
+        test_user.save()
+
+    def test_redirect_if_user_no_login(self):
+        resp = self.client.get(reverse('profile:profile_detail'))
+        self.assertEqual(resp.status_code, 302)
+
+    def test_profile_detail_page_url(self):
+        login = self.client.login(username='admin', password='admin')
+        resp = self.client.get(reverse('profile:profile_detail'))
+        self.assertEqual(resp.status_code, 200)
+        # Проверка того, что мы используем правильный шаблон
+        self.assertTemplateUsed(resp, 'profile_detail.html')
+
+    @mock.patch('profile.views.change_profile_data')
+    @mock.patch('profile.views.change_profile_email')
+    @mock.patch('profile.views.change_password')
+    def test_called_function_profile_detail(self, mock_change_profile_data, mock_change_profile_email,
+                                            mock_change_password):
+        login = self.client.login(username='admin', password='admin')
+        resp = self.client.post(reverse('profile:profile_detail'))
+        mock_change_password.assert_called()
+        mock_change_profile_data.assert_called()
+        mock_change_profile_email.assert_called()
+
+    @mock.patch('profile.views.change_profile_data')
+    @mock.patch('profile.views.change_profile_email')
+    @mock.patch('profile.views.change_password')
+    def test_called_function_profile_detail(self, mock_change_profile_data, mock_change_profile_email,
+                                            mock_change_password):
+        login = self.client.login(username='admin', password='admin')
+        resp = self.client.post(reverse('profile:profile_detail'))
+        mock_response = mock.Mock()
+        mock_response.return_value = exceptions.ValidationError('email уже занят')
+        self.assertEqual(mock_change_profile_email.return_value, mock_response.return_value)

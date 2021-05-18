@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.template.loader import get_template
 from django.shortcuts import render
 from django.core import exceptions
+
 from bookstore.settings import SITE_DOMAIN
 from profile.forms import SignUpForm
 from .profile import change_password, change_profile_data, change_profile_email
@@ -83,7 +84,6 @@ class ProfileDetailView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         errors = dict()
-
         for func in (change_profile_data, change_profile_email, change_password):
             try:
                 func(request)
