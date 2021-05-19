@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.test.client import Client
 from django.urls import reverse
-from django.core import exceptions
 
 
 class SignUpViewRedirectTest(TestCase):
@@ -111,13 +110,3 @@ class ProfileDetailTest(TestCase):
         mock_change_profile_data.assert_called()
         mock_change_profile_email.assert_called()
 
-    @mock.patch('profile.views.change_profile_data')
-    @mock.patch('profile.views.change_profile_email')
-    @mock.patch('profile.views.change_password')
-    def test_called_function_profile_detail(self, mock_change_profile_data, mock_change_profile_email,
-                                            mock_change_password):
-        login = self.client.login(username='admin', password='admin')
-        resp = self.client.post(reverse('profile:profile_detail'))
-        mock_response = mock.Mock()
-        mock_response.return_value = exceptions.ValidationError('email уже занят')
-        self.assertEqual(mock_change_profile_email.return_value, mock_response.return_value)
