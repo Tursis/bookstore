@@ -24,7 +24,6 @@ class MakingChangesProfileTest(TestCase):
         second_user.save()
 
     def test_change_profile_data(self):
-
         user = User.objects.get(pk=1)
         data = {'last_name': 'Спиця', 'name': 'Олег', 'middle_name': 'Вікторович', 'gender': 'М',
                 'birth_day': '7', 'birth_month': '3', 'birth_year': '1994', 'phone_number': ''}
@@ -58,7 +57,6 @@ class MakingChangesProfileTest(TestCase):
         with self.assertRaisesRegexp(ValidationError, 'email уже занят'):
             change_profile_email(request)
 
-
     def test_change_password(self):
         user = User.objects.get(pk=1)
         data = {'old_password': '123456', 'new_password': 'Qwe1432fQr', 'repeat_new_password': 'Qwe1432fQr'}
@@ -67,5 +65,3 @@ class MakingChangesProfileTest(TestCase):
         change_password(request)
         user = User.objects.get(pk=1)
         self.assertTrue(user.check_password(data['new_password']))
-
-
