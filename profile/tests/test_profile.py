@@ -15,12 +15,12 @@ class MakingChangesProfileTest(TestCase):
         self.factory = RequestFactory()
         first_user = User.objects.create_user(username='Tursis')
         first_user.set_password('123456')
-        first_user.email = 'oleh94@inbox.ru'
+        first_user.email = 'test1@gmail.com'
         first_user.save()
 
         second_user = User.objects.create_user(username='Milisento')
         second_user.set_password('123456')
-        second_user.email = 'test@gmail.com'
+        second_user.email = 'test2@gmail.com'
         second_user.save()
 
     def test_change_profile_data(self):
@@ -42,7 +42,7 @@ class MakingChangesProfileTest(TestCase):
 
     def test_change_profile_email(self):
         user = User.objects.get(pk=1)
-        data = {'email': 'tursis94@gmail.com'}
+        data = {'email': 'new_email@gmail.com'}
         request = self.factory.post(PROFILE_DETAIL_URL, data=data)
         request.user = user
         change_profile_email(request)
@@ -51,7 +51,7 @@ class MakingChangesProfileTest(TestCase):
 
     def test_email_is_already_use(self):
         user = User.objects.get(pk=1)
-        data = {'email': 'test@gmail.com'}
+        data = {'email': 'test2@gmail.com'}
         request = self.factory.post(PROFILE_DETAIL_URL, data=data)
         request.user = user
         with self.assertRaisesRegexp(ValidationError, 'email уже занят'):

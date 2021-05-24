@@ -39,12 +39,11 @@ class SignUpViewTest(TestCase):
             'username': 'tursis',
             'first_name': 'Oleh',
             'last_name': 'Spytsia',
-            'email': 'oleh94@inbox.ru',
-            'password1': 'Jktu199437',
-            'password2': 'Jktu199437'
+            'email': 'test@gmail.com',
+            'password1': 'Test123456',
+            'password2': 'Test123456'
         }
         resp = self.client.post(reverse('profile:sign_up'), user_data)
-        print()
         user = get_user_model().objects.get(username='tursis')
         self.assertEqual(user.username, 'tursis')
         self.assertTrue(user.check_password(user_data['password1']))
@@ -57,9 +56,9 @@ class SignUpViewTest(TestCase):
             'username': 'tursis',
             'first_name': 'Oleh',
             'last_name': 'Spytsia',
-            'email': 'oleh94@inbox.ru',
-            'password1': 'Jktu199437',
-            'password2': 'Jktu199437'
+            'email': 'test@gmail.com',
+            'password1': 'Test123456',
+            'password2': 'Test123456'
         }
         resp = self.client.post(reverse('profile:sign_up'), user_data)
         mock_send_simple_message.assert_called()
@@ -69,9 +68,9 @@ class SignUpViewTest(TestCase):
             'username': 'tursis',
             'first_name': 'Oleh',
             'last_name': 'Spytsia',
-            'email': 'oleh94@inbox.ru',
-            'password1': 'Jktu199437',
-            'password2': 'Jktu199437'
+            'email': 'test@gmail.com',
+            'password1': 'Test123456',
+            'password2': 'Test123456'
         }
         resp = self.client.post(reverse('profile:sign_up'), user_data, follow=True)
         user = get_user_model().objects.get(pk=1)

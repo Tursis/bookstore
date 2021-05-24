@@ -13,7 +13,7 @@ from django.core import exceptions
 from bookstore.settings import SITE_DOMAIN
 from profile.forms import SignUpForm
 from .profile import change_password, change_profile_data, change_profile_email
-from .token import AccountToken
+from .token import create_token
 from .models import Token
 from shared.send_message import send_simple_message
 from shared.mixins import AuthCheckerMixin
@@ -37,7 +37,7 @@ class SignUpView(AuthCheckerMixin, CreateView):
             user_form = form.cleaned_data
             user_token = Token(id=user.id)
             user_token.user = user
-            user_token.token = AccountToken.create_token(self, user_form['username'])
+            user_token.token = create_token(user_form['username'])
             user_token.save()
 
             html = get_template('registration/email.html')
