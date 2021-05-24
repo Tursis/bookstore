@@ -65,3 +65,28 @@ class MakingChangesProfileTest(TestCase):
         change_password(request)
         user = User.objects.get(pk=1)
         self.assertTrue(user.check_password(data['new_password']))
+
+    def test_empty_password(self):
+        user = User.objects.get(pk=1)
+        data = {'old_password': '', 'new_password': 'Qwe1432fQr', 'repeat_new_password': 'Qwe1432fQr'}
+        request = self.factory.post(PROFILE_DETAIL_URL, data=data)
+        request.user = user
+        change_password(request)
+        user = User.objects.get(pk=1)
+        self.assertFalse(user.check_password(data['new_password']))
+
+    def test_wrong_old_password(self):
+        user = User.objects.get(pk=1)
+        data = {'old_password': '12345678', 'new_password': 'Qwe1432fQr', 'repeat_new_password': 'Qwe1432fQr'}
+        request = self.factory.post(PROFILE_DETAIL_URL, data=data)
+        request.user = user
+        with self.assertRaisesRegexp(ValidationError, 'Не правильный пароль'):
+            change_password(request)
+
+    def test_Equal_passwords(self):
+        user = User.objects.get(pk=1)
+        data = {'old_password': '123456', 'new_password': 'Qwe1432fQr', 'repeat_new_password': 'Qwe143'}
+        request = self.factory.post(PROFILE_DETAIL_URL, data=data)
+        request.user = user
+        with self.assertRaisesRegexp(ValidationError, 'Пароли не равны'):
+            change_password(request)
