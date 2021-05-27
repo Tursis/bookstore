@@ -13,5 +13,5 @@ class SearchTest(TestCase):
 
     def test_search_product(self):
         search_test = search_page.SearchPage(self.driver)
-        search_test.search_product('ЧУЖАК')
+        assert search_test.search_product('ЧУЖАК')
         assert search_test.is_title_matches()

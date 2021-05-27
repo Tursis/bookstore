@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class MainPageLocators(object):
+class SearchLocators(object):
     """A class for main page locators. All main page locators should come here"""
 
-    GO_BUTTON = (By.ID, 'submit')
+    search = (By.ID, 'search')
