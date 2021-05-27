@@ -1,6 +1,6 @@
 from unittest import TestCase
 from selenium import webdriver
-from selenium_test.pages import search_page
+from selenium_test.pages.search_page import SearchPage
 
 
 class SearchTest(TestCase):
@@ -12,6 +12,6 @@ class SearchTest(TestCase):
         self.driver.quit()
 
     def test_search_product(self):
-        search_test = search_page.SearchPage(self.driver)
+        search_test = SearchPage(self.driver)
         assert search_test.search_product('ЧУЖАК')
         assert search_test.is_title_matches()

@@ -1,7 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 
 from .base import BasePage
-from selenium.webdriver.common.by import By
 
 from ..locators.search_locators import SearchLocators
 
