@@ -60,27 +60,27 @@ class ProductReviewsTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'product_reviews.html', product.slug)
 
-    @mock.patch('comments.views.add_product_reviews')
-    def test_called_function_add_product_reviews(self, mock_add_product_reviews):
-        login = self.client.login(username='Tursis', password='123456')
-        product = Product.objects.get(pk=1)
-        # form = ProductReviewsForm(data={'product': product.id, 'rating': 5, 'description': 'Nice'})
-        # resp = self.client.post(reverse('reviews:product_reviews', args=(product.slug,)))
-        #
-        # resp = self.client.post(reverse('store:book_detail', args=(product.slug,)), follow=True,)
-        resp = self.client.post('/reviews/add/%s/next=/store/books/%s' % (product.slug, product.slug), follow=True)
-        # self.assertTrue(form.is_valid())
-        mock_add_product_reviews.assert_called()
+    # @mock.patch('comments.views.add_product_reviews')
+    # def test_called_function_add_product_reviews(self, mock_add_product_reviews):
+    #     login = self.client.login(username='Tursis', password='123456')
+    #     product = Product.objects.get(pk=1)
+    #     # form = ProductReviewsForm(data={'product': product.id, 'rating': 5, 'description': 'Nice'})
+    #     # resp = self.client.post(reverse('reviews:product_reviews', args=(product.slug,)))
+    #     #
+    #     # resp = self.client.post(reverse('store:book_detail', args=(product.slug,)), follow=True,)
+    #     resp = self.client.post('/reviews/add/%s/next=/store/books/%s' % (product.slug, product.slug), follow=True)
+    #     # self.assertTrue(form.is_valid())
+    #     mock_add_product_reviews.assert_called()
 
     def test_redirect_back_to_product(self):
         login = self.client.login(username='Tursis', password='123456')
         product = Product.objects.get(pk=1)
         # _, uuidb64, _ = path.strip('/').split('/')
         # response = Client().get('/reset/%s/set-password/' % uuidb64)
-        resp = self.client.post('/reviews/add/%s/next=/store/books/%s' % (product.slug, product.slug), follow=True)
-        # resp = self.client.post(reverse('store:book_detail', args=(product.slug,)), follow=True)
-        # self.assertRedirects(resp, reverse('reviews:product_reviews', args=(product.slug,)), status_code=301,
-        #                      target_status_code=200)
+        # resp = self.client.post('/reviews/add/%s/next=/store/books/%s' % (product.slug, product.slug), follow=True)
+        resp = self.client.post(reverse('reviews:product_reviews', args=(product.slug,)), follow=True)
+        self.assertRedirects(resp, reverse('store:book_detail', args=(product.slug,)), status_code=302,
+                             target_status_code=200)
         print(resp.redirect_chain)
 
 
