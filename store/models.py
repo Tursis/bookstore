@@ -58,6 +58,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):  # new
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
+
     def counter(self, data):
         queryset = Product.objects.filter(category=self.id)
         for item in data:
