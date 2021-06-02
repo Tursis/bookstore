@@ -2,25 +2,22 @@ from unittest import mock
 
 from django.test import TestCase
 
-from django.contrib.auth.models import User
+
 from django.test.client import Client, RequestFactory
 from django.urls import reverse
 
 from comments.forms import ProductReviewsForm
 from store.models import Product
-from test_unit_core.test_core import create_product_for_test
+from test_unit_core.test_core import create_product_for_test, create_user
 
 
 class ProductReviewsTest(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
-        user = User.objects.create_user(username='Tursis')
-        user.set_password('123456')
-        user.email = 'test1@gmail.com'
-        user.save()
-        login = self.client.login(username='Tursis', password='123456')
+        create_user('Tursis', '123456', 'test@gmail.com')
         create_product_for_test(2)
+        login = self.client.login(username='Tursis', password='123456')
 
     def test_product_reviews_url(self):
         product = Product.objects.get(pk=1)

@@ -5,6 +5,14 @@ from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from store.models import Category, Publisher, BookAuthor, BookGenre, Book, Magazine
+from django.contrib.auth.models import User
+
+
+def create_user(username, password, email):
+    user = User.objects.create_user(username=username)
+    user.set_password(password)
+    user.email = email
+    user.save()
 
 
 def create_product_for_test(count):
