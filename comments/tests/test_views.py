@@ -19,6 +19,10 @@ class ProductReviewsTest(TestCase):
         create_product_for_test(2)
         login = self.client.login(username='Tursis', password='123456')
 
+    def tearDown(self):
+        for i in Product.objects.all():
+            i.image.delete()
+
     def test_product_reviews_url(self):
         product = Product.objects.get(pk=1)
         resp = self.client.post(reverse('reviews:product_reviews', args=(product.slug,)), follow=True)
