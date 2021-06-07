@@ -20,7 +20,6 @@ def add_product_reviews(request, slug, form):
 def add_review_comment(request, slug, form):
     product = get_object_or_404(Product, slug=slug)
     review_id = get_object_or_404(ProductReviews, id=request.POST.get('reviews'))
-    print(request.POST.get('reviews'))
     if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.product = product
