@@ -78,7 +78,8 @@ class ReviewCommentTest(TestCase):
         resp = self.client.post(reverse('store:book_detail', args=(product.slug,)), form_data)
         mock_add_review_comment.assert_called()
 
-    def test_access_to_add_review_comment_if_user_no_login(self):
+    @mock.patch('comments.views.add_review_comment')
+    def test_access_to_add_review_comment_if_user_no_login(self, mock_add_review_comment):
         self.client.logout()
         product = Product.objects.get(pk=1)
         form_data = {'comment': 'Nice'}
