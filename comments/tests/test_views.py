@@ -66,10 +66,16 @@ class ReviewCommentTest(TestCase):
             i.image.delete()
 
     def test_book_detail_url(self):
-        product = Book.objects.get(pk=1)
-        resp = self.client.post(reverse('store:book_detail', args=(product.slug,)), follow=True)
+        book = Book.objects.get(pk=1)
+        resp = self.client.post(reverse('store:book_detail', args=(book.slug,)), follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'store/book/book_detail.html', product.slug)
+        self.assertTemplateUsed(resp, 'store/book/book_detail.html', book.slug)
+
+    def test_magazine_detail_url(self):
+        magazine = Book.objects.get(pk=1)
+        resp = self.client.post(reverse('store:magazine_detail', args=(magazine.slug,)), follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/book/magazine_detail.html', magazine.slug)
 
     @mock.patch('comments.views.add_review_comment')
     def test_called_function_add_review_comment(self, mock_add_review_comment):
