@@ -63,4 +63,5 @@ class CommentsFunctionTest(TestCase):
             request = self.factory.post(reverse('store:book_detail', args=(product.slug,)), form_data)
             request.user = user
             add_review_comment(request, product.slug, form)
+            self.assertEqual(ReviewComment.objects.get(pk=item).reviews, ProductReviews.objects.get(reviewcomment=item))
         self.assertEqual(ReviewComment.objects.all().count(), 2)
