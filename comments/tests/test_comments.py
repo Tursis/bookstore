@@ -24,8 +24,8 @@ class CommentsFunctionTest(TestCase):
         login = self.client.login(username='Tursis', password='123456')
 
     def tearDown(self):
-        for i in Product.objects.all():
-            i.image.delete()
+        for item in Product.objects.all():
+            item.image.delete()
 
     def test_add_product_reviews(self):
         for item in [1, 2]:
