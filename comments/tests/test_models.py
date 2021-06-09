@@ -17,11 +17,6 @@ class ProductReviewsModelTest(TestCase):
         create_user('Test3', '123456', 'test3@gmail.com')
         create_product_for_test(2)
 
-    def tearDown(self):
-        for i in Product.objects.all():
-            i.image.delete()
-
-    def test_get_comments_counter(self):
         for item in [1, 2]:
             ProductReviews.objects.create(user=User.objects.get(pk=item), product=Product.objects.get(pk=item),
                                           description='Text comment %s' % item, rating=item,
@@ -37,6 +32,11 @@ class ProductReviewsModelTest(TestCase):
                                          comment='comment to review %s ' % item, pub_date=datetime.datetime.now(),
                                          active=True)
 
+    def tearDown(self):
+        for i in Product.objects.all():
+            i.image.delete()
+
+    def test_get_comments_counter(self):
+
         self.assertEqual(ProductReviews.objects.get(pk=1).get_comments_counter(), 4)
         self.assertEqual(ProductReviews.objects.get(pk=2).get_comments_counter(), 6)
-
