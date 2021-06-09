@@ -42,6 +42,7 @@ class ProductReviews(models.Model):
         else:
             return 0
 
+
 class ReviewComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     reviews = models.ForeignKey(ProductReviews, on_delete=models.SET_NULL, null=True)
@@ -51,9 +52,3 @@ class ReviewComment(models.Model):
 
     class Meta:
         ordering = ['pub_date']
-
-
-
-
-
-
