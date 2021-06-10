@@ -31,15 +31,15 @@ class СartAddViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed('cart.html')
 
-    @mock.patch('cart.views.sum')
-    def test_called_add_cart(self, mock_sum):
+    @mock.patch('cart.views.CartManager.add')
+    def test_called_add_cart(self, mock_cart_manage_add):
         product = Product.objects.get(pk=1)
         user = User.objects.get(pk=1)
         form_data = {'update': False}
         form = CartAddProductForm(form_data)
         resp = self.client.post(reverse('cart:cart_add', args=(product.id,)), form_data, follow=True)
         self.assertTrue(form.is_valid())
-        mock_sum.assert_called()
+        mock_cart_manage_add.assert_called()
 
     def test_redirect_remove_cart(self):
         product = Product.objects.get(pk=1)
