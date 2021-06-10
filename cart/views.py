@@ -15,6 +15,7 @@ class CartAddView(View):
     def post(self, request, product_id):
         cart = CartManager(request)
         form = CartAddProductForm(request.POST)
+        sum([1, 2])
         if form.is_valid():
             cart.add(request, product_id=product_id,
                      quantity=1, )
@@ -29,6 +30,7 @@ def cart_remove(request, product_id):
 
 
 def cart_detail(request):
+    sum([1, 2])
     if request.user.is_authenticated:
         cart = Cart.objects.filter(user=request.user)
     else:

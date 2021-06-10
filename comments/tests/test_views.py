@@ -6,7 +6,7 @@ from django.test.client import Client, RequestFactory
 from django.urls import reverse
 
 from comments.forms import ProductReviewsForm
-from store.models import Product, Book
+from store.models import Product, Book, Magazine
 from test_unit_core.test_core import create_product_for_test, create_user
 
 
@@ -36,6 +36,7 @@ class ProductReviewsTest(TestCase):
             '/reviews/add/%s?next=/store/%s/%s' % (product.slug, product.category.slug, product.slug), form_data,
             follow=True)
         mock_add_product_reviews.assert_called()
+
 
     def test_redirect_back_to_product(self):
         product = Product.objects.get(pk=1)
@@ -72,10 +73,10 @@ class ReviewCommentTest(TestCase):
         self.assertTemplateUsed(resp, 'store/book/book_detail.html', book.slug)
 
     def test_magazine_detail_url(self):
-        magazine = Book.objects.get(pk=1)
+        magazine = Magazine.objects.get(pk=2)
         resp = self.client.post(reverse('store:magazine_detail', args=(magazine.slug,)), follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'store/book/magazine_detail.html', magazine.slug)
+        self.assertTemplateUsed(resp, 'store/magazine/magazine_detail.html', magazine.slug)
 
     @mock.patch('comments.views.add_review_comment')
     def test_called_function_add_review_comment(self, mock_add_review_comment):
