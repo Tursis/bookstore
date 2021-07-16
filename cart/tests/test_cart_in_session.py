@@ -16,12 +16,16 @@ class CartInSessionTest(TestCase):
         self.factory = RequestFactory()
         create_product_for_test(2)
 
+    def tearDown(self):
+        for item in Product.objects.all():
+            item.image.delete()
+
     def test_init_session(self):
         request = self.factory.post(PROFILE_DETAIL_URL)
         session = self.client.session
         request.session = session
         req = CartInSession(request)
-        print(req.session.)
+        print(req.session)
 
         # self.assertEqual('c', 'cart')
 
