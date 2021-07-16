@@ -10,6 +10,7 @@ class CartInSession:
         Инициализация корзины в сесии
         """
         self.session = request.session
+
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
