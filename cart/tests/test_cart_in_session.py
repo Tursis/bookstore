@@ -20,14 +20,13 @@ class CartInSessionTest(TestCase):
         for item in Product.objects.all():
             item.image.delete()
 
-    def test_init_session(self):
+    def test_add_product_in_session(self):
+        product = Product.objects.get(pk=1)
         request = self.factory.post(PROFILE_DETAIL_URL)
         session = self.client.session
         request.session = session
-        req = CartInSession(request)
-        print(req.session.keys())
-        print('___________________')
-        # self.assertEqual('c', 'cart')
-
-    def test_add_product_in_session(self):
-        pass
+        cart_manager = CartInSession(request)
+        cart_manager.add(product.id, quantity=1)
+        self.assertTrue(cart_manager.cart)
+        self.assertEqual(list(cart_manager.cart.keys())[0], product.id)
+        self.assertEqual(list(cart_manager.cart.values())[0]['quantity'], 1)
