@@ -51,9 +51,10 @@ class СartAddViewTest(TestCase):
     def test_call_remove_product_in_cart(self, mock_cart_manage_remove):
         product = Product.objects.get(pk=1)
         resp = self.client.post(reverse('cart:cart_remove', args=(product.id,)), follow=True)
+        mock_cart_manage_remove.assert_called()
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed('cart.html')
-        mock_cart_manage_remove.assert_called()
+
 
     def test_cart_url(self):
         login = self.client.login(username='Tursis', password='123456')
@@ -72,5 +73,5 @@ class СartAddViewTest(TestCase):
 
     @mock.patch('cart.views.CartManager.cart_quantity_update')
     def test_called_cart_quantity_update_in_cart_update(self, mock_cart_quantity_update):
-        resp = self.client.post(redirect('cart:cart_update'))
+        resp = self.client.post(reverse('cart:cart_update'), follow=True)
         mock_cart_quantity_update.assert_called()

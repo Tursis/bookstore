@@ -25,8 +25,8 @@ class CartInSessionTest(TestCase):
         session = self.client.session
         request.session = session
         req = CartInSession(request)
-        print(req.session)
-
+        print(req.session.keys())
+        print('___________________')
         # self.assertEqual('c', 'cart')
 
     def test_add_product_in_session(self):

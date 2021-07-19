@@ -85,5 +85,4 @@ class CartInSession:
             if product != 'csrfmiddlewaretoken':
                 if product in self.cart:
                     self.cart[product]['quantity'] = int(data[product])
-                    print(self.cart)
                     self.save()
