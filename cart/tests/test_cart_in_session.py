@@ -34,7 +34,7 @@ class CartInSessionTest(TestCase):
         product = Product.objects.get(pk=1)
         cart_manager = add_product_in_cart_session(self)
         self.assertTrue(cart_manager.cart)
-        self.assertEqual(list(cart_manager.cart.keys())[0], product.id)
+        self.assertEqual(list(cart_manager.cart.keys())[0], str(product.id))
         self.assertEqual(list(cart_manager.cart.values())[0]['quantity'], 1)
 
     def test_remove_product_in_cart_session(self):
@@ -47,13 +47,6 @@ class CartInSessionTest(TestCase):
         request.session = session
         cart_manager = CartInSession(request)
         cart_manager.add(product.id, quantity=1)
-
-
-
-        print(cart_manager.__len__())
-        cart_manager.remove(product)
-        cart_manager.clear()
-
-        print(cart_manager.cart)
-        self.assertTrue(cart_manager.cart)
+        cart_manager.remove(product.id)
+        self.assertFalse(cart_manager.cart)
 

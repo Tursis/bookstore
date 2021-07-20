@@ -21,7 +21,7 @@ class CartInSession:
         Добавление товара в корзину
         """
         if str(product_id) not in self.cart:
-            self.cart[product_id] = {'quantity': quantity,
+            self.cart[str(product_id)] = {'quantity': quantity,
                                      }
         elif str(product_id) in self.cart:
             self.cart[str(product_id)]['quantity'] += 1
@@ -39,7 +39,6 @@ class CartInSession:
         """
         product_id = str(product_id)
         if product_id in self.cart:
-            print('wtf')
             del self.cart[product_id]
             self.save()
 
