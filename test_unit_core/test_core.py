@@ -4,7 +4,7 @@ from PIL import Image
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from store.models import Category, Publisher, BookAuthor, BookGenre, Book, Magazine
+from store.models import Category, Publisher, BookAuthor, BookGenre, Book, Magazine, CategoryDiscount
 from django.contrib.auth.models import User
 
 
@@ -16,11 +16,13 @@ def create_user(username, password, email):
 
 
 def create_product_for_test(count):
-    number = 2
+    number = count + 1
     [Category.objects.create(name=category_item) for category_item in ('Books', 'Magazine')]
     [Publisher.objects.create(name=publisher_item) for publisher_item in range(1, number)]
     [BookAuthor.objects.create(name=author_item) for author_item in range(1, number)]
     [BookGenre.objects.create(name=genre_item) for genre_item in range(1, number)]
+    [CategoryDiscount.objects.create(category=Category.objects.get(pk=discount_item), discount=10, active=False) for
+     discount_item in range(1, 3)]
 
     image = Image.new('RGBA', size=(50, 50), color=(256, 0, 0))
     image_file = BytesIO(image.tobytes())

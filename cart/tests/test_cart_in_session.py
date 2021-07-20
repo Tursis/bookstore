@@ -11,13 +11,14 @@ from test_unit_core.test_core import create_product_for_test, create_user
 PROFILE_DETAIL_URL = redirect('store:index')
 
 
-def add_product_in_cart_session(self):
-    product = Product.objects.get(pk=1)
+def add_product_in_cart_session(self, quantity):
     request = self.factory.post(PROFILE_DETAIL_URL)
     session = self.client.session
     request.session = session
     cart_manager = CartInSession(request)
-    cart_manager.add(product.id, quantity=1)
+    for item in range(1, quantity + 1):
+        product = Product.objects.get(pk=item)
+        cart_manager.add(product.id, quantity=item)
     return cart_manager
 
 
@@ -32,21 +33,22 @@ class CartInSessionTest(TestCase):
 
     def test_add_product_in_cart_session(self):
         product = Product.objects.get(pk=1)
-        cart_manager = add_product_in_cart_session(self)
+        cart_manager = add_product_in_cart_session(self, 2)
         self.assertTrue(cart_manager.cart)
         self.assertEqual(list(cart_manager.cart.keys())[0], str(product.id))
         self.assertEqual(list(cart_manager.cart.values())[0]['quantity'], 1)
 
     def test_remove_product_in_cart_session(self):
-        # product = Product.objects.get(pk=1)
-        # cart_manager = add_product_in_cart_session(self)
         product = Product.objects.get(pk=1)
-        # request = self.factory.post(reverse('cart:cart_remove', args=(product.id,)), follow=True)
-        request = self.factory.post(PROFILE_DETAIL_URL)
-        session = self.client.session
-        request.session = session
-        cart_manager = CartInSession(request)
-        cart_manager.add(product.id, quantity=1)
+        cart_manager = add_product_in_cart_session(self, 1)
         cart_manager.remove(product.id)
         self.assertFalse(cart_manager.cart)
 
+    def test_quantity_product_in_cart_session(self):
+        cart_manager = add_product_in_cart_session(self, 3)
+        self.assertEqual(cart_manager.__len__(), 6)
+
+    def test_get_total_price(self):
+        cart_manager = add_product_in_cart_session(self, 3)
+        self.assertTrue(cart_manager.get_total_price())
+        self.assertEqual(cart_manager.get_total_price(), 72)

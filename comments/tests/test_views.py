@@ -37,7 +37,6 @@ class ProductReviewsTest(TestCase):
             follow=True)
         mock_add_product_reviews.assert_called()
 
-
     def test_redirect_back_to_product(self):
         product = Product.objects.get(pk=1)
         form_data = {'product': product.id, 'rating': 5, 'description': 'Nice'}
@@ -73,7 +72,7 @@ class ReviewCommentTest(TestCase):
         self.assertTemplateUsed(resp, 'store/book/book_detail.html', book.slug)
 
     def test_magazine_detail_url(self):
-        magazine = Magazine.objects.get(pk=2)
+        magazine = Magazine.objects.get(pk=3)
         resp = self.client.post(reverse('store:magazine_detail', args=(magazine.slug,)), follow=True)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'store/magazine/magazine_detail.html', magazine.slug)

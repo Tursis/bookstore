@@ -13,5 +13,4 @@ class UserModelTest(TestCase):
     def test_len_gender(self):
         user = User.objects.get(id=1)
         gender_len = len(user.profile.gender)
-        print('test')
         self.assertEqual(gender_len, 0)
