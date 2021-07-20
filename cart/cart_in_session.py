@@ -33,12 +33,13 @@ class CartInSession:
         # Отметить сеанс как "измененный", чтобы убедиться, что он сохранен
         self.session.modified = True
 
-    def remove(self, product):
+    def remove(self, product_id):
         """
         Удаление товара из корзины.
         """
-        product_id = str(product.id)
+        product_id = str(product_id)
         if product_id in self.cart:
+            print('wtf')
             del self.cart[product_id]
             self.save()
 
@@ -83,6 +84,8 @@ class CartInSession:
     def cart_quantity_update(self, data):
         for product in data:
             if product != 'csrfmiddlewaretoken':
-                if product in self.cart:
-                    self.cart[product]['quantity'] = int(data[product])
+                if data[str(product)] == '0':
+                    self.remove(product)
+                else:
+                    self.cart[str(product)]['quantity'] = int(data[product])
                     self.save()

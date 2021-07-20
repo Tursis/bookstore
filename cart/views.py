@@ -24,7 +24,8 @@ class CartAddView(View):
 def cart_remove(request, product_id):
     cart = CartManager(request)
     product = get_object_or_404(Product, id=product_id)
-    cart.remove(product)
+    print(product.id)
+    cart.remove(product.id)
     return redirect('cart:cart_detail')
 
 
