@@ -21,7 +21,7 @@ def create_product_for_test(count):
     [Publisher.objects.create(name=publisher_item) for publisher_item in range(1, number)]
     [BookAuthor.objects.create(name=author_item) for author_item in range(1, number)]
     [BookGenre.objects.create(name=genre_item) for genre_item in range(1, number)]
-    [CategoryDiscount.objects.create(category=Category.objects.get(pk=discount_item), discount=10, active=False) for
+    [CategoryDiscount.objects.create(category=Category.objects.get(pk=discount_item), discount=10, active=True) for
      discount_item in range(1, 3)]
 
     image = Image.new('RGBA', size=(50, 50), color=(256, 0, 0))

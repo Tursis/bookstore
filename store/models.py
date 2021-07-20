@@ -147,8 +147,11 @@ class Product(models.Model):
         Получение скидки больше
         """
         category_discount = self.category.categorydiscount_set.get(category=self.category)
-        if category_discount.discount > self.Discounts:
-            return category_discount.discount
+        if category_discount.active:
+            if category_discount.discount > self.Discounts:
+                return category_discount.discount
+            else:
+                return self.Discounts
         else:
             return self.Discounts
 
