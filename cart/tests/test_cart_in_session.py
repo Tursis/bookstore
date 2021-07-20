@@ -60,3 +60,22 @@ class CartInSessionTest(TestCase):
         cart_manager = add_product_in_cart_session(self, 3)
         self.assertTrue(cart_manager.get_total_price())
         self.assertEqual(cart_manager.get_total_price(), 80)
+
+    def test_clear_cart_in_session(self):
+        cart_manager = add_product_in_cart_session(self, 3)
+        cart_manager.clear()
+        self.assertFalse(cart_manager.session.keys())
+
+
+    def test_cart_quantity_update(self):
+        cart_manager = add_product_in_cart_session(self, 3)
+        for key, value in cart_manager.cart.items():
+            cart_manager.cart[str(key)]['quantity'] = 100.
+        data = {'cart': cart_manager}
+        request = self.factory.post(redirect('cart:cart_update'), data)
+
+        cart_manager.cart_quantity_update(request.data)
+
+
+
+
