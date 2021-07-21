@@ -1,12 +1,11 @@
 from django.shortcuts import redirect
 from django.test import TestCase
 
-from django.test.client import Client, RequestFactory
-from django.urls import reverse
+from django.test.client import RequestFactory
 
 from cart.cart_in_session import CartInSession
-from store.models import Product, Book, CategoryDiscount
-from test_unit_core.test_core import create_product_for_test, create_user
+from store.models import Product, CategoryDiscount
+from test_unit_core.test_core import create_product_for_test
 
 PROFILE_DETAIL_URL = redirect('store:index')
 
@@ -66,16 +65,11 @@ class CartInSessionTest(TestCase):
         cart_manager.clear()
         self.assertFalse(cart_manager.session.keys())
 
-
     def test_cart_quantity_update(self):
         cart_manager = add_product_in_cart_session(self, 3)
-        for key, value in cart_manager.cart.items():
-            cart_manager.cart[str(key)]['quantity'] = 100.
-        data = {'cart': cart_manager}
+        data = {'1': ['1'], '2': ['3'], '3': ['4']}
         request = self.factory.post(redirect('cart:cart_update'), data)
-
-        cart_manager.cart_quantity_update(request.data)
-
-
-
-
+        cart_manager.cart_quantity_update(request.POST)
+        self.assertEqual(cart_manager.cart['1']['quantity'], 1)
+        self.assertEqual(cart_manager.cart['2']['quantity'], 3)
+        self.assertEqual(cart_manager.cart['3']['quantity'], 4)
