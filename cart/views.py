@@ -45,3 +45,5 @@ class CartUpdate(APIView):
         cart_manager.cart_quantity_update(request.data)
         json = JSONRenderer().render([cart_manager.get_total_price(), cart_manager.__len__()])
         return Response(json)
+
+
