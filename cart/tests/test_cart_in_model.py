@@ -79,4 +79,19 @@ class CartInModelTest(TestCase):
         self.assertEqual(len(Cart.objects.filter(user=user2)), 0,
                          msg='После удаления одного товара у пользователя Test2 остаеться пустая корзина')
 
+    def test_count_product_in_cart_model(self):
+        user = User.objects.get(pk=1)
+        user2 = User.objects.get(pk=2)
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=4)
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=2, quantity=3)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=1, quantity=3)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=3, quantity=10)
+
+        self.assertEqual(cart_manager_user.__len__(), 7,
+                         msg='Подсечт количества товара пользователя Test должен быть 7')
+        self.assertEqual(cart_manager_user2.__len__(), 13,
+                         msg='Подсечт количества товара пользователя Test2 должен быть 13')
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=3)
+        self.assertEqual(cart_manager_user.__len__(), 10,
+                         msg='Подсечт количества товара пользователя Test должен быть 10')
 
