@@ -95,3 +95,41 @@ class CartInModelTest(TestCase):
         self.assertEqual(cart_manager_user.__len__(), 10,
                          msg='Подсечт количества товара пользователя Test должен быть 10')
 
+    def test_get_total_price(self):
+        user = User.objects.get(pk=1)
+        user2 = User.objects.get(pk=2)
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=2)
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=2, quantity=1)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=2, quantity=3)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=3, quantity=1)
+
+        self.assertEqual(cart_manager_user.get_total_price(), 36)
+        self.assertEqual(cart_manager_user2.get_total_price(), 81)
+
+    def test_get_total_price_category_discount_false(self):
+        user = User.objects.get(pk=1)
+        user2 = User.objects.get(pk=2)
+        for category_discount in CategoryDiscount.objects.all():
+            category_discount.active = False
+            category_discount.save()
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=2)
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=2, quantity=1)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=2, quantity=3)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=3, quantity=1)
+        self.assertEqual(cart_manager_user.get_total_price(), 40)
+        self.assertEqual(cart_manager_user2.get_total_price(), 90)
+
+    def test_cart_quantity_update(self):
+        user = User.objects.get(pk=1)
+        user2 = User.objects.get(pk=2)
+        cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=2)
+        cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=1, quantity=1)
+        data = {'1': ['10']}
+        request = self.factory.post(redirect('cart:cart_update'), data)
+        cart_manager_user.cart_quantity_update(request.POST)
+        data = {'1': ['3']}
+        request = self.factory.post(redirect('cart:cart_update'), data)
+        cart_manager_user2.cart_quantity_update(request.POST)
+        self.assertEqual(cart_manager_user.cart['1']['quantity'], 10)
+        self.assertEqual(cart_manager_user2.cart['1']['quantity'], 3)
+
