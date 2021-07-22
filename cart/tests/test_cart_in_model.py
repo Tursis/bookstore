@@ -1,12 +1,9 @@
-from itertools import count
-
 from django.shortcuts import redirect
 from django.test import TestCase
 
 from django.contrib.auth.models import User
 
-from django.test.client import Client, RequestFactory
-from django.urls import reverse
+from django.test.client import RequestFactory
 
 from cart.cart_in_model import CartInModel
 from cart.cart_in_session import CartInSession
@@ -95,7 +92,7 @@ class CartInModelTest(TestCase):
         self.assertEqual(cart_manager_user.__len__(), 10,
                          msg='Подсечт количества товара пользователя Test должен быть 10')
 
-    def test_get_total_price(self):
+    def test_get_total_price_category_discount_true(self):
         user = User.objects.get(pk=1)
         user2 = User.objects.get(pk=2)
         cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=2)
@@ -103,8 +100,10 @@ class CartInModelTest(TestCase):
         cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=2, quantity=3)
         cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=3, quantity=1)
 
-        self.assertEqual(cart_manager_user.get_total_price(), 36)
-        self.assertEqual(cart_manager_user2.get_total_price(), 81)
+        self.assertEqual(cart_manager_user.get_total_price(), 36,
+                         msg='Подсчет суммы товаров пользователя Test со скидкой')
+        self.assertEqual(cart_manager_user2.get_total_price(), 81,
+                         msg='Подсчет суммы товаров пользователя Test2 со скидкой')
 
     def test_get_total_price_category_discount_false(self):
         user = User.objects.get(pk=1)
@@ -116,12 +115,15 @@ class CartInModelTest(TestCase):
         cart_manager_user = add_product_in_cart_model(self, user, product_id=2, quantity=1)
         cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=2, quantity=3)
         cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=3, quantity=1)
-        self.assertEqual(cart_manager_user.get_total_price(), 40)
-        self.assertEqual(cart_manager_user2.get_total_price(), 90)
+        self.assertEqual(cart_manager_user.get_total_price(), 40,
+                         msg='Подсчет суммы товаров пользователя Test без скидкки')
+        self.assertEqual(cart_manager_user2.get_total_price(), 90,
+                         msg='Подсчет суммы товаров пользователя Test2 без скидкки')
 
     def test_cart_quantity_update(self):
         user = User.objects.get(pk=1)
         user2 = User.objects.get(pk=2)
+        product = Product.objects.get(pk=1)
         cart_manager_user = add_product_in_cart_model(self, user, product_id=1, quantity=2)
         cart_manager_user2 = add_product_in_cart_model(self, user2, product_id=1, quantity=1)
         data = {'1': ['10']}
@@ -130,6 +132,7 @@ class CartInModelTest(TestCase):
         data = {'1': ['3']}
         request = self.factory.post(redirect('cart:cart_update'), data)
         cart_manager_user2.cart_quantity_update(request.POST)
-        self.assertEqual(cart_manager_user.cart['1']['quantity'], 10)
-        self.assertEqual(cart_manager_user2.cart['1']['quantity'], 3)
-
+        self.assertEqual(Cart.objects.filter(user=user).get(product=product).quantity, 10,
+                         msg='обновление колисчества товара book_1 пользователя Test c 2 на 10')
+        self.assertEqual(Cart.objects.filter(user=user2).get(product=product).quantity, 3,
+                         msg='обновление колисчества товара book_1 пользователя Test2 c 1 на 3')
