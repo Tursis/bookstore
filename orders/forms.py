@@ -4,9 +4,6 @@ from .models import Order
 
 
 class OrderCreateForm(forms.ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super(OrderCreateForm, self).__init__(*args, **kwargs)
-    #     self.fields['email'].initial = 'hello'
 
     class Meta:
         model = Order

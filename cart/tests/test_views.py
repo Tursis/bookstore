@@ -1,7 +1,6 @@
 from unittest import mock
 
 from django.urls import reverse
-from rest_framework.test import APIRequestFactory, APIClient
 
 from django.shortcuts import redirect
 from django.test import TestCase, RequestFactory
@@ -34,7 +33,6 @@ class СartAddViewTest(TestCase):
     @mock.patch('cart.views.CartManager.add')
     def test_called_add_product_cart(self, mock_cart_manage_add):
         product = Product.objects.get(pk=1)
-        # user = User.objects.get(pk=1)
         form_data = {'update': False}
         form = CartAddProductForm(form_data)
         resp = self.client.post(reverse('cart:cart_add', args=(product.id,)), follow=True)
