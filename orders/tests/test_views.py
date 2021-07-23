@@ -33,17 +33,29 @@ class OrderViewTest(TestCase):
 
     def test_url_redirect_create_order(self):
         resp = self.client.post(reverse('order:order_view'))
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 200, msg='Страница должна загрузиться с кодом 200')
         self.assertTemplateUsed(resp, 'orders/create.html')
 
     def test_form_valid(self):
         form = order_create_form_for_test()
         resp = self.client.post(reverse('order:order_view'))
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid(), msg='Проверка валидности формы заполнения заказа')
 
     @mock.patch('orders.views.OrdersCreate.add_to_order')
     def test_call_method_add_to_order(self, mock_add_to_order):
         form = order_create_form_for_test()
-        print(form.data)
         resp = self.client.post(reverse('order:order_view'), form.data)
         mock_add_to_order.assert_called()
+
+    @mock.patch('orders.views.get_total_price')
+    def test_call_get_total_price(self, mock_get_total_price):
+        form = order_create_form_for_test()
+        resp = self.client.post(reverse('order:order_view'), form.data)
+        mock_get_total_price.assert_called()
+
+    @mock.patch('orders.views.send_simple_message')
+    def test_call_send_simple_message(self, mock_send_simple_message):
+        form = order_create_form_for_test()
+        resp = self.client.post(reverse('order:order_view'), form.data)
+        mock_send_simple_message.assert_called()
+
