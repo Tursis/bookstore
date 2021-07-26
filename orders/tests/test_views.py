@@ -82,6 +82,6 @@ class OrdersListViewTest(TestCase):
         order = Order.objects.get(email=user.email)
         resp = self.client.get(reverse('order:orders_list'), {'orders_list': order})
         self.assertEqual(resp.status_code, 302, msg='Страница должна загрузиться с кодом 302')
-        self.assertTemplateUsed(resp, 'orders/orders_list.html')
+
 
 
