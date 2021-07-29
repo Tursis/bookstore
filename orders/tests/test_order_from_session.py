@@ -20,7 +20,7 @@ class OrderFromSessionTest(TestCase):
         for item in Product.objects.all():
             item.image.delete()
 
-    def test_add_to_order(self):
+    def test_add_to_order_from_session(self):
         session = self.client.session
         form_data = {'first_name': 'name', 'last_name': 'last_name', 'email': 'test@gmail.com', 'address': 'test 10',
                      'postal_code': '1234', 'city': 'Test City'}
@@ -33,8 +33,10 @@ class OrderFromSessionTest(TestCase):
         cart[str(Product.objects.get(pk=2).id)] = {'quantity': 2}
         order_from_session = OrderFromSession(request)
         order_from_session.add_to_order(form.save())
-        self.assertEqual(len(Purchase.objects.all()), 2)
-        self.assertTrue(Order.objects.all())
-        self.assertEqual(len(Order.objects.all()), 1)
-        self.assertEqual(Purchase.objects.get(pk=1).order, Order.objects.get(pk=1))
-        self.assertEqual(Purchase.objects.get(pk=2).order, Order.objects.get(pk=1))
+        self.assertEqual(len(Purchase.objects.all()), 2, msg='Количество обьектов модели покупки должно быть 2')
+        self.assertTrue(Order.objects.all(), msg='Создан заказ')
+        self.assertEqual(len(Order.objects.all()), 1, msg='Количество заказов равно 1')
+        self.assertEqual(Purchase.objects.get(pk=1).order, Order.objects.get(pk=1),
+                         msg='Продукт с id=1 относиться к заказу с id=1')
+        self.assertEqual(Purchase.objects.get(pk=2).order, Order.objects.get(pk=1),
+                         msg='Продукт с id=2 относиться к заказу с id=1')
