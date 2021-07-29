@@ -2,12 +2,9 @@ from unittest import mock
 
 from django.urls import reverse
 
-from django.shortcuts import redirect
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 from django.contrib.auth.models import User
 
-from cart.forms import CartAddProductForm
-from cart.models import Cart
 from orders.forms import OrderCreateForm
 from orders.models import Order
 from store.models import Product
