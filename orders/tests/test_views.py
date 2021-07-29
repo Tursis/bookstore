@@ -60,8 +60,6 @@ class OrdersListViewTest(TestCase):
         Order.objects.create(first_name=user.first_name, last_name=user.last_name, email=user.email,
                              address='test 45', postal_code='123456', city='TestCity', paid=False)
 
-
-
     def tearDown(self):
         for item in Product.objects.all():
             item.image.delete()
@@ -79,6 +77,3 @@ class OrdersListViewTest(TestCase):
         order = Order.objects.get(email=user.email)
         resp = self.client.get(reverse('order:orders_list'), {'orders_list': order})
         self.assertEqual(resp.status_code, 302, msg='Страница должна загрузиться с кодом 302')
-
-
-

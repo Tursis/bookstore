@@ -22,7 +22,7 @@ class OrderView(View):
             form = OrderCreateForm(request.POST)
             if form.is_valid():
                 order = form.save()
-                order_create.add_to_order(request, order)
+                order_create.add_to_order(order)
                 purchase = Purchase.objects.filter(order=order)
                 total_price = get_total_price(purchase)
                 html = get_template('orders/order_email.html')

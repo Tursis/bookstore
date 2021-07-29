@@ -14,8 +14,8 @@ class OrdersCreate:
         else:
             self.order = OrderFromModels(request)
 
-    def add_to_order(self, request, order):
-        self.order.add_to_order(request, order)
+    def add_to_order(self, order):
+        self.order.add_to_order(order)
 
 
 def get_total_price(purchase):
