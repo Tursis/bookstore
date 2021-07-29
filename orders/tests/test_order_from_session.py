@@ -33,6 +33,7 @@ class OrderFromSessionTest(TestCase):
         cart[str(Product.objects.get(pk=2).id)] = {'quantity': 2}
         order_from_session = OrderFromSession(request)
         order_from_session.add_to_order(form.save())
+        self.assertTrue(Purchase.objects.all(), msg='Создан заказ')
         self.assertEqual(len(Purchase.objects.all()), 2, msg='Количество обьектов модели покупки должно быть 2')
         self.assertTrue(Order.objects.all(), msg='Создан заказ')
         self.assertEqual(len(Order.objects.all()), 1, msg='Количество заказов равно 1')
