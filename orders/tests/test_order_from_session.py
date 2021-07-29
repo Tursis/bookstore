@@ -1,13 +1,8 @@
-from unittest import mock
-
 from django.shortcuts import redirect
-from django.urls import reverse
 
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 
-from cart.cart_in_session import CartInSession
-from cart.models import Cart
 from orders.forms import OrderCreateForm
 from orders.models import Order, Purchase
 from orders.order_from_session import OrderFromSession
@@ -20,7 +15,6 @@ class OrderFromSessionTest(TestCase):
         self.factory = RequestFactory()
         create_user('Tursis', '123456', 'test@gmail.com')
         create_product_for_test(2)
-
 
     def tearDown(self):
         for item in Product.objects.all():
@@ -44,7 +38,3 @@ class OrderFromSessionTest(TestCase):
         self.assertEqual(len(Order.objects.all()), 1)
         self.assertEqual(Purchase.objects.get(pk=1).order, Order.objects.get(pk=1))
         self.assertEqual(Purchase.objects.get(pk=2).order, Order.objects.get(pk=1))
-
-
-
-
