@@ -153,7 +153,6 @@ class MagazineDelete(PermissionRequiredMixin, DeleteView):
 
 class SearchView(View):
     def get(self, request):
-        # f = search_filter(request.GET, queryset=Product.objects.all())
         f = SearchFilter(request.GET)
         return render(request, 'index.html',
                       context={'filter': f})

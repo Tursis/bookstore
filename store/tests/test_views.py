@@ -1,26 +1,45 @@
+from unittest import mock
+
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test.client import RequestFactory
 
 from django.urls import reverse
 
-from test_unit_core.test_core import create_product_for_test
+from store.models import Product
+from test_unit_core.test_core import create_product_for_test, create_user
 
 
 class ProductListViewTest(TestCase):
 
-    @classmethod
-    def SetUpTestData(cls):
+    def setUp(self):
+        self.factory = RequestFactory()
+        create_user('Tursis', '123456', 'test@gmail.com')
         create_product_for_test(2)
 
-    def test_get_response(self):
-        resp = self.client.get('index.html')
-        self.assertEqual(resp.status_code, 200)
+    def tearDown(self):
+        for item in Product.objects.all():
+            item.image.delete()
 
-    def test_view_uses_correct_template(self):
+    def test_index_template(self):
         resp = self.client.get(reverse('store:index'))
         self.assertEqual(resp.status_code, 200)
-
         self.assertTemplateUsed(resp, 'index.html')
+
+    @mock.patch('store.views.ProductFilter')
+    def test_call_product_filter(self, mock_product_filter):
+        resp = self.client.get(reverse('store:index'))
+        mock_product_filter.assert_called()
+
+    @mock.patch('store.views.product_filter_counter')
+    def test_call_product_filter_counter(self, mock_product_filter_counter):
+        resp = self.client.get(reverse('store:index'))
+        mock_product_filter_counter.assert_called()
+
+    @mock.patch('store.views.update_model_counter')
+    def test_call_update_model_counter(self, mock_update_model_counter):
+        resp = self.client.get(reverse('store:index'))
+        mock_update_model_counter.assert_called()
 
 
 class AuthorizationСheckTest(TestCase):
