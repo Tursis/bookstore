@@ -6,6 +6,7 @@ from django.test.client import RequestFactory
 
 from django.urls import reverse
 
+from comments.models import ProductReviews
 from store.models import Product
 from test_unit_core.test_core import create_product_for_test, create_user
 
@@ -40,6 +41,42 @@ class ProductListViewTest(TestCase):
     def test_call_update_model_counter(self, mock_update_model_counter):
         resp = self.client.get(reverse('store:index'))
         mock_update_model_counter.assert_called()
+
+
+class BooksDetailView(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+        create_user('Tursis', '123456', 'test@gmail.com')
+        create_product_for_test(2)
+
+    def tearDown(self):
+        for item in Product.objects.all():
+            item.image.delete()
+
+    def test_book_detail_template(self):
+        product = Product.objects.get(pk=1)
+        resp = self.client.get(reverse('store:book_detail', args=[product, ]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/book/book_detail.html')
+
+    @mock.patch('store.views.quantity_reviews')
+    def test_called_quantity_reviews(self, mock_quantity_reviews):
+        product = Product.objects.get(pk=1)
+        resp = self.client.get(reverse('store:book_detail', args=[product, ]))
+        mock_quantity_reviews.assert_called()
+
+    def test_product_reviews_form_in_context(self):
+        product = Product.objects.get(pk=1)
+        ProductReviews.objects.create(user=User.objects.get(pk=1), product=product, description='reviews', rating=4,
+                                      active=True)
+        resp = self.client.get(reverse('store:book_detail', args=[product, ]))
+        self.assertTrue(resp.context['reviews_list'])
+
+    def test_review_comment_form_in_context(self):
+        product = Product.objects.get(pk=1)
+        resp = self.client.get(reverse('store:book_detail', args=[product, ]))
+        self.assertTrue(resp.context['comment_form'])
 
 
 class AuthorizationСheckTest(TestCase):
