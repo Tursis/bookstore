@@ -86,7 +86,7 @@ class BooksDetailView(TestCase):
         mock_review_comment_view.post.assert_called()
 
 
-class BooksManageViewTest(TestCase):
+class ProductManageViewTest(TestCase):
 
     def setUp(self):
         create_user('Tursis', '123456', 'test@gmail.com')
