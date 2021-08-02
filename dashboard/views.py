@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
 from django.views import View
 
-from bookstore.settings import PERMISSION_ON_SITE
+from shared.permissions import PERMISSION_ON_SITE
 from .store_statistics import get_quantity_of_product_sold
 from .models import ViewStatistics
 

@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views import View
 from .comments import add_product_reviews, add_review_comment
 from .forms import ProductReviewsForm, ReviewCommentForm

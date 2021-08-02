@@ -5,7 +5,7 @@ from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from store.models import Category, Publisher, BookAuthor, BookGenre, Book, Magazine, CategoryDiscount
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 
 def create_user(username, password, email):
@@ -43,3 +43,6 @@ def create_product_for_test(count):
                                 price=product_item * 10, Discounts=0, numb=product_item, numb_in_year=product_item,
                                 subs_price=20 * product_item, pages=5 * product_item,
                                 pub_year=2000 + product_item, size='240x165', image=file)
+
+
+

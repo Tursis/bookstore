@@ -1,10 +1,11 @@
+from django.contrib.auth.models import Permission
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from bookstore.settings import PERMISSION_ON_SITE
+from shared.permissions import PERMISSION_ON_SITE
 from .filter_counter import product_filter_counter, update_model_counter
 from .filters import ProductFilter, SearchFilter
 from .forms import BookForm
@@ -32,9 +33,13 @@ class ProductListView(View):
 
 
 class ProductManage(PermissionRequiredMixin, View):
+
     permission_required = PERMISSION_ON_SITE['moderator']
 
     def get(self, request):
+        for item in Permission.objects.filter(group__name='moderator'):
+            print(item)
+
         return render(request, 'store/product_manage.html')
 
 

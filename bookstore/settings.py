@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -88,7 +90,6 @@ MIDDLEWARE_CLASSES = [
 ]
 """
 
-
 CART_SESSION_ID = 'cart'
 
 ROOT_URLCONF = 'bookstore.urls'
@@ -148,7 +149,7 @@ REST_FRAMEWORK = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru'    # uk
+LANGUAGE_CODE = 'ru'  # uk
 
 TIME_ZONE = 'Europe/Kiev'
 
@@ -162,10 +163,10 @@ USE_TZ = True
 
 DATE_INPUT_FORMATS = [
     '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y',  # '2006-10-25', '10/25/2006', '10/25/06'
-    '%b %d %Y', '%b %d, %Y',             # 'Oct 25 2006', 'Oct 25, 2006'
-    '%d %b %Y', '%d %b, %Y',             # '25 Oct 2006', '25 Oct, 2006'
-    '%B %d %Y', '%B %d, %Y',             # 'October 25 2006', 'October 25, 2006'
-    '%d %B %Y', '%d %B, %Y',             # '25 October 2006', '25 October, 2006'
+    '%b %d %Y', '%b %d, %Y',  # 'Oct 25 2006', 'Oct 25, 2006'
+    '%d %b %Y', '%d %b, %Y',  # '25 Oct 2006', '25 Oct, 2006'
+    '%B %d %Y', '%B %d, %Y',  # 'October 25 2006', 'October 25, 2006'
+    '%d %B %Y', '%d %B, %Y',  # '25 October 2006', '25 October, 2006'
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -186,7 +187,6 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
@@ -203,6 +203,5 @@ LOGIN_REDIRECT_URL = "admin/"  # To go to home after login instead of getting re
 LOGOUT_REDIRECT_URL = "/admin/"
 
 SITE_DOMAIN = '127.0.0.1:8000'
-PERMISSION_ON_SITE = {'moderator': ('store.change_magazine', 'store.view_magazine', 'store.delete_magazine'),
-                      'user': ('store.view_book', 'store.view_magazine'),
-                      }
+
+

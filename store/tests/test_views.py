@@ -7,6 +7,7 @@ from django.test.client import RequestFactory
 from django.urls import reverse
 
 from comments.models import ProductReviews
+from shared.permissions import PERMISSION_ON_SITE, permission_for_user
 from store.models import Product
 from test_unit_core.test_core import create_product_for_test, create_user
 
@@ -88,17 +89,17 @@ class BooksDetailView(TestCase):
 class BooksManageViewTest(TestCase):
 
     def setUp(self):
-        test_user = User.objects.create_user(username='admin')
-        test_user.set_password('admin')
-        test_user.is_superuser = True
-        test_user.save()
+        create_user('Tursis', '123456', 'test@gmail.com')
+        user = User.objects.get(pk=1)
+        user.is_superuser = True
+        user.save()
 
     def test_redirect_if_not_logged_in(self):
         resp = self.client.get(reverse('store:product_manage'))
         self.assertRedirects(resp, '/accounts/login/?next=/store/manage/')
 
-    def test_logged_in_uses_correct_template(self):
-        login = self.client.login(username='admin', password='admin')
+    def test_logged_in_user_correct_template(self):
+        login = self.client.login(username='Tursis', password='123456')
         resp = self.client.get(reverse('store:product_manage'))
 
         self.assertTrue(login)
@@ -106,3 +107,27 @@ class BooksManageViewTest(TestCase):
 
         # Проверка того, что мы используем правильный шаблон
         self.assertTemplateUsed(resp, 'store/product_manage.html')
+
+
+class BookCreateTest(TestCase):
+    def setUp(self):
+        create_user('Tursis', '123456', 'test@gmail.com')
+
+    def test_book_create_template_permission_required_user(self):
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:book_create'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
+
+    def test_book_create_template_permission_required_moderator(self):
+        user = User.objects.get(pk=1)
+
+        for moderator_permission in PERMISSION_ON_SITE['moderator']:
+            user.user_permissions.add(permission_for_user(moderator_permission))
+            user.save()
+
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:book_create'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/book/book_create.html')
