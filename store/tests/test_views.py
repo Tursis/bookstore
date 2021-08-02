@@ -78,8 +78,14 @@ class BooksDetailView(TestCase):
         resp = self.client.get(reverse('store:book_detail', args=[product, ]))
         self.assertTrue(resp.context['comment_form'])
 
+    @mock.patch('store.views.ReviewCommentView')
+    def test_called_review_comment_view(self, mock_review_comment_view):
+        product = Product.objects.get(pk=1)
+        resp = self.client.post(reverse('store:book_detail', args=[product, ]))
+        mock_review_comment_view.post.assert_called()
 
-class AuthorizationСheckTest(TestCase):
+
+class BooksManageViewTest(TestCase):
 
     def setUp(self):
         test_user = User.objects.create_user(username='admin')
