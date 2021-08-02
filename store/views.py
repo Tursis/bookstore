@@ -37,9 +37,6 @@ class ProductManage(PermissionRequiredMixin, View):
     permission_required = PERMISSION_ON_SITE['moderator']
 
     def get(self, request):
-        for item in Permission.objects.filter(group__name='moderator'):
-            print(item)
-
         return render(request, 'store/product_manage.html')
 
 

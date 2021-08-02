@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from comments.models import ProductReviews
 from shared.permissions import PERMISSION_ON_SITE, permission_for_user
-from store.models import Product
+from store.models import Product, Book
 from test_unit_core.test_core import create_product_for_test, create_user
 
 
@@ -101,39 +101,85 @@ class ProductManageViewTest(TestCase):
     def test_logged_in_user_correct_template(self):
         login = self.client.login(username='Tursis', password='123456')
         resp = self.client.get(reverse('store:product_manage'))
-
         self.assertTrue(login)
         self.assertEqual(resp.status_code, 200)
-
-        # Проверка того, что мы используем правильный шаблон
         self.assertTemplateUsed(resp, 'store/product_manage.html')
 
 
-class BookCreateTest(TestCase):
+class BooksManagerViewTest(TestCase):
+
     def setUp(self):
         create_user('Tursis', '123456', 'test@gmail.com')
+        create_user('test_user', '123456', 'test@gmail.com')
+        user = User.objects.get(pk=1)
+        for moderator_permission in PERMISSION_ON_SITE['moderator']:
+            user.user_permissions.add(permission_for_user(moderator_permission))
+            user.save()
+
+    def test_book_manager_template_permission_required_user(self):
+        login = self.client.login(username='test_user', password='123456')
+        resp = self.client.get(reverse('store:book_manage'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
+
+    def test_book_manager_template_permission_required_moderator(self):
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:book_manage'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/book/book_manage.html')
+
+
+class BooksCRUDTest(TestCase):
+
+    def setUp(self):
+        create_product_for_test(2)
+        create_user('Tursis', '123456', 'test@gmail.com')
+        create_user('test_user', '123456', 'test@gmail.com')
+        user = User.objects.get(pk=1)
+        for moderator_permission in PERMISSION_ON_SITE['moderator']:
+            user.user_permissions.add(permission_for_user(moderator_permission))
+            user.save()
 
     def test_book_create_template_permission_required_user(self):
-        login = self.client.login(username='Tursis', password='123456')
+        login = self.client.login(username='test_user', password='123456')
         resp = self.client.get(reverse('store:book_create'))
         self.assertTrue(login)
         self.assertEqual(resp.status_code, 403)
 
     def test_book_create_template_permission_required_moderator(self):
-        user = User.objects.get(pk=1)
-
-        for moderator_permission in PERMISSION_ON_SITE['moderator']:
-            user.user_permissions.add(permission_for_user(moderator_permission))
-            user.save()
-
         login = self.client.login(username='Tursis', password='123456')
         resp = self.client.get(reverse('store:book_create'))
         self.assertTrue(login)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'store/book/book_create.html')
 
-    def test_book_create_template_permission_user(self):
-        login = self.client.login(username='Tursis', password='123456')
-        resp = self.client.get(reverse('store:book_create'))
+    def test_book_update_template_permission_required_user(self):
+        product = Product.objects.get(pk=1)
+        login = self.client.login(username='test_user', password='123456')
+        resp = self.client.get(reverse('store:book_update', args=(product,)))
         self.assertTrue(login)
         self.assertEqual(resp.status_code, 403)
+
+    def test_book_update_template_permission_required_moderator(self):
+        product = Product.objects.get(pk=1)
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:book_update', args=(product,)))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/book/book_update.html')
+
+    def test_book_delete_template_permission_required_user(self):
+        product = Product.objects.get(pk=1)
+        login = self.client.login(username='test_user', password='123456')
+        resp = self.client.get(reverse('store:book_delete', args=(product, )))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
+
+    def test_book_delete_template_permission_required_moderator(self):
+        product = Product.objects.get(pk=1)
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:book_delete', args=(product, )))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/book/book_delete.html')

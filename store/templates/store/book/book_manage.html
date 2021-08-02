@@ -60,16 +60,8 @@
     <div class="col-12">
       <div class="alert alert-warning" role="alert">
         There is no product, yet. But if you want, you can add from <a class="badge badge-info"
-                                                                       href="{% url '' %}"><strong>here.</strong></a>
+                                                                       href="{% url 'store:book_manage' %}"><strong>here.</strong></a>
       </div>
     </div>
   {% endif %}
-
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script type="text/javascript">
-      $("#dropdown-menu").on("click", () => {
-          $("#side-nav").slideToggle(200);
-          //     $('body').toggleClass('overlay');
-      });
-  </script>
 {% endblock %}
