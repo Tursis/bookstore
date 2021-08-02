@@ -131,3 +131,9 @@ class BookCreateTest(TestCase):
         self.assertTrue(login)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'store/book/book_create.html')
+
+    def test_book_create_template_permission_user(self):
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:book_create'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
