@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from shared.permissions import PERMISSION_ON_SITE
 from .filter_counter import product_filter_counter, update_model_counter
 from .filters import ProductFilter, SearchFilter
-from .forms import BookForm
+from .forms import BookForm, MagazineForm
 from .models import Product, Book, Magazine, BookGenre, BookAuthor, Category, Publisher
 from comments.models import ProductReviews
 from comments.comments import quantity_reviews
@@ -130,7 +130,7 @@ class MagazineCreate(PermissionRequiredMixin, CreateView):
     """
     permission_required = PERMISSION_ON_SITE['moderator']
     model = Magazine
-    form = BookForm
+    form = MagazineForm
     fields = '__all__'
     template_name = 'store/magazine/magazine_create.html'
 
@@ -138,15 +138,15 @@ class MagazineCreate(PermissionRequiredMixin, CreateView):
 class MagazineUpdate(PermissionRequiredMixin, UpdateView):
     permission_required = PERMISSION_ON_SITE['moderator']
     model = Magazine
-    form = BookForm
+    form = MagazineForm
     fields = '__all__'
     template_name = 'store/magazine/magazine_update.html'
 
 
 class MagazineDelete(PermissionRequiredMixin, DeleteView):
     permission_required = PERMISSION_ON_SITE['moderator']
-    model = Book
-    form = BookForm
+    model = Magazine
+    form = MagazineForm
     template_name = 'store/magazine/magazine_delete.html'
 
     def get_success_url(self):

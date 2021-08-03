@@ -135,7 +135,7 @@ class BooksCRUDTest(TestCase):
     def setUp(self):
         create_product_for_test(2)
         create_user('Tursis', '123456', 'test@gmail.com')
-        create_user('test_user', '123456', 'test@gmail.com')
+        create_user('test_user', '123456', 'test2@gmail.com')
         user = User.objects.get(pk=1)
         for moderator_permission in PERMISSION_ON_SITE['moderator']:
             user.user_permissions.add(permission_for_user(moderator_permission))
@@ -183,3 +183,58 @@ class BooksCRUDTest(TestCase):
         self.assertTrue(login)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'store/book/book_delete.html')
+
+
+class MagazineCRUDTest(TestCase):
+
+    def setUp(self):
+        create_product_for_test(2)
+        create_user('Tursis', '123456', 'test@gmail.com')
+        create_user('test_user', '123456', 'test2@gmail.com')
+        user = User.objects.get(pk=1)
+        for moderator_permission in PERMISSION_ON_SITE['moderator']:
+            user.user_permissions.add(permission_for_user(moderator_permission))
+            user.save()
+
+    def test_magazine_create_template_permission_required_user(self):
+        login = self.client.login(username='test_user', password='123456')
+        resp = self.client.get(reverse('store:magazine_create'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
+
+    def test_magazine_create_template_permission_required_moderator(self):
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:magazine_create'))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/magazine/magazine_create.html')
+
+    def test_magazine_update_template_permission_required_user(self):
+        product = Product.objects.get(pk=3)
+        login = self.client.login(username='test_user', password='123456')
+        resp = self.client.get(reverse('store:magazine_update', args=(product,)))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
+
+    def test_magazine_update_template_permission_required_moderator(self):
+        product = Product.objects.get(pk=3)
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:magazine_update', args=(product,)))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/magazine/magazine_update.html')
+
+    def test_magazine_delete_template_permission_required_user(self):
+        product = Product.objects.get(pk=3)
+        login = self.client.login(username='test_user', password='123456')
+        resp = self.client.get(reverse('store:magazine_delete', args=(product, )))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 403)
+
+    def test_magazine_delete_template_permission_required_moderator(self):
+        product = Product.objects.get(pk=3)
+        login = self.client.login(username='Tursis', password='123456')
+        resp = self.client.get(reverse('store:magazine_delete', args=(product, )))
+        self.assertTrue(login)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'store/magazine/magazine_delete.html')
